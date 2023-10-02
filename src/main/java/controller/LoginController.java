@@ -26,6 +26,8 @@ public class LoginController {
     private Button loginButton;
     @javafx.fxml.FXML
     private Button backButton;
+    @javafx.fxml.FXML
+    private Label successfulAccountCreationLabel;
 
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) {
@@ -42,4 +44,5 @@ public class LoginController {
         currentStage.close();
         newStage.show();
     }
+
 }
