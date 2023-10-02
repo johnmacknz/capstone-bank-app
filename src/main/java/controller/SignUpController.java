@@ -31,6 +31,8 @@ public class SignUpController {
     private Button backButton;
     @javafx.fxml.FXML
     private Label createAccountErrorMessage;
+    @javafx.fxml.FXML
+    private Label successMessage;
 
     private static boolean checkString(String password) {
         char ch;
@@ -53,7 +55,7 @@ public class SignUpController {
     }
 
     @javafx.fxml.FXML
-    public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException {
+    public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException, InterruptedException {
         String username = newUserNameTextFiend.getText();
         String password = enterPasswordTextField.getText();
         String passwordCheck = reEnterPasswordTextField.getText();
@@ -84,4 +86,6 @@ public class SignUpController {
         currentStage.close();
         newStage.show();
     }
+
+
 }

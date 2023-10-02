@@ -23,5 +23,10 @@
          </font>
       </Button>
       <Label fx:id="createAccountErrorMessage" layoutX="164.0" layoutY="302.0" prefHeight="26.0" prefWidth="242.0" textFill="#b41c0f" />
+      <Label fx:id="successMessage" layoutX="179.0" layoutY="336.0" prefHeight="26.0" prefWidth="242.0" textFill="#16992e">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
