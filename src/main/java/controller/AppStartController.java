@@ -31,4 +31,17 @@ public class AppStartController {
         currentStage.close();
         newStage.show();
     }
+
+
+    @FXML
+    public void handleSignUpButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/sign-up-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
+    }
 }
