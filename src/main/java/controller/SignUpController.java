@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class SignUpController {
     @javafx.fxml.FXML
     private Label successMessage;
 
-    private static boolean checkString(String password) {
+    private static boolean checkString(@NotNull String password) {
         char ch;
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
@@ -62,8 +63,10 @@ public class SignUpController {
         if (password.equals(passwordCheck)) {
            boolean passwordConditions = checkString(password);
            if (passwordConditions){
-               Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
+               ApplicationContext.setAccountCreated(true);
+
+               Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
                Parent root = fxmlLoader.load();
                Stage newStage = new Stage();
@@ -74,9 +77,22 @@ public class SignUpController {
             }else createAccountErrorMessage.setText("Passwords do not match!");
         }
 
+    public class ApplicationContext {
+        private static boolean accountCreated = false;
+
+        public static boolean isAccountCreated() {
+            return accountCreated;
+        }
+
+        public static void setAccountCreated(boolean created) {
+            accountCreated = created;
+        }
+    }
+
+
 
     @javafx.fxml.FXML
-    public void handleBackButton(ActionEvent actionEvent) throws IOException {
+    public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
@@ -86,6 +102,4 @@ public class SignUpController {
         currentStage.close();
         newStage.show();
     }
-
-
 }
