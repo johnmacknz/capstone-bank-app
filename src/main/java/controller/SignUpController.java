@@ -62,7 +62,7 @@ public class SignUpController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException, InterruptedException {
+    public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException {
         String username = newUserNameTextFiend.getText();
         String password = enterPasswordTextField.getText();
         String passwordCheck = reEnterPasswordTextField.getText();
