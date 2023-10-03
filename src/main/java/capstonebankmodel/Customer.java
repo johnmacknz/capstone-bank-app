@@ -8,6 +8,8 @@ public class Customer {
     private String lastName;
     private String password;
 
+    private HashMap<String, Long> accountTypeHashMap = new HashMap<String, Long>();
+
     public Customer(String userName) {
         this.userName = userName;
         //TODO get all the data for customer
@@ -20,6 +22,10 @@ public class Customer {
         this.lastName = lastName;
         this.password = password;
         //TODO check csv for username availability
+    }
+
+    public void addAccount(Account account) {
+        accountTypeHashMap.put(account.ACCOUNT_TYPE, account.getAccountId());
     }
 
     public String getUserName() {
@@ -36,5 +42,9 @@ public class Customer {
 
     public String getPassword() {
         return password;
+    }
+
+    public HashMap<String, Long> getAccountTypeHashMap() {
+        return accountTypeHashMap;
     }
 }

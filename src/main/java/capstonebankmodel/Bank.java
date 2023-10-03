@@ -30,6 +30,13 @@ public class Bank implements IBank{
     }
 
     @Override
+    public void addAccount(Customer customer, String accountType, long accountId, double balance) {
+        customerDataHashMap.put(customer.getUserName(), customer);
+        Account account = AccountFactory.generateAccount(accountType, customer, accountId, balance);
+        accountDataHashMap.put(account.getAccountId(), account);
+    }
+
+    @Override
     public void deleteAccount(String accountId) {
         accountDataHashMap.remove(accountId);
     }

@@ -5,6 +5,9 @@ public interface IBank {
     void deposit(Account account, double amount);
     void transfer(Account sender, Account recipient, double amount);
     void addAccount(Customer customer, String accountType);
+
+    void addAccount(Customer customer, String accountType, long accountId, double balance);
+
     void deleteAccount(String accountId);
     void initializeAccounts();
     void takeLoan(Account account, Loan loan);
