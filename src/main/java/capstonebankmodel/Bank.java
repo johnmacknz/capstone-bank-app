@@ -1,44 +1,33 @@
 package capstonebankmodel;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 
-public class Bank implements IBank {
+public class Bank{
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
 
     public Bank() {
-        // initializeHashMaps();
+        initializeHashMaps();
     }
 
-    @Override
     public void withdraw(Account account, double amount) {
         account.withdraw(amount);
     }
 
-    @Override
     public void deposit(Account account, double amount) {
         account.deposit(amount);
     }
 
-    @Override
     public void transfer(Account sender, Account recipient, double amount) {
         sender.transferTo(amount, recipient);
     }
 
-    @Override
     public void addAccount(Customer customer, String accountType) {
         // NEW ACCOUNT
         Account account = AccountFactory.generateAccount(accountType, customer);
@@ -60,7 +49,6 @@ public class Bank implements IBank {
         }
     }
 
-    @Override
     public void addAccount(Customer customer, String accountType, long accountId, double balance) {
         // OLD ACCOUNT
         Account account = AccountFactory.generateAccount(accountType, customer, accountId, balance);
@@ -68,13 +56,11 @@ public class Bank implements IBank {
         customer.addAccount(account);
     }
 
-    @Override
     public void deleteAccount(String accountId) {
         accountDataHashMap.remove(accountId);
         // TODO delete account to account-data.csv
     }
 
-    @Override
     public void initializeHashMaps() {
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/customer-data.csv"))) {
             while (fileScanner.hasNextLine()) {
@@ -98,16 +84,21 @@ public class Bank implements IBank {
         }
     }
 
-    @Override
     public void takeLoan(Account account, Loan loan) {
 
     }
 
-    @Override
-    public void addCustomer(String firstName, String lastName, String username, String password) {
+    public void addNewCustomer(String firstName, String lastName, String username, String password) {
+        // NEW CUSTOMER
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
         csvAddCustomerRecord(customer);
+    }
+
+    public void addCustomer(String firstName, String lastName, String username, String password) {
+        // OLD CUSTOMER
+        Customer customer = new Customer(username, firstName, lastName, password);
+        customerDataHashMap.put(customer.getUserName(), customer);
     }
 
     private void csvAddCustomerRecord(Customer customer) {
@@ -124,7 +115,6 @@ public class Bank implements IBank {
     }
 
 
-    @Override
     public void deleteCustomer(String customerId) {
         customerDataHashMap.remove(customerId);
         // TODO delete customer from customer-data.csv
