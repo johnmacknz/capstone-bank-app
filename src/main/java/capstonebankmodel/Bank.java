@@ -27,6 +27,7 @@ public class Bank implements IBank{
         customerDataHashMap.put(customer.getUserName(), customer);
         Account account = AccountFactory.generateAccount(accountType, customer);
         accountDataHashMap.put(account.getAccountId(), account);
+        // TODO add new account to account-data.csv
     }
 
     @Override
@@ -39,6 +40,7 @@ public class Bank implements IBank{
     @Override
     public void deleteAccount(String accountId) {
         accountDataHashMap.remove(accountId);
+        // TODO delete account to account-data.csv
     }
 
     @Override
@@ -55,11 +57,13 @@ public class Bank implements IBank{
     public void addCustomer(String firstName, String lastName, String username, String password) {
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
+        // TODO add new customer data to customer-data.csv
     }
 
     @Override
     public void deleteCustomer(String customerId) {
         customerDataHashMap.remove(customerId);
+        // TODO delete customer from customer-data.csv
     }
     public HashMap<String, Customer> getCustomerDataHashMap() {
         return customerDataHashMap;
