@@ -39,6 +39,14 @@ public class SignUpController implements Initializable {
     private Label successMessage;
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
+    @javafx.fxml.FXML
+    private Label firstNameLabel;
+    @javafx.fxml.FXML
+    private Label lastNameLabel;
+    @javafx.fxml.FXML
+    private TextField lastNameUserTextField;
+    @javafx.fxml.FXML
+    private TextField firstNameUserTextField;
 
 
     private static boolean checkString(@NotNull String password) {

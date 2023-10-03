@@ -4,31 +4,35 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
-   <children>
-      <Label fx:id="usenameLabel" layoutX="144.0" layoutY="135.0" prefHeight="30.0" prefWidth="65.0" text="Username">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="passwordLabel" layoutX="143.0" layoutY="191.0" prefHeight="30.0" prefWidth="66.0" text="Password">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <TextField fx:id="userNameTextField" layoutX="234.0" layoutY="138.0" />
-      <Button fx:id="loginButton" layoutX="159.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="30.0" prefWidth="75.0" text="Login">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-      <Button fx:id="backButton" layoutX="284.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="75.0" text="Back">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <Label fx:id="usenameLabel" alignment="CENTER_RIGHT" layoutX="140.0" layoutY="136.0" prefHeight="30.0"
+          prefWidth="65.0" text="Username:" textAlignment="RIGHT">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Label>
+   <Label fx:id="passwordLabel" alignment="CENTER_RIGHT" layoutX="140.0" layoutY="192.0" prefHeight="30.0"
+          prefWidth="65.0" text="Password:" textAlignment="RIGHT">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="userNameTextField" layoutX="210.0" layoutY="138.0" prefHeight="25.0" prefWidth="174.0"/>
+   <Button fx:id="loginButton" layoutX="209.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleLoginButton"
+           prefHeight="30.0" prefWidth="75.0" text="Login">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Button>
+   <Button fx:id="backButton" layoutX="309.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleBackButton"
+           prefHeight="30.0" prefWidth="75.0" text="Back">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Button>
 
-      <PasswordField fx:id="passwordFieldLogin" layoutX="235.0" layoutY="194.0" />
-      <Text fx:id="accountCreation" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   <PasswordField fx:id="passwordFieldLogin" layoutX="210.0" layoutY="194.0" prefHeight="25.0" prefWidth="174.0"/>
+   <Text fx:id="accountCreation" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
 
-   </children>
 </AnchorPane>
