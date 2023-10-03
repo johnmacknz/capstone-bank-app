@@ -1,5 +1,6 @@
 package controller;
 
+
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import javafx.event.ActionEvent;
@@ -13,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,7 +42,6 @@ public class SignUpController implements Initializable {
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
     @javafx.fxml.FXML
-
     private Label firstNameLabel;
     @javafx.fxml.FXML
     private Label lastNameLabel;
