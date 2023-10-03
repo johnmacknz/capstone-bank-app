@@ -35,8 +35,9 @@ public class LoginController {
     private Button backButton;
     @FXML
     private PasswordField passwordFieldLogin;
-
-
+    @FXML
+    private Label titleLabel;
+  
     private Bank bank;
 
 
@@ -52,13 +53,11 @@ public class LoginController {
         if(bank.getCustomerDataHashMap().containsKey(userNameTextField.getText())) {
             Customer customer = bank.getCustomerDataHashMap().get(userNameTextField.getText());
             if (passwordFieldLogin.getText().equals(customer.getPassword())) {
-                //TODO- username and password validated, progress to next scene 3
+                // TODO Progress to next scene
             } else {
                 accountCreation.setText("Incorrect password entered!"); //TODO- make this red colour
-
             }
-        }
-        else{
+        } else {
             accountCreation.setText("No user with this username exists!"); //TODO- make this red colour
         }
     }
