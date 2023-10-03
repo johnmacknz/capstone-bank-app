@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,12 +23,13 @@ public class LoginController {
     @javafx.fxml.FXML
     private TextField userNameTextField;
     @javafx.fxml.FXML
-    private TextField passwordTextField;
-    @javafx.fxml.FXML
     private Button loginButton;
     @javafx.fxml.FXML
     private Button backButton;
     @javafx.fxml.FXML
+      
+    private PasswordField passwordFieldLogin;
+  
     private Text accountCreation;
 
     public void initialize() {
@@ -36,6 +38,7 @@ public class LoginController {
             accountCreation.setText("Account Successfully Created");
         }
     }
+
 
 
     @javafx.fxml.FXML
@@ -52,6 +55,7 @@ public class LoginController {
         newStage.setScene(new Scene(root));
         currentStage.close();
         newStage.show();
+
     }
 
 }
