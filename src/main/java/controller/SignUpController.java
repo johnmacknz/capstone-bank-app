@@ -84,7 +84,7 @@ public class SignUpController implements Initializable {
             if (password.equals(passwordCheck)) {
                 boolean passwordConditions = checkString(password);
                 if (passwordConditions) {
-                    bank.addCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
+                    bank.addNewCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
                             username, password);
                     ApplicationContext.setAccountCreated(true);
                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
