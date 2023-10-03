@@ -1,8 +1,16 @@
 package capstonebankmodel;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class Bank implements IBank{
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
+
+public class Bank implements IBank {
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
@@ -27,7 +35,23 @@ public class Bank implements IBank{
         customerDataHashMap.put(customer.getUserName(), customer);
         Account account = AccountFactory.generateAccount(accountType, customer);
         accountDataHashMap.put(account.getAccountId(), account);
-        // TODO add new account to account-data.csv
+        csvAddAccountRecord(account, customer.getUserName());
+        customer.addAccount(account);
+    }
+
+    private void csvAddAccountRecord(Account account, String customerName) {
+        String csvFilePath = "src/main/resources/data/account-data.csv";
+        String[] recordToAdd = {String.valueOf(account.getAccountId()), customerName, account.ACCOUNT_TYPE, String.valueOf(account.getBalance())};
+
+        try (Writer fileWriter = new FileWriter(csvFilePath, true);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            //csvPrinter.println(); // Start a new line
+            // Add a new record
+            csvPrinter.printRecord((Object[]) recordToAdd);
+            csvPrinter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -35,6 +59,7 @@ public class Bank implements IBank{
         customerDataHashMap.put(customer.getUserName(), customer);
         Account account = AccountFactory.generateAccount(accountType, customer, accountId, balance);
         accountDataHashMap.put(account.getAccountId(), account);
+        customer.addAccount(account);
     }
 
     @Override
@@ -57,14 +82,37 @@ public class Bank implements IBank{
     public void addCustomer(String firstName, String lastName, String username, String password) {
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
-        // TODO add new customer data to customer-data.csv
+        csvAddCustomerRecord(customer);
     }
+
+    private void csvAddCustomerRecord(Customer customer) {
+        String csvFilePath = "src/main/resources/data/customer-data.csv";
+        String[] recordToAdd = {customer.getUserName(), customer.getFirstName(), customer.getLastName(), customer.getPassword()};
+
+        try (Writer fileWriter = new FileWriter(csvFilePath, true);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            //csvPrinter.println(); // Start a new line
+            // Add a new record
+            csvPrinter.printRecord((Object[]) recordToAdd);
+            csvPrinter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void deleteCustomer(String customerId) {
         customerDataHashMap.remove(customerId);
         // TODO delete customer from customer-data.csv
+        csvDeleteCustomer(customerId);
     }
+
+    private void csvDeleteCustomer(String customerId) {
+        String userPath = "src/main/resources/data/customer-data.csv";
+
+    }
+
     public HashMap<String, Customer> getCustomerDataHashMap() {
         return customerDataHashMap;
     }
