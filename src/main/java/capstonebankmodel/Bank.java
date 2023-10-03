@@ -1,6 +1,9 @@
 package capstonebankmodel;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +86,7 @@ public class Bank implements IBank {
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
         csvAddCustomerRecord(customer);
+        deleteCustomer("test01");
     }
 
     private void csvAddCustomerRecord(Customer customer) {
@@ -91,8 +95,6 @@ public class Bank implements IBank {
 
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-            //csvPrinter.println(); // Start a new line
-            // Add a new record
             csvPrinter.printRecord((Object[]) recordToAdd);
             csvPrinter.flush();
         } catch (IOException e) {
@@ -105,12 +107,34 @@ public class Bank implements IBank {
     public void deleteCustomer(String customerId) {
         customerDataHashMap.remove(customerId);
         // TODO delete customer from customer-data.csv
+        File temporaryFile = createTemporaryCsvFile();
+        File customerDataFile = new File("src/main/resources/data/customer-data.csv");
         csvDeleteCustomer(customerId);
+        customerDataFile.delete();
+        temporaryFile.renameTo(new File("src/main/resources/data/customer-data.csv"));
+    }
+
+    private File createTemporaryCsvFile(){
+        return new File("src/main/resources/data/temporary-file.csv");
     }
 
     private void csvDeleteCustomer(String customerId) {
-        String userPath = "src/main/resources/data/customer-data.csv";
+        try{
+            BufferedReader csvReader = new BufferedReader(new FileReader("src/main/resources/data/customer-data.csv"));
+            String row;
+            FileWriter myWriter = new FileWriter("src/main/resources/data/temporary-file.csv");
 
+            while (((row = csvReader.readLine()) != null)){
+                String[] line = row.split(",");
+                if (!line[0].equals(customerId)){
+                    myWriter.write(row + "\n");
+                }
+            }
+            myWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public HashMap<String, Customer> getCustomerDataHashMap() {
