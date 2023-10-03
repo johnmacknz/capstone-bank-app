@@ -1,6 +1,7 @@
 package controller;
 
 import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,13 +36,15 @@ public class LoginController {
     @FXML
     private PasswordField passwordFieldLogin;
 
-    Bank bank = new Bank();
+
+    private Bank bank;
 
 
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated()) {
             accountCreation.setText("Account Successfully Created");
         }
+        bank = BankFactory.getBank();
     }
 
     @javafx.fxml.FXML
