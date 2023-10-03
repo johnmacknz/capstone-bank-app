@@ -61,4 +61,11 @@ public class Bank implements IBank{
     public void deleteCustomer(String customerId) {
         customerDataHashMap.remove(customerId);
     }
+    public HashMap<String, Customer> getCustomerDataHashMap() {
+        return customerDataHashMap;
+    }
+
+    public HashMap<Long, Account> getAccountDataHashMap() {
+        return accountDataHashMap;
+    }
 }
