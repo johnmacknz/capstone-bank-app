@@ -26,6 +26,9 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+
       <PasswordField fx:id="passwordFieldLogin" layoutX="235.0" layoutY="194.0" />
+      <Text fx:id="accountCreation" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+
    </children>
 </AnchorPane>

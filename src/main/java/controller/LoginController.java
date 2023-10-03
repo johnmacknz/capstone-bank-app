@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,19 @@ public class LoginController {
     @javafx.fxml.FXML
     private Button backButton;
     @javafx.fxml.FXML
+      
     private PasswordField passwordFieldLogin;
+  
+    private Text accountCreation;
+
+    public void initialize() {
+        if (SignUpController.ApplicationContext.isAccountCreated()) {
+
+            accountCreation.setText("Account Successfully Created");
+        }
+    }
+
+
 
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) {

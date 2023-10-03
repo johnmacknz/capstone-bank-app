@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class Customer {
     private String userName;
     private String firstName;
-
     private String lastName;
     private HashMap<String, Long> accountsMap = new HashMap<String, Long>();
     private String password;
