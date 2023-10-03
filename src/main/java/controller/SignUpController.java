@@ -40,6 +40,8 @@ public class SignUpController implements Initializable {
     private Label successMessage;
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
+    @javafx.fxml.FXML
+    private Label titleLabel;
 
     Bank bank = new Bank();
     public SignUpController(Bank bank){
