@@ -1,5 +1,7 @@
 package capstonebankmodel;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Account {
 
     public final String ACCOUNT_TYPE = "default";
@@ -8,7 +10,7 @@ public class Account {
 
     private double balance;
 
-    private String username;
+    private final String username;
 
     public long getAccountId() {
         return accountId;
@@ -20,7 +22,9 @@ public class Account {
 
     public Account(String username) {
         this.username = username;
-        // TODO generate ID
+        do {
+            accountId = ThreadLocalRandom.current().nextLong(1000000000L,9999999999L);
+        } while (!BankFactory.getBank().getAccountDataHashMap().containsKey(accountId));
         balance = 0;
     }
 
