@@ -9,7 +9,7 @@ public interface IBank {
     void addAccount(Customer customer, String accountType, long accountId, double balance);
 
     void deleteAccount(String accountId);
-    void initializeAccounts();
+    void initializeHashMaps();
     void takeLoan(Account account, Loan loan);
     void addCustomer(String firstName, String lastName, String username, String password);
     void deleteCustomer(String customerId);

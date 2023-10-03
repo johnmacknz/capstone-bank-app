@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,7 +52,7 @@ public class SignUpController implements Initializable {
     private TextField firstNameUserTextField;
     @javafx.fxml.FXML
     private Label titleLabel;
- 
+
     private Bank bank;
 
     private static boolean checkString(@NotNull String password) {
@@ -59,19 +60,19 @@ public class SignUpController implements Initializable {
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
-        for(int i=0;i < password.length();i++) {
+        for (int i = 0; i < password.length(); i++) {
             ch = password.charAt(i);
-            if( Character.isDigit(ch)) {
+            if (Character.isDigit(ch)) {
                 numberFlag = true;
-            }
-            else if (Character.isUpperCase(ch)) {
+            } else if (Character.isUpperCase(ch)) {
                 capitalFlag = true;
             } else if (Character.isLowerCase(ch)) {
                 lowerCaseFlag = true;
             }
-            if(numberFlag && capitalFlag && lowerCaseFlag)
+            if (numberFlag && capitalFlag && lowerCaseFlag)
                 return true;
-        }return false;
+        }
+        return false;
     }
 
     @javafx.fxml.FXML
@@ -79,22 +80,24 @@ public class SignUpController implements Initializable {
         String username = newUserNameTextFiend.getText();
         String password = enterPasswordTextField.getText();
         String passwordCheck = reEnterPasswordTextField.getText();
-        if (password.equals(passwordCheck)) {
-           boolean passwordConditions = checkString(password);
-           if (passwordConditions){
-               bank.addCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
-                       username, password);
-               ApplicationContext.setAccountCreated(true);
-               Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-               FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
-               Parent root = fxmlLoader.load();
-               Stage newStage = new Stage();
-               newStage.setScene(new Scene(root));
-               currentStage.close();
-               newStage.show();
-           }else createAccountErrorMessage.setText("Password conditions not met!");
-            }else createAccountErrorMessage.setText("Passwords do not match!");
-        }
+        if (!bank.getCustomerDataHashMap().containsKey(username)){
+            if (password.equals(passwordCheck)) {
+                boolean passwordConditions = checkString(password);
+                if (passwordConditions) {
+                    bank.addCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
+                            username, password);
+                    ApplicationContext.setAccountCreated(true);
+                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Stage newStage = new Stage();
+                    newStage.setScene(new Scene(root));
+                    currentStage.close();
+                    newStage.show();
+                } else createAccountErrorMessage.setText("Password conditions not met!");
+            } else createAccountErrorMessage.setText("Passwords do not match!");
+        } else createAccountErrorMessage.setText("Username taken!");
+    }
 
     public class ApplicationContext {
         private static boolean accountCreated = false;
@@ -123,9 +126,9 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String text = """
-        Password needs to have at least 
-        1 uppercase letter, 1 lowercase 
-        letter and  a number!""";
+                Password needs to have at least 
+                1 uppercase letter, 1 lowercase 
+                letter and  a number!""";
         passwordRequirementsLabel.setText(text);
         bank = BankFactory.getBank();
     }
