@@ -53,7 +53,7 @@ public class SignUpController implements Initializable {
     @javafx.fxml.FXML
     private Label titleLabel;
  
-    Bank bank;
+    private Bank bank;
 
     private static boolean checkString(@NotNull String password) {
         char ch;
@@ -83,10 +83,9 @@ public class SignUpController implements Initializable {
         if (password.equals(passwordCheck)) {
            boolean passwordConditions = checkString(password);
            if (passwordConditions){
-                //TODO- check if this is the right position
-               //bank.addCustomer();
+               bank.addCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
+                       username, password);
                ApplicationContext.setAccountCreated(true);
-
                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
                Parent root = fxmlLoader.load();
