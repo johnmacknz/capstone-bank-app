@@ -10,12 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 
 public class AppStartController{
-
-
     @FXML
     private ImageView barclavaImageView;
     @FXML
@@ -36,7 +33,6 @@ public class AppStartController{
         newStage.show();
     }
 
-
     @FXML
     public void handleSignUpButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -48,6 +44,4 @@ public class AppStartController{
         currentStage.close();
         newStage.show();
     }
-
-
-    }
+}

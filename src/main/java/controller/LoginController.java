@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 
 
@@ -35,17 +34,8 @@ public class LoginController {
     private Button backButton;
     @FXML
     private PasswordField passwordFieldLogin;
-    @FXML
-    private Text accountCreation;
-    @FXML
-    private Label titleLabel;
 
     Bank bank = new Bank();
-  
-    private Text accountCreation;
-    public LoginController(Bank bank){
-        this.bank = bank;
-    }
 
 
     public void initialize() {
@@ -82,5 +72,4 @@ public class LoginController {
         newStage.show();
 
     }
-
 }

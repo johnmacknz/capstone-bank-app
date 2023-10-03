@@ -1,6 +1,5 @@
 package controller;
 
-import capstonebankmodel.Bank;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,7 +39,6 @@ public class SignUpController implements Initializable {
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
     @javafx.fxml.FXML
-
     private Label firstNameLabel;
     @javafx.fxml.FXML
     private Label lastNameLabel;
@@ -49,14 +46,7 @@ public class SignUpController implements Initializable {
     private TextField lastNameUserTextField;
     @javafx.fxml.FXML
     private TextField firstNameUserTextField;
-    @javafx.fxml.FXML
-    private Label titleLabel;
 
-
-    Bank bank = new Bank();
-    public SignUpController(Bank bank){
-        this.bank = bank;
-    }
 
     private static boolean checkString(@NotNull String password) {
         char ch;
