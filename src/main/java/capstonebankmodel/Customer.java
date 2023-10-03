@@ -6,13 +6,14 @@ public class Customer {
     private String userName;
     private String firstName;
     private String lastName;
-    private HashMap<String, Long> accountsMap = new HashMap<String, Long>();
     private String password;
+
+    private HashMap<String, Long> accountTypeHashMap = new HashMap<String, Long>();
 
     public Customer(String userName) {
         this.userName = userName;
         //TODO get all the data for customer
-        //TODO call exception if customer didnot exist already
+        //TODO throw exception if customer does not exist already
     }
 
     public Customer(String userName, String firstName, String lastName, String password) {
@@ -23,8 +24,8 @@ public class Customer {
         //TODO check csv for username availability
     }
 
-    public void populateAccountsMap(String accountType, Long accountId) {
-        accountsMap.put(accountType, accountId);
+    public void addAccount(Account account) {
+        accountTypeHashMap.put(account.ACCOUNT_TYPE, account.getAccountId());
     }
 
     public String getUserName() {
@@ -39,11 +40,11 @@ public class Customer {
         return lastName;
     }
 
-    public HashMap<String, Long> getAccountsMap() {
-        return accountsMap;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public HashMap<String, Long> getAccountTypeHashMap() {
+        return accountTypeHashMap;
     }
 }
