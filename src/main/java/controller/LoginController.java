@@ -1,5 +1,7 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController{
     @javafx.fxml.FXML
     private Label usenameLabel;
     @javafx.fxml.FXML
@@ -35,16 +37,33 @@ public class LoginController {
     @FXML
     private Label titleLabel;
 
+    Bank bank = new Bank();
+  
+    private Text accountCreation;
+    public LoginController(Bank bank){
+        this.bank = bank;
+    }
+
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated()) {
             accountCreation.setText("Account Successfully Created");
         }
     }
 
-
-
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) {
+        if(bank.getCustomerDataHashMap().containsKey(userNameTextField.getText())) {
+            Customer customer = bank.getCustomerDataHashMap().get(userNameTextField.getText());
+            if (passwordFieldLogin.getText().equals(customer.getPassword())) {
+                //TODO- username and password validated, progress to next scene 3
+            } else {
+                accountCreation.setText("Incorrect password entered!"); //TODO- make this red colour
+
+            }
+        }
+        else{
+            accountCreation.setText("No user with this username exists!"); //TODO- make this red colour
+        }
     }
 
     @javafx.fxml.FXML
