@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <Label fx:id="usenameLabel" alignment="CENTER_RIGHT" layoutX="140.0" layoutY="136.0" prefHeight="30.0"
@@ -34,5 +35,4 @@
 
    <PasswordField fx:id="passwordFieldLogin" layoutX="210.0" layoutY="194.0" prefHeight="25.0" prefWidth="174.0"/>
    <Text fx:id="accountCreation" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
-
 </AnchorPane>

@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankmodel.Bank;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,6 +41,7 @@ public class SignUpController implements Initializable {
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
     @javafx.fxml.FXML
+
     private Label firstNameLabel;
     @javafx.fxml.FXML
     private Label lastNameLabel;
@@ -47,7 +49,14 @@ public class SignUpController implements Initializable {
     private TextField lastNameUserTextField;
     @javafx.fxml.FXML
     private TextField firstNameUserTextField;
+    @javafx.fxml.FXML
+    private Label titleLabel;
 
+
+    Bank bank = new Bank();
+    public SignUpController(Bank bank){
+        this.bank = bank;
+    }
 
     private static boolean checkString(@NotNull String password) {
         char ch;
@@ -77,7 +86,8 @@ public class SignUpController implements Initializable {
         if (password.equals(passwordCheck)) {
            boolean passwordConditions = checkString(password);
            if (passwordConditions){
-
+                //TODO- check if this is the right position
+               //bank.addCustomer();
                ApplicationContext.setAccountCreated(true);
 
                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -103,8 +113,6 @@ public class SignUpController implements Initializable {
         }
     }
 
-
-
     @javafx.fxml.FXML
     public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -116,8 +124,6 @@ public class SignUpController implements Initializable {
         currentStage.close();
         newStage.show();
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
