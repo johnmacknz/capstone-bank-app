@@ -22,8 +22,6 @@ import java.io.IOException;
 public class LoginController {
 
     @FXML
-    private Text accountCreation;
-    @FXML
     private Label usenameLabel;
     @FXML
     private Label passwordLabel;
@@ -35,10 +33,12 @@ public class LoginController {
     private Button backButton;
     @FXML
     private PasswordField passwordFieldLogin;
-    @FXML
-    private Label titleLabel;
-  
+
     private Bank bank;
+    @FXML
+    private Text errorMessage;
+    @FXML
+    private Text accountCreation;
 
 
     public void initialize() {
@@ -49,16 +49,23 @@ public class LoginController {
     }
 
     @javafx.fxml.FXML
-    public void handleLoginButton(ActionEvent actionEvent) {
+    public void handleLoginButton(ActionEvent actionEvent) throws IOException {
         if(bank.getCustomerDataHashMap().containsKey(userNameTextField.getText())) {
             Customer customer = bank.getCustomerDataHashMap().get(userNameTextField.getText());
             if (passwordFieldLogin.getText().equals(customer.getPassword())) {
-                // TODO Progress to next scene
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage newStage = new Stage();
+                newStage.setScene(new Scene(root));
+                currentStage.close();
+                newStage.show();
             } else {
-                accountCreation.setText("Incorrect password entered!"); //TODO- make this red colour
+                errorMessage.setText("Incorrect password entered!");
             }
         } else {
-            accountCreation.setText("No user with this username exists!"); //TODO- make this red colour
+            errorMessage.setText("No user with this username exists!");
         }
     }
 
