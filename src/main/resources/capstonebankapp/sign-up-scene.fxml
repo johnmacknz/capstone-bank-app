@@ -4,37 +4,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
-   <children>
-      <Label fx:id="newUserNameLabel" alignment="CENTER" layoutX="93.0" layoutY="97.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="New Username" />
-      <Label fx:id="enterPasswordLabel" alignment="CENTER" layoutX="93.0" layoutY="140.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Enter a password" textFill="#00008a" />
-      <Label fx:id="reEnterPasswordLabel" alignment="CENTER" layoutX="93.0" layoutY="184.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Re-enter password" />
-      <TextField fx:id="newUserNameTextFiend" layoutX="246.0" layoutY="99.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField fx:id="enterPasswordTextField" layoutX="247.0" layoutY="143.0" />
-      <TextField fx:id="reEnterPasswordTextField" layoutX="247.0" layoutY="187.0" />
-      <Button fx:id="createAccountButton" layoutX="119.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Create Account" textFill="DARKBLUE">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="backButton" layoutX="285.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Back" textFill="DARKBLUE">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Label fx:id="createAccountErrorMessage" layoutX="164.0" layoutY="309.0" prefHeight="26.0" prefWidth="242.0" textFill="#b41c0f" />
-      <Label fx:id="successMessage" layoutX="164.0" layoutY="335.0" prefHeight="26.0" prefWidth="242.0" textFill="#16992e">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="passwordRequirementsLabel" layoutX="397.0" layoutY="130.0" prefHeight="63.0" prefWidth="188.0">
-         <font>
-            <Font size="10.0" />
-         </font></Label>
-      <Label fx:id="titleLabel" alignment="CENTER" layoutX="152.0" layoutY="23.0" prefHeight="41.0" prefWidth="296.0" style="-fx-text-fill: #6082B6;" text="Provide your Details">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font></Label>
-   </children>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
+   <Label fx:id="newUserNameLabel" alignment="CENTER_RIGHT" layoutX="93.0" layoutY="100.0" prefHeight="30.0"
+          prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="New Username:"/>
+   <Label fx:id="enterPasswordLabel" alignment="CENTER_RIGHT" layoutX="93.0" layoutY="140.0" prefHeight="30.0"
+          prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Enter a password:"/>
+   <Label fx:id="reEnterPasswordLabel" alignment="CENTER_RIGHT" layoutX="93.0" layoutY="185.0" prefHeight="30.0"
+          prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Re-enter password:"/>
+   <TextField fx:id="newUserNameTextFiend" layoutX="246.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0"/>
+   <TextField fx:id="enterPasswordTextField" layoutX="247.0" layoutY="143.0" prefHeight="25.0" prefWidth="150.0"/>
+   <TextField fx:id="reEnterPasswordTextField" layoutX="247.0" layoutY="187.0" prefHeight="25.0" prefWidth="150.0"/>
+   <Button fx:id="createAccountButton" layoutX="93.0" layoutY="234.0" mnemonicParsing="false"
+           onAction="#handleCreateAccountButton" prefHeight="47.0" prefWidth="127.0" text="Create Account">
+      <font>
+         <Font name="System Bold" size="14.0"/>
+      </font>
+   </Button>
+   <Button fx:id="backButton" layoutX="247.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleBackButton"
+           prefHeight="47.0" prefWidth="127.0" text="Back">
+      <font>
+         <Font name="System Bold" size="14.0"/>
+      </font>
+   </Button>
+   <Label fx:id="createAccountErrorMessage" layoutX="164.0" layoutY="302.0" prefHeight="26.0" prefWidth="242.0"
+          textFill="#b41c0f"/>
+   <Label fx:id="successMessage" layoutX="179.0" layoutY="336.0" prefHeight="26.0" prefWidth="242.0" textFill="#16992e">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Label>
+   <Label fx:id="passwordRequirementsLabel" layoutX="419.0" layoutY="124.0" prefHeight="90.0" prefWidth="166.0">
+      <font>
+         <Font size="10.0"/>
+      </font>
+   </Label>
+   <Label fx:id="firstNameLabel" alignment="CENTER_RIGHT" layoutX="93.0" layoutY="24.0" prefHeight="30.0"
+          prefWidth="127.0" text="First Name:"/>
+   <Label fx:id="lastNameLabel" alignment="CENTER_RIGHT" layoutX="93.0" layoutY="63.0" prefHeight="30.0"
+          prefWidth="127.0" text="Last Name:"/>
+   <TextField fx:id="lastNameUserTextField" layoutX="247.0" layoutY="66.0" prefHeight="25.0" prefWidth="150.0"/>
+   <TextField fx:id="firstNameUserTextField" layoutX="247.0" layoutY="27.0" prefHeight="25.0" prefWidth="150.0"/>
 </AnchorPane>
