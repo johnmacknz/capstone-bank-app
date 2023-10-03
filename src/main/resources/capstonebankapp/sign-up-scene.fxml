@@ -6,20 +6,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
    <children>
-      <Label fx:id="newUserNameLabel" layoutX="93.0" layoutY="103.0" prefHeight="23.0" prefWidth="92.0" text="New Username" />
-      <Label fx:id="enterPasswordLabel" layoutX="93.0" layoutY="140.0" prefHeight="30.0" prefWidth="127.0" text="Enter a password" />
-      <Label fx:id="reEnterPasswordLabel" layoutX="93.0" layoutY="188.0" prefHeight="23.0" prefWidth="119.0" text="Re-enter password" />
-      <TextField fx:id="newUserNameTextFiend" layoutX="231.0" layoutY="102.0" />
-      <TextField fx:id="enterPasswordTextField" layoutX="231.0" layoutY="143.0" />
-      <TextField fx:id="reEnterPasswordTextField" layoutX="231.0" layoutY="187.0" />
+      <Label fx:id="newUserNameLabel" alignment="CENTER" layoutX="93.0" layoutY="100.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="New Username" />
+      <Label fx:id="enterPasswordLabel" alignment="CENTER" layoutX="93.0" layoutY="140.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Enter a password" />
+      <Label fx:id="reEnterPasswordLabel" alignment="CENTER" layoutX="93.0" layoutY="185.0" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #ADD8E6; -fx-text-fill: #00008B;" text="Re-enter password" />
+      <TextField fx:id="newUserNameTextFiend" layoutX="246.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="enterPasswordTextField" layoutX="247.0" layoutY="143.0" />
+      <TextField fx:id="reEnterPasswordTextField" layoutX="247.0" layoutY="187.0" />
       <Button fx:id="createAccountButton" layoutX="121.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="47.0" prefWidth="127.0" text="Create Account">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
       <Button fx:id="backButton" layoutX="287.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="47.0" prefWidth="127.0" text="Back">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
       <Label fx:id="createAccountErrorMessage" layoutX="164.0" layoutY="302.0" prefHeight="26.0" prefWidth="242.0" textFill="#b41c0f" />
@@ -28,5 +28,9 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label fx:id="passwordRequirementsLabel" layoutX="397.0" layoutY="124.0" prefHeight="63.0" prefWidth="188.0">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
    </children>
 </AnchorPane>
