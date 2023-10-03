@@ -41,7 +41,17 @@ public class SignUpController implements Initializable {
     @javafx.fxml.FXML
     private Label passwordRequirementsLabel;
     @javafx.fxml.FXML
+
+    private Label firstNameLabel;
+    @javafx.fxml.FXML
+    private Label lastNameLabel;
+    @javafx.fxml.FXML
+    private TextField lastNameUserTextField;
+    @javafx.fxml.FXML
+    private TextField firstNameUserTextField;
+    @javafx.fxml.FXML
     private Label titleLabel;
+
 
     Bank bank = new Bank();
     public SignUpController(Bank bank){

@@ -18,20 +18,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class LoginController{
-    @javafx.fxml.FXML
-    private Label usenameLabel;
-    @javafx.fxml.FXML
-    private Label passwordLabel;
-    @javafx.fxml.FXML
-    private TextField userNameTextField;
-    @javafx.fxml.FXML
-    private Button loginButton;
-    @javafx.fxml.FXML
-    private Button backButton;
-    @javafx.fxml.FXML
-    private PasswordField passwordFieldLogin;
 
+public class LoginController {
+
+    @FXML
+    private Text accountCreation;
+    @FXML
+    private Label usenameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private TextField userNameTextField;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private PasswordField passwordFieldLogin;
     @FXML
     private Text accountCreation;
     @FXML
@@ -43,6 +46,7 @@ public class LoginController{
     public LoginController(Bank bank){
         this.bank = bank;
     }
+
 
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated()) {
