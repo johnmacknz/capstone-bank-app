@@ -4,13 +4,13 @@ public class AccountFactory {
 
     public static Account generateAccount(String accountType, Customer customer) {
         switch (accountType) {
-            case "savings" -> {
+            case "Savings Account" -> {
                 return new SavingsAccount(customer.getUserName());
             }
-            case "checking" -> {
+            case "Checking Account" -> {
                 return new CheckingAccount(customer.getUserName());
             }
-            case "cd" -> {
+            case "CD Account" -> {
                 return new CDAccount(customer.getUserName());
             }
             default -> {
@@ -21,13 +21,13 @@ public class AccountFactory {
 
     public static Account generateAccount(String accountType, Customer customer, long accountId, double balance) {
         switch (accountType) {
-            case "savings" -> {
+            case "Savings Account" -> {
                 return new SavingsAccount(customer.getUserName(), accountId, balance);
             }
-            case "checking" -> {
+            case "Checking Account" -> {
                 return new CheckingAccount(customer.getUserName(), accountId, balance);
             }
-            case "cd" -> {
+            case "CD Account" -> {
                 return new CDAccount(customer.getUserName(), accountId, balance);
             }
             default -> {

@@ -68,7 +68,6 @@ public class Bank{
                 String[] customerDetails = line.split(",");
                 addCustomer(customerDetails[0], customerDetails[1], customerDetails[2], customerDetails[3]);
             }
-            System.out.println(customerDataHashMap);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

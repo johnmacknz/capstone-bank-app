@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,8 +40,17 @@ public class CreateNewAccountController implements Initializable {
     @FXML
     private Label alreadyExistingTypeErrorLabel;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
         accountTypeChoiceBox.setItems(FXCollections.observableArrayList("Savings Account", "Checking Account", "CD Account"));
     }
 
@@ -59,6 +71,7 @@ public class CreateNewAccountController implements Initializable {
         if (accountTypeChoiceBox.getValue() == null) {
             emptyErrorMessageLabel.setText("Please select an account type!");
         } else {
+            createNewAccount();
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
             Parent root = fxmlLoader.load();
@@ -66,6 +79,15 @@ public class CreateNewAccountController implements Initializable {
             newStage.setScene(new Scene(root));
             currentStage.close();
             newStage.show();
+        }
+    }
+
+    private void createNewAccount() {
+        String accountType = accountTypeChoiceBox.getValue().toString();
+        if (!customer.getAccountTypeHashMap().containsKey(accountType)){
+            bank.addAccount(customer, accountType);
+        } else {
+            emptyErrorMessageLabel.setText("Account of this type already exist!");
         }
     }
 }

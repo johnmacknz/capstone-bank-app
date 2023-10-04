@@ -1,10 +1,11 @@
 package capstonebankmodel;
 
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Account {
 
-    public final String ACCOUNT_TYPE = "default";
+    public String ACCOUNT_TYPE = "default";
 
     private long accountId;
 
@@ -22,9 +23,11 @@ public class Account {
 
     public Account(String username) {
         this.username = username;
-        do {
-            accountId = ThreadLocalRandom.current().nextLong(1000000000L,9999999999L);
-        } while (!BankFactory.getBank().getAccountDataHashMap().containsKey(accountId));
+        if (BankFactory.getBank().getAccountDataHashMap().keySet().isEmpty()) {
+            accountId = 1000000000L;
+        } else {
+            accountId = Collections.max(BankFactory.getBank().getAccountDataHashMap().keySet()) + 1;
+        }
         balance = 0;
     }
 
