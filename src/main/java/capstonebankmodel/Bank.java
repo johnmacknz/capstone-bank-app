@@ -68,6 +68,7 @@ public class Bank{
                 String[] customerDetails = line.split(",");
                 addCustomer(customerDetails[0], customerDetails[1], customerDetails[2], customerDetails[3]);
             }
+            System.out.println(customerDataHashMap);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -88,14 +89,14 @@ public class Bank{
 
     }
 
-    public void addNewCustomer(String firstName, String lastName, String username, String password) {
+    public void addNewCustomer(String username, String firstName, String lastName, String password) {
         // NEW CUSTOMER
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
         csvAddCustomerRecord(customer);
     }
 
-    public void addCustomer(String firstName, String lastName, String username, String password) {
+    public void addCustomer(String username, String firstName, String lastName, String password) {
         // OLD CUSTOMER
         Customer customer = new Customer(username, firstName, lastName, password);
         customerDataHashMap.put(customer.getUserName(), customer);
