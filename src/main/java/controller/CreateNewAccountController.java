@@ -51,6 +51,7 @@ public class CreateNewAccountController implements Initializable {
         bank = BankFactory.getBank();
         username = LoginController.getUsername();
         customer = bank.getCustomerDataHashMap().get(username);
+        accountNameLabel.setText(username);
         accountTypeChoiceBox.setItems(FXCollections.observableArrayList("Savings Account", "Checking Account", "CD Account"));
     }
 
