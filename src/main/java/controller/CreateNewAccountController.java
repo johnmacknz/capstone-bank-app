@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -32,7 +33,9 @@ public class CreateNewAccountController implements Initializable {
     @javafx.fxml.FXML
     private Button backButton;
     @javafx.fxml.FXML
-    private Label errorMessageLabel;
+    private Label emptyErrorMessageLabel;
+    @FXML
+    private Label alreadyExistingTypeErrorLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -51,10 +54,10 @@ public class CreateNewAccountController implements Initializable {
         newStage.show();
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException {
         if (accountTypeChoiceBox.getValue() == null) {
-            errorMessageLabel.setText("Please select an account type!");
+            emptyErrorMessageLabel.setText("Please select an account type!");
         } else {
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
