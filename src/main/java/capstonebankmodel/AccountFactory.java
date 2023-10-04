@@ -2,36 +2,36 @@ package capstonebankmodel;
 
 public class AccountFactory {
 
-    public static Account generateAccount(String accountType, Customer customer) {
+    public static Account generateAccount(String accountType) {
         switch (accountType) {
             case "Savings Account" -> {
-                return new SavingsAccount(customer.getUserName());
+                return new SavingsAccount();
             }
             case "Checking Account" -> {
-                return new CheckingAccount(customer.getUserName());
+                return new CheckingAccount();
             }
             case "CD Account" -> {
-                return new CDAccount(customer.getUserName());
+                return new CDAccount();
             }
             default -> {
-                return new Account(customer.getUserName());
+                return new Account();
             }
         }
     }
 
-    public static Account generateAccount(String accountType, Customer customer, long accountId, double balance) {
+    public static Account generateAccount(String accountType, long accountId, double balance) {
         switch (accountType) {
             case "Savings Account" -> {
-                return new SavingsAccount(customer.getUserName(), accountId, balance);
+                return new SavingsAccount(accountId, balance);
             }
             case "Checking Account" -> {
-                return new CheckingAccount(customer.getUserName(), accountId, balance);
+                return new CheckingAccount(accountId, balance);
             }
             case "CD Account" -> {
-                return new CDAccount(customer.getUserName(), accountId, balance);
+                return new CDAccount(accountId, balance);
             }
             default -> {
-                return new Account(customer.getUserName(), accountId, balance);
+                return new Account(accountId, balance);
             }
         }
     }

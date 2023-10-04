@@ -2,19 +2,19 @@ package capstonebankmodel;
 
 public class LoanFactory {
 
-    public static Loan generateLoan(String loanType, Loan loan) {
+    public static Loan generateLoan(String loanType, double loanAmount, int loanDuration) {
         switch (loanType) {
             case "Personal Loan" -> {
-                return new PersonalLoan(loan.getUserName());
+                return new PersonalLoan(loanAmount, loanDuration);
             }
             case "Car Loan" -> {
-                return new CarLoan(loan.getUserName());
+                return new CarLoan(loanAmount, loanDuration);
             }
             case "Home Loan" -> {
-                return new HomeLoan(loan.getUserName());
+                return new HomeLoan(loanAmount, loanDuration);
             }
             default -> {
-                return new Loan(loan.getUserName()); //TODO - need to changed to a default action
+                return new Loan(loanAmount, loanDuration); //TODO - need to changed to a default action
             }
         }
     }

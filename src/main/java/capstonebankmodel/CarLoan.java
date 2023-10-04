@@ -1,11 +1,8 @@
 package capstonebankmodel;
 
 public class CarLoan extends Loan{
-    public CarLoan(String userName, double loanAmount, int loanDuration) {
-        super(userName, loanAmount, loanDuration);
-    }
-
-    public CarLoan(String userName) {
-        super(userName);
+    public CarLoan(double loanAmount, int loanDuration) {
+        super(loanAmount, loanDuration);
+        this.loanType = "Car Loan";
     }
 }

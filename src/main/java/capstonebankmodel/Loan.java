@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Loan {
-    private String userName;
+
     private final double interestRate = 5.00; //TODO- for now let it be fixed
     private long loanAccountId;
     private double loanAmount;
@@ -13,11 +13,10 @@ public class Loan {
     private int loanDuration;
     private LocalDate loanDate;
     public String loanType;
-    private Bank bank;
 
 
-    public Loan(String userName, double loanAmount, int loanDuration){ // for new loan account creation
-        this.userName = userName;
+    public Loan(double loanAmount, int loanDuration){
+        // for new loan account creation
         if (BankFactory.getBank().getLoanDataHashMap().keySet().isEmpty()) {
             loanAccountId = 1000000000L;
         } else {
@@ -27,10 +26,6 @@ public class Loan {
         outstandingAmount = loanAmount;
         this.loanDuration = loanDuration;
         loanDate = LocalDate.now();
-    }
-
-    public Loan(String userName) { //for existing loan accounts
-        this.userName = userName;
     }
 
     public void calculateInterest(long loanAccountId){
@@ -53,9 +48,6 @@ public class Loan {
     }
     public int getLoanDuration() {
         return loanDuration;
-    }
-    public String getUserName() {
-        return userName;
     }
     public LocalDate getLoanDate() {
         return loanDate;

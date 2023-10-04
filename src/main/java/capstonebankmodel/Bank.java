@@ -34,7 +34,7 @@ public class Bank{
 
     public void addAccount(Customer customer, String accountType) {
         // NEW ACCOUNT
-        Account account = AccountFactory.generateAccount(accountType, customer);
+        Account account = AccountFactory.generateAccount(accountType);
         accountDataHashMap.put(account.getAccountId(), account);
         csvAddAccountRecord(account, customer.getUserName());
         customer.addAccount(account);
@@ -55,7 +55,7 @@ public class Bank{
 
     public void addAccount(Customer customer, String accountType, long accountId, double balance) {
         // OLD ACCOUNT
-        Account account = AccountFactory.generateAccount(accountType, customer, accountId, balance);
+        Account account = AccountFactory.generateAccount(accountType, accountId, balance);
         accountDataHashMap.put(account.getAccountId(), account);
         customer.addAccount(account);
     }
@@ -90,23 +90,31 @@ public class Bank{
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] loanDetails = line.split(",");
-                Loan loan = new Loan(loanDetails[0], Double.parseDouble(loanDetails[2]), Integer.parseInt(loanDetails[4]));
-                loanDataHashMap.put(Long.parseLong(loanDetails[1]), loan);
+                Customer customer = customerDataHashMap.get(loanDetails[0]);
+                addLoan(customer, loanDetails[0], Double.parseDouble(loanDetails[2]),
+                        Integer.parseInt(loanDetails[4]));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addLoan(Customer customer, Loan loan) {
+    public void addNewLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
+        Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
         loanDataHashMap.put(loan.getLoanAccountId(), loan);
-        csvAddLoan(loan);
+        csvAddLoan(loan, customer.getUserName());
         customer.addLoan(loan);
     }
 
-    private void csvAddLoan(Loan loan) {
+    public void addLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
+        Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
+        loanDataHashMap.put(loan.getLoanAccountId(), loan);
+        customer.addLoan(loan);
+    }
+
+    private void csvAddLoan(Loan loan, String username) {
         String csvFilePath = "src/main/resources/data/loan-data.csv";
-        String[] recordToAdd = {loan.getUserName(), String.valueOf(loan.getLoanAccountId()),
+        String[] recordToAdd = {String.valueOf(loan.getLoanAccountId()), username, loan.loanType,
                 String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
                 String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
 
