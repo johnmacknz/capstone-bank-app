@@ -10,4 +10,9 @@ public class CheckingAccount extends Account{
     public CheckingAccount(String username, long accountId, double balance) {
         super(username, accountId, balance);
     }
+
+    public void payBills(){
+
+    }
+
 }
