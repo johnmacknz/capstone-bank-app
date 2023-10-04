@@ -49,13 +49,20 @@ public class DepositController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleDepositButton(ActionEvent actionEvent){
+    public void handleDepositButton(ActionEvent actionEvent) throws IOException {
         if (accountComboBox.getValue() != null) {
             if (depositAmountTextField.getText() != null) {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
                 double amount = Double.parseDouble(depositAmountTextField.getText());
                 bank.deposit(bank.getAccountDataHashMap().get(accountNumber), amount);
-                //TODO deposit success text
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-deposit.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage newStage = new Stage();
+                newStage.setScene(new Scene(root));
+                currentStage.close();
+                newStage.show();
             }else errorMessageLabel.setText("Please enter a Deposit Amount");
         }else errorMessageLabel.setText("Please select an Account");
     }
