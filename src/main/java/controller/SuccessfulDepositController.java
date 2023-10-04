@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SuccessfulLoanController {
+public class SuccessfulDepositController {
     @javafx.fxml.FXML
-    private Label successfulLoanLabel;
+    private Label successfulDepositLabel;
     @javafx.fxml.FXML
     private Label signedInAsLabel;
     @javafx.fxml.FXML

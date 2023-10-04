@@ -10,6 +10,13 @@ public class Customer {
 
     private HashMap<String, Long> accountTypeHashMap = new HashMap<String, Long>();
 
+    public HashMap<String, Long> getLoanTypeHashMap() {
+        return loanTypeHashMap;
+    }
+
+    private HashMap<String, Long> loanTypeHashMap = new HashMap<String, Long>();
+
+
     public Customer(String userName) {
         this.userName = userName;
         //TODO get all the data for customer
@@ -46,5 +53,9 @@ public class Customer {
 
     public HashMap<String, Long> getAccountTypeHashMap() {
         return accountTypeHashMap;
+    }
+
+    public void addLoan(Loan loan) {
+        loanTypeHashMap.put(loan.loanType, loan.getLoanAccountId());
     }
 }

@@ -11,6 +11,7 @@ public class Bank{
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
+    HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
 
     public Bank() {
         initializeHashMaps();
@@ -85,10 +86,37 @@ public class Bank{
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] loanDetails = line.split(",");
+                Loan loan = new Loan(loanDetails[0], Double.parseDouble(loanDetails[2]), Integer.parseInt(loanDetails[4]));
+                loanDataHashMap.put(Long.parseLong(loanDetails[1]), loan);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void takeLoan(Account account, Loan loan) {
+    public void addLoan(Customer customer, Loan loan) {
+        loanDataHashMap.put(loan.getLoanAccountId(), loan);
+        csvAddLoan(loan);
+        customer.addLoan(loan);
+    }
 
+    private void csvAddLoan(Loan loan) {
+        String csvFilePath = "src/main/resources/data/loan-data.csv";
+        String[] recordToAdd = {loan.getUserName(), String.valueOf(loan.getLoanAccountId()),
+                String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
+                String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
+
+        try (Writer fileWriter = new FileWriter(csvFilePath, true);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord((Object[]) recordToAdd);
+            csvPrinter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addNewCustomer(String username, String firstName, String lastName, String password) {
@@ -157,5 +185,8 @@ public class Bank{
 
     public HashMap<Long, Account> getAccountDataHashMap() {
         return accountDataHashMap;
+    }
+    public HashMap<Long, Loan> getLoanDataHashMap() {
+        return loanDataHashMap;
     }
 }
