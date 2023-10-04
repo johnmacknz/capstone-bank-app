@@ -84,8 +84,8 @@ public class SignUpController implements Initializable {
             if (password.equals(passwordCheck)) {
                 boolean passwordConditions = checkString(password);
                 if (passwordConditions) {
-                    bank.addNewCustomer(firstNameUserTextField.getText(), lastNameUserTextField.getText(),
-                            username, password);
+                    bank.addNewCustomer(username, firstNameUserTextField.getText(),
+                            lastNameUserTextField.getText(), password);
                     ApplicationContext.setAccountCreated(true);
                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
