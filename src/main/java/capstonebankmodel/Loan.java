@@ -1,6 +1,7 @@
 package capstonebankmodel;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Loan {
@@ -17,9 +18,11 @@ public class Loan {
 
     public Loan(String userName, double loanAmount, int loanDuration){ // for new loan account creation
         this.userName = userName;
-        do {
-           loanAccountId = ThreadLocalRandom.current().nextLong(1000000000L,9999999999L);
-        } while (false);//TODO- add hashmap logic to check already created id
+        if (BankFactory.getBank().getLoanDataHashMap().keySet().isEmpty()) {
+            loanAccountId = 1000000000L;
+        } else {
+            loanAccountId = Collections.max(BankFactory.getBank().getLoanDataHashMap().keySet()) + 1;
+        }
         this.loanAmount = loanAmount;
         outstandingAmount = loanAmount;
         this.loanDuration = loanDuration;
@@ -42,19 +45,19 @@ public class Loan {
     public long getLoanAccountId() {
         return loanAccountId;
     }
-
     public double getLoanAmount() {
         return loanAmount;
     }
-
     public double getOutstandingAmount() {
         return outstandingAmount;
     }
-
     public int getLoanDuration() {
         return loanDuration;
     }
     public String getUserName() {
         return userName;
+    }
+    public LocalDate getLoanDate() {
+        return loanDate;
     }
 }

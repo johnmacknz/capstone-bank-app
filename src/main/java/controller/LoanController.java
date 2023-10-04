@@ -1,5 +1,9 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
+import capstonebankmodel.Loan;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +52,9 @@ public class LoanController implements Initializable {
     private Label durationInYearsLabel;
     @javafx.fxml.FXML
     private TextField personalLoanDurationTextField;
+    private Bank bank;
+    private String username;
+    private Customer customer;
 
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
@@ -81,12 +88,15 @@ public class LoanController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        username = LoginController.getUsername();
+        bank = BankFactory.getBank();
+        customer = bank.getCustomerDataHashMap().get(username);
         loanTypeChoiceBox.setItems(FXCollections.observableArrayList("Home Loan", "Car Loan", "Personal Loan"));
     }
 
     @javafx.fxml.FXML
     public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
         Parent root = fxmlLoader.load();
@@ -110,12 +120,10 @@ public class LoanController implements Initializable {
         } else if ("Personal Loan".equals(selectedOption)) {
             maxLoanAmount = 45000;
         }
-        if(loanTypeChoiceBox.getValue() == null){
+        if (loanTypeChoiceBox.getValue() == null) {
             errorMessageLabel.setText("Please fill in all of the boxes!");
-        }
-        else if((loanTypeChoiceBox.getValue().equals("Personal Loan") && (loanAmountTextField.getText().isEmpty() || personalLoanDurationTextField.getText().isEmpty())) || ((loanDurationChoiceBox.getValue() == null
-                || loanAmountTextField.getText().isEmpty()) && !loanTypeChoiceBox.getValue().equals("Personal Loan")))
-        {
+        } else if ((loanTypeChoiceBox.getValue().equals("Personal Loan") && (loanAmountTextField.getText().isEmpty() || personalLoanDurationTextField.getText().isEmpty())) || ((loanDurationChoiceBox.getValue() == null
+                || loanAmountTextField.getText().isEmpty()) && !loanTypeChoiceBox.getValue().equals("Personal Loan"))) {
             errorMessageLabel.setText("Please fill in all of the boxes!");
 
         } else {
@@ -124,7 +132,8 @@ public class LoanController implements Initializable {
                 if (loanAmount > maxLoanAmount) {
                     errorMessageLabel.setText("Loan amount exceeds the maximum allowed amount for " + selectedOption);
                 } else {
-                    //TODO: Loan request Logic here
+                    Loan loan = new Loan(customer.getUserName(), loanAmount, loanDurationChoiceBox.getValue());
+                    bank.addLoan(customer, loan);
                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-loan.fxml"));
                     Parent root = fxmlLoader.load();
