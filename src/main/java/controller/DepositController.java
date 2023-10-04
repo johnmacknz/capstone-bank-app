@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DepositController implements Initializable {
@@ -30,16 +34,28 @@ public class DepositController implements Initializable {
     @javafx.fxml.FXML
     private Label errorMessageLabel;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        accountComboBox.setItems(FXCollections.observableArrayList("Account 1", "Account 2", "Account 3"));
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
+        accountComboBox.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
     }
 
     @javafx.fxml.FXML
-    public void handleDepositButton(ActionEvent actionEvent) {
+    public void handleDepositButton(ActionEvent actionEvent){
         if (accountComboBox.getValue() != null) {
             if (depositAmountTextField.getText() != null) {
-
+                long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
+                double amount = Double.parseDouble(depositAmountTextField.getText());
+                bank.deposit(bank.getAccountDataHashMap().get(accountNumber), amount);
+                //TODO deposit success text
             }else errorMessageLabel.setText("Please enter a Deposit Amount");
         }else errorMessageLabel.setText("Please select an Account");
     }
@@ -47,7 +63,6 @@ public class DepositController implements Initializable {
     @javafx.fxml.FXML
     public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();

@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -32,10 +35,19 @@ public class TransferController implements Initializable {
     @javafx.fxml.FXML
     private ComboBox accountComboBox2;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        accountComboBox1.setItems(FXCollections.observableArrayList("Account 1", "Account 2", "Account 3"));
-        accountComboBox2.setItems(FXCollections.observableArrayList("Account 1", "Account 2", "Account 3"));
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
+        accountComboBox1.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
+        accountComboBox2.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
     }
 
     @javafx.fxml.FXML
@@ -43,7 +55,12 @@ public class TransferController implements Initializable {
         if (accountComboBox1.getValue() != null) {
             if (accountComboBox2.getValue() != null) {
                 if (transferAmountTextField.getText() != null) {
-
+                    long accountNumber1 = customer.getAccountTypeHashMap().get(accountComboBox1.getValue());
+                    long accountNumber2 = customer.getAccountTypeHashMap().get(accountComboBox2.getValue());
+                    double amount = Double.parseDouble(transferAmountTextField.getText());
+                    bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
+                            bank.getAccountDataHashMap().get(accountNumber2), amount);
+                    //TODO transfer success text
                 }else errorMessageLabel.setText("Please enter a Deposit Amount");
             }else errorMessageLabel.setText("Please select an Account to Transfer to");
         }else errorMessageLabel.setText("Please select an Account to Transfer from");

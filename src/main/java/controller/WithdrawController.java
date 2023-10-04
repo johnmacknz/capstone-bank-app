@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class WithdrawController implements Initializable {
     @javafx.fxml.FXML
-    private ComboBox accountComboBox;
+    private ComboBox<Object> accountComboBox;
     @javafx.fxml.FXML
     private TextField withdrawAmountTextField;
     @javafx.fxml.FXML
@@ -30,9 +33,18 @@ public class WithdrawController implements Initializable {
     @javafx.fxml.FXML
     private Label errorMessageLabel;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        accountComboBox.setItems(FXCollections.observableArrayList("Account 1", "Account 2", "Account 3"));
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
+        accountComboBox.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
     }
 
     @javafx.fxml.FXML
@@ -48,10 +60,13 @@ public class WithdrawController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleWithdrawButton(ActionEvent actionEvent) {
+    public void handleWithdrawButton(ActionEvent actionEvent){
         if (accountComboBox.getValue() != null) {
             if (withdrawAmountTextField.getText() != null) {
-
+                long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
+                double amount = Double.parseDouble(withdrawAmountTextField.getText());
+                bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
+                //TODO withdraw success text
             }else errorMessageLabel.setText("Please enter a Deposit Amount");
         }else errorMessageLabel.setText("Please select an Account");
     }
