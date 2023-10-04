@@ -96,12 +96,10 @@ public class LoanController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         bank = BankFactory.getBank();
         username = LoginController.getUsername();
         customer = bank.getCustomerDataHashMap().get(username);
         accountNameLabel.setText(username);
-
         loanTypeChoiceBox.setItems(FXCollections.observableArrayList("Home Loan", "Car Loan", "Personal Loan"));
     }
 
