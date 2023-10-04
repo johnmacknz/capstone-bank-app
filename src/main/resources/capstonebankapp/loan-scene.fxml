@@ -22,7 +22,9 @@
       <Label fx:id="accountNameLabel" alignment="CENTER_RIGHT" layoutX="474.0" layoutY="28.0" prefHeight="28.0" prefWidth="126.0" textFill="#0451c4" />
       <Label fx:id="loanDurationLabel" layoutX="112.0" layoutY="188.0" prefHeight="31.0" prefWidth="92.0" text="Loan Duration:" />
       <ChoiceBox fx:id="loanDurationChoiceBox" disable="true" layoutX="216.0" layoutY="191.0" prefWidth="150.0" />
-      <TextField fx:id="homeLoanDurationTextField" layoutX="216.0" layoutY="195.0" prefHeight="26.0" prefWidth="150.0" visible="false" />
-      <Label fx:id="errorMessageLabel" alignment="CENTER" layoutX="144.0" layoutY="221.0" prefHeight="28.0" prefWidth="287.0" textFill="RED" />
+      <TextField fx:id="personalLoanDurationTextField" layoutX="216.0" layoutY="195.0" prefHeight="26.0" prefWidth="150.0" visible="false" />
+      <Label fx:id="errorMessageLabel" alignment="CENTER" layoutX="110.0" layoutY="221.0" prefHeight="28.0" prefWidth="405.0" textFill="RED" />
+      <Label fx:id="enterAnIntegerLabel" layoutX="380.0" layoutY="153.0" prefHeight="38.0" prefWidth="185.0" text="Please enter an Integer" />
+      <Label fx:id="durationInYearsLabel" layoutX="380.0" layoutY="187.0" prefHeight="38.0" prefWidth="185.0" text="Duration in Years" />
    </children>
 </AnchorPane>

@@ -18,7 +18,7 @@ public class LoanController implements Initializable {
     @javafx.fxml.FXML
     private Label loanTypeLabel;
     @javafx.fxml.FXML
-    private ChoiceBox <String> loanTypeChoiceBox;
+    private ChoiceBox<String> loanTypeChoiceBox;
     @javafx.fxml.FXML
     private Label loanAmountLabel;
     @javafx.fxml.FXML
@@ -40,38 +40,40 @@ public class LoanController implements Initializable {
     @javafx.fxml.FXML
     private ChoiceBox<Integer> loanDurationChoiceBox;
     @javafx.fxml.FXML
-    private TextField homeLoanDurationTextField;
-    @javafx.fxml.FXML
     private Label errorMessageLabel;
+    @javafx.fxml.FXML
+    private Label enterAnIntegerLabel;
+    @javafx.fxml.FXML
+    private Label durationInYearsLabel;
+    @javafx.fxml.FXML
+    private TextField personalLoanDurationTextField;
 
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
         String selectedOption = loanTypeChoiceBox.getValue();
         if ("Home Loan".equals(selectedOption)) {
             loanOutputLabel.setText("The maximum amount you\ncan request is 2,000,000");
-        }else if ("Car Loan".equals(selectedOption)){
+        } else if ("Car Loan".equals(selectedOption)) {
             loanOutputLabel.setText("The maximum amount you \ncan request is 50,000");
-        }
-    else if ("Personal Loan".equals(selectedOption)){
+        } else if ("Personal Loan".equals(selectedOption)) {
             loanOutputLabel.setText("The maximum amount you\ncan request is 45,000");
-        }
-        else {
+        } else {
             loanOutputLabel.setText("");
         }
         loanDurationChoiceBox.getItems().clear();
         if ("Home Loan".equals(selectedOption)) {
-            loanDurationChoiceBox.setItems(FXCollections.observableArrayList( 15, 20, 30));
+            loanDurationChoiceBox.setItems(FXCollections.observableArrayList(15, 20, 30));
         } else if ("Car Loan".equals(selectedOption)) {
-            loanDurationChoiceBox.setItems(FXCollections.observableArrayList( 3, 4, 5));
+            loanDurationChoiceBox.setItems(FXCollections.observableArrayList(3, 4, 5));
         } else {
             loanDurationChoiceBox.setItems(FXCollections.emptyObservableList());
         }
         if ("Personal Loan".equals(selectedOption)) {
             loanDurationChoiceBox.setDisable(true);
-            homeLoanDurationTextField.setVisible(true);
+            personalLoanDurationTextField.setVisible(true);
         } else {
             loanDurationChoiceBox.setDisable(false);
-            homeLoanDurationTextField.setVisible(false);
+            personalLoanDurationTextField.setVisible(false);
         }
     }
 
@@ -83,23 +85,56 @@ public class LoanController implements Initializable {
 
     @javafx.fxml.FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            currentStage.close();
-            newStage.show();
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
+    }
 
     @javafx.fxml.FXML
-    public void handleRequestButton(ActionEvent actionEvent) {
-        if (loanTypeChoiceBox.getValue() == null || loanAmountTextField.getText() == null ||
-                loanDurationChoiceBox.getValue() == null || homeLoanDurationTextField.getText() == null){
+    public void handleRequestButton(ActionEvent actionEvent) throws IOException {
+        errorMessageLabel.setText("");
+
+        String selectedOption = loanTypeChoiceBox.getValue();
+        int maxLoanAmount = 0;
+
+        if ("Home Loan".equals(selectedOption)) {
+            maxLoanAmount = 2000000;
+        } else if ("Car Loan".equals(selectedOption)) {
+            maxLoanAmount = 50000;
+        } else if ("Personal Loan".equals(selectedOption)) {
+            maxLoanAmount = 45000;
+        }
+        if(loanTypeChoiceBox.getValue() == null){
             errorMessageLabel.setText("Please fill in all of the boxes!");
-        }else {
-            //TODO: Code to take you to the next scene that confirms creation of the account
+        }
+        else if((loanTypeChoiceBox.getValue().equals("Personal Loan") && (loanAmountTextField.getText().isEmpty() || personalLoanDurationTextField.getText().isEmpty())) || ((loanDurationChoiceBox.getValue() == null
+                || loanAmountTextField.getText().isEmpty()) && !loanTypeChoiceBox.getValue().equals("Personal Loan")))
+        {
+            errorMessageLabel.setText("Please fill in all of the boxes!");
+
+        } else {
+            try {
+                int loanAmount = Integer.parseInt(loanAmountTextField.getText());
+                if (loanAmount > maxLoanAmount) {
+                    errorMessageLabel.setText("Loan amount exceeds the maximum allowed amount for " + selectedOption);
+                } else {
+                    //TODO: Loan request Logic here
+                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-loan.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Stage newStage = new Stage();
+                    newStage.setScene(new Scene(root));
+                    currentStage.close();
+                    newStage.show();
+                }
+            } catch (NumberFormatException e) {
+                errorMessageLabel.setText("Invalid loan amount. Please enter a valid number.");
+            }
         }
     }
 }
