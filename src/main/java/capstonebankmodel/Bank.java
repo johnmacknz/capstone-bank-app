@@ -18,14 +18,17 @@ public class Bank{
 
     public void withdraw(Account account, double amount) {
         account.withdraw(amount);
+        //TODO populate account-data.csv with new amount
     }
 
     public void deposit(Account account, double amount) {
         account.deposit(amount);
+        //TODO populate account-data.csv with new amount
     }
 
     public void transfer(Account sender, Account recipient, double amount) {
         sender.transferTo(amount, recipient);
+        //TODO populate account-data.csv with new amounts
     }
 
     public void addAccount(Customer customer, String accountType) {

@@ -47,7 +47,7 @@ public class CreateNewAccountController implements Initializable {
     private Customer customer;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         bank = BankFactory.getBank();
         username = LoginController.getUsername();
         customer = bank.getCustomerDataHashMap().get(username);
@@ -68,10 +68,13 @@ public class CreateNewAccountController implements Initializable {
 
     @FXML
     public void handleCreateAccountButton(ActionEvent actionEvent) throws IOException {
+        String accountType = accountTypeChoiceBox.getValue().toString();
         if (accountTypeChoiceBox.getValue() == null) {
             emptyErrorMessageLabel.setText("Please select an account type!");
+        } else if (customer.getAccountTypeHashMap().containsKey(accountType)) {
+            emptyErrorMessageLabel.setText("Account of this type already exist!");
         } else {
-            createNewAccount();
+            bank.addAccount(customer, accountType);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
             Parent root = fxmlLoader.load();
@@ -79,15 +82,6 @@ public class CreateNewAccountController implements Initializable {
             newStage.setScene(new Scene(root));
             currentStage.close();
             newStage.show();
-        }
-    }
-
-    private void createNewAccount() {
-        String accountType = accountTypeChoiceBox.getValue().toString();
-        if (!customer.getAccountTypeHashMap().containsKey(accountType)){
-            bank.addAccount(customer, accountType);
-        } else {
-            emptyErrorMessageLabel.setText("Account of this type already exist!");
         }
     }
 }
