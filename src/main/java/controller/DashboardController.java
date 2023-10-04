@@ -59,6 +59,32 @@ public class DashboardController {
     private Label balance3Label;
     @javafx.fxml.FXML
     private GridPane accountGrid;
+    @javafx.fxml.FXML
+    private GridPane loanGrid;
+    @javafx.fxml.FXML
+    private Label loanTypeTitleLabel;
+    @javafx.fxml.FXML
+    private Label loanAmountTitleLabel;
+    @javafx.fxml.FXML
+    private Label loanDurationTitleLabel;
+    @javafx.fxml.FXML
+    private Label loanType1Label;
+    @javafx.fxml.FXML
+    private Label loanAmount1Label;
+    @javafx.fxml.FXML
+    private Label loanDuration1Label;
+    @javafx.fxml.FXML
+    private Label loanType2Label;
+    @javafx.fxml.FXML
+    private Label loanAmount2Label;
+    @javafx.fxml.FXML
+    private Label loanDuration2Label;
+    @javafx.fxml.FXML
+    private Label loanType3Label;
+    @javafx.fxml.FXML
+    private Label loanAmount3Label;
+    @javafx.fxml.FXML
+    private Label loanDuration3Label;
 
     public void initialize() {
         //TODO boolean expresion returns true if user has an account
@@ -67,10 +93,16 @@ public class DashboardController {
         } else {
             accountGrid.setVisible(false);
             noAccountCreatedTextFlow.setVisible(true);
-
-
         }
-    }
+        //TODO boolean expression returns true if user has a loan
+        if (false) {
+
+        }else {
+                loanGrid.setVisible(false);
+                noLoansTextFlow.setVisible(true);
+            }
+        }
+
 
 
 
