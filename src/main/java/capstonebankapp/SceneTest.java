@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SceneTest extends Application{
     @Override
     public void start(@NotNull Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/loan-scene.fxml"));
         Parent root = fxmlLoader.load();
         stage.setScene(new Scene(root));
         stage.show();

@@ -41,6 +41,8 @@ public class LoanController implements Initializable {
     private ChoiceBox<Integer> loanDurationChoiceBox;
     @javafx.fxml.FXML
     private TextField homeLoanDurationTextField;
+    @javafx.fxml.FXML
+    private Label errorMessageLabel;
 
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
@@ -90,5 +92,15 @@ public class LoanController implements Initializable {
             currentStage.close();
             newStage.show();
         }
+
+    @javafx.fxml.FXML
+    public void handleRequestButton(ActionEvent actionEvent) {
+        if (loanTypeChoiceBox.getValue() == null || loanAmountTextField.getText() == null ||
+                loanDurationChoiceBox.getValue() == null || homeLoanDurationTextField.getText() == null){
+            errorMessageLabel.setText("Please fill in all of the boxes!");
+        }else {
+            //TODO: Code to take you to the next scene that confirms creation of the account
+        }
     }
+}
 
