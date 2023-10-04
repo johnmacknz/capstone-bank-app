@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +52,12 @@ public class LoanController implements Initializable {
     @javafx.fxml.FXML
     private TextField personalLoanDurationTextField;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
         String selectedOption = loanTypeChoiceBox.getValue();
@@ -81,6 +90,10 @@ public class LoanController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
+        accountNameLabel.setText(username);
         loanTypeChoiceBox.setItems(FXCollections.observableArrayList("Home Loan", "Car Loan", "Personal Loan"));
     }
 
