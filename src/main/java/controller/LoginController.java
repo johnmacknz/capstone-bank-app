@@ -40,6 +40,12 @@ public class LoginController {
     @FXML
     private Text accountCreation;
 
+    public static String getUsername() {
+        return username;
+    }
+
+    private static String username;
+
 
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated()) {
@@ -50,8 +56,9 @@ public class LoginController {
 
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
-        if(bank.getCustomerDataHashMap().containsKey(userNameTextField.getText())) {
-            Customer customer = bank.getCustomerDataHashMap().get(userNameTextField.getText());
+        username = userNameTextField.getText();
+        if(bank.getCustomerDataHashMap().containsKey(username)) {
+            Customer customer = bank.getCustomerDataHashMap().get(username);
             if (passwordFieldLogin.getText().equals(customer.getPassword())) {
                 Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
@@ -79,6 +86,5 @@ public class LoginController {
         newStage.setScene(new Scene(root));
         currentStage.close();
         newStage.show();
-
     }
 }

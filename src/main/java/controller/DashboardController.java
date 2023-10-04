@@ -1,5 +1,8 @@
 package controller;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,7 +13,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -60,18 +62,55 @@ public class DashboardController {
     @javafx.fxml.FXML
     private GridPane accountGrid;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
     public void initialize() {
         //TODO boolean expresion returns true if user has an account
-        if (false) {
-
+        username = LoginController.getUsername();
+        bank = BankFactory.getBank();
+        customer = bank.getCustomerDataHashMap().get(username);
+        if (!customer.getAccountTypeHashMap().isEmpty()) {
+            accountGrid.setVisible(true);
+            noAccountCreatedTextFlow.setVisible(false);
+            populateAccountGrid();
         } else {
             accountGrid.setVisible(false);
             noAccountCreatedTextFlow.setVisible(true);
-
-
         }
     }
 
+    private void populateAccountGrid() {
+        for (String accountType : customer.getAccountTypeHashMap().keySet()) {
+            long accountNumber =  customer.getAccountTypeHashMap().get(accountType);
+            double balance = bank.getAccountDataHashMap().get(accountNumber).getBalance();
+            if (accountType1Label.getText().equals("Label")) {
+                accountType1Label.setVisible(true);
+                accountNumber1Label.setVisible(true);
+                balance1Label.setVisible(true);
+                accountType1Label.setText(accountType);
+                accountNumber1Label.setText(String.valueOf(accountNumber));
+                balance1Label.setText(String.valueOf(balance));
+            } else if (accountType2Label.getText().equals("Label")) {
+                accountType2Label.setVisible(true);
+                accountNumber2Label.setVisible(true);
+                balance2Label.setVisible(true);
+                accountType2Label.setText(accountType);
+                accountNumber2Label.setText(String.valueOf(accountNumber));
+                balance2Label.setText(String.valueOf(balance));
+            } else if (accountType3Label.getText().equals("Label")) {
+                accountType3Label.setVisible(true);
+                accountNumber3Label.setVisible(true);
+                balance3Label.setVisible(true);
+                accountType3Label.setText(accountType);
+                accountNumber3Label.setText(String.valueOf(accountNumber));
+                balance3Label.setText(String.valueOf(balance));
+            }
+        }
+    }
 
 
     @javafx.fxml.FXML
