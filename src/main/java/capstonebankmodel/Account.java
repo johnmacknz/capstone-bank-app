@@ -7,11 +7,9 @@ public class Account {
 
     public String ACCOUNT_TYPE = "default";
 
-    private long accountId;
+    private final long accountId;
 
     private double balance;
-
-    private final String username;
 
     public long getAccountId() {
         return accountId;
@@ -21,8 +19,7 @@ public class Account {
         return balance;
     }
 
-    public Account(String username) {
-        this.username = username;
+    public Account() {
         if (BankFactory.getBank().getAccountDataHashMap().keySet().isEmpty()) {
             accountId = 1000000000L;
         } else {
@@ -31,8 +28,7 @@ public class Account {
         balance = 0;
     }
 
-    public Account(String username, long accountId, double balance) {
-        this.username = username;
+    public Account(long accountId, double balance) {
         this.accountId = accountId;
         this.balance = balance;
     }

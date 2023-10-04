@@ -1,13 +1,13 @@
 package capstonebankmodel;
 
 public class SavingsAccount extends Account{
-    public SavingsAccount(String username) {
-        super(username);
+    public SavingsAccount() {
+        super();
         this.ACCOUNT_TYPE = "Savings Account";
     }
 
-    public SavingsAccount(String username, long accountId, double balance) {
-        super(username, accountId, balance);
+    public SavingsAccount(long accountId, double balance) {
+        super(accountId, balance);
         this.ACCOUNT_TYPE = "Savings Account";
     }
 }

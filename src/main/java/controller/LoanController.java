@@ -58,12 +58,6 @@ public class LoanController implements Initializable {
     private String username;
     private Customer customer;
 
-    private Bank bank;
-
-    private String username;
-
-    private Customer customer;
-
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
         String selectedOption = loanTypeChoiceBox.getValue();
@@ -141,8 +135,7 @@ public class LoanController implements Initializable {
                 if (loanAmount > maxLoanAmount) {
                     errorMessageLabel.setText("Loan amount exceeds the maximum allowed amount for " + selectedOption);
                 } else {
-                    Loan loan = new Loan(customer.getUserName(), loanAmount, loanDurationChoiceBox.getValue());
-                    bank.addLoan(customer, loan);
+                    bank.addNewLoan(customer, loanTypeChoiceBox.getValue(), loanAmount, loanDurationChoiceBox.getValue());
                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-loan.fxml"));
                     Parent root = fxmlLoader.load();
