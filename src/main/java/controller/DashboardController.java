@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-
 public class DashboardController {
     @javafx.fxml.FXML
     private ImageView barclavaImageView;
@@ -110,16 +109,15 @@ public class DashboardController {
         //TODO boolean expression returns true if user has a loan
         if (false) {
 
-        }else {
-                loanGrid.setVisible(false);
-                noLoansTextFlow.setVisible(true);
-            }
+        } else {
+            loanGrid.setVisible(false);
+            noLoansTextFlow.setVisible(true);
         }
-
+    }
 
     private void populateAccountGrid() {
         for (String accountType : customer.getAccountTypeHashMap().keySet()) {
-            long accountNumber =  customer.getAccountTypeHashMap().get(accountType);
+            long accountNumber = customer.getAccountTypeHashMap().get(accountType);
             double balance = bank.getAccountDataHashMap().get(accountNumber).getBalance();
             if (accountType1Label.getText().equals("Label")) {
                 accountType1Label.setVisible(true);
@@ -146,7 +144,6 @@ public class DashboardController {
         }
     }
 
-
     @javafx.fxml.FXML
     public void handleHereHyperLink(@NotNull ActionEvent actionEvent) throws IOException {
         accountGrid.setVisible(true);
@@ -172,7 +169,6 @@ public class DashboardController {
         newStage.setScene(new Scene(root));
         currentStage.close();
         newStage.show();
-
     }
 
     @javafx.fxml.FXML
@@ -235,5 +231,35 @@ public class DashboardController {
         newStage.setScene(new Scene(root));
         currentStage.close();
         newStage.show();
+    }
+
+    private void populateLoanGrid() {
+        for (String loanType : customer.getLoanTypeHashMap().keySet()) {
+            long loanAccountId = customer.getLoanTypeHashMap().get(loanType);
+            int loanDuration = bank.getLoanDataHashMap().get(loanAccountId).getLoanDuration();
+            double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getLoanAmount();
+            if (loanType1Label.getText().equals("Label")) {
+                loanType1Label.setVisible(true);
+                loanAmount1Label.setVisible(true);
+                loanDuration1Label.setVisible(true);
+                loanType1Label.setText(loanType);
+                loanAmount1Label.setText(String.valueOf(loanAmount));
+                loanDuration1Label.setText(String.valueOf(loanDuration));
+            } else if (loanType2Label.getText().equals("Label")) {
+                loanType2Label.setVisible(true);
+                loanAmount2Label.setVisible(true);
+                loanDuration2Label.setVisible(true);
+                loanType2Label.setText(loanType);
+                loanAmount2Label.setText(String.valueOf(loanAmount));
+                loanDuration2Label.setText(String.valueOf(loanDuration));
+            } else if (loanType3Label.getText().equals("Label")) {
+                loanType3Label.setVisible(true);
+                loanAmount3Label.setVisible(true);
+                loanDuration3Label.setVisible(true);
+                loanType3Label.setText(loanType);
+                loanAmount3Label.setText(String.valueOf(loanAmount));
+                loanDuration3Label.setText(String.valueOf(loanDuration));
+            }
+        }
     }
 }

@@ -98,8 +98,25 @@ public class Bank{
         }
     }
 
-    public void takeLoan(Account account, Loan loan) {
+    public void addLoan(Customer customer, Loan loan) {
+        loanDataHashMap.put(loan.getLoanAccountId(), loan);
+        csvAddLoan(loan);
+        customer.addLoan(loan);
+    }
 
+    private void csvAddLoan(Loan loan) {
+        String csvFilePath = "src/main/resources/data/loan-data.csv";
+        String[] recordToAdd = {loan.getUserName(), String.valueOf(loan.getLoanAccountId()),
+                String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
+                String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
+
+        try (Writer fileWriter = new FileWriter(csvFilePath, true);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord((Object[]) recordToAdd);
+            csvPrinter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addNewCustomer(String username, String firstName, String lastName, String password) {
