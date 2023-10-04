@@ -11,6 +11,7 @@ public class Bank{
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
+    HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
 
     public Bank() {
         initializeHashMaps();
@@ -81,6 +82,16 @@ public class Bank{
                 Customer customer = customerDataHashMap.get(accountDetails[1]);
                 addAccount(customer, accountDetails[2],
                         Long.parseLong(accountDetails[0]), Double.parseDouble(accountDetails[3]));
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] loanDetails = line.split(",");
+                Loan loan = new Loan(loanDetails[0], Double.parseDouble(loanDetails[2]), Integer.parseInt(loanDetails[4]));
+                loanDataHashMap.put(Long.parseLong(loanDetails[1]), loan);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -157,5 +168,8 @@ public class Bank{
 
     public HashMap<Long, Account> getAccountDataHashMap() {
         return accountDataHashMap;
+    }
+    public HashMap<Long, Loan> getLoanDataHashMap() {
+        return loanDataHashMap;
     }
 }
