@@ -31,4 +31,5 @@
          </Text>
       </children>
    </Group>
+   <Label layoutX="26.0" layoutY="297.0" text="©500MilesOfCode" textFill="#3abf20" />
 </AnchorPane>
