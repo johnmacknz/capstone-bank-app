@@ -67,7 +67,7 @@ public class WithdrawController implements Initializable {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
                 double amount = Double.parseDouble(withdrawAmountTextField.getText());
                 Account account = bank.getAccountDataHashMap().get(accountNumber);
-                if (amount < account.getBalance()) {
+                if (amount <= account.getBalance()) {
                     bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
                     //TODO withdraw success text
                     errorMessageLabel.setText("");

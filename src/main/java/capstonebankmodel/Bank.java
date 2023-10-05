@@ -2,13 +2,16 @@ package capstonebankmodel;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
-public class Bank{
+public class Bank {
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
@@ -22,6 +25,7 @@ public class Bank{
         account.withdraw(amount);
         //TODO populate account-data.csv with new amount
     }
+
 
     public void deposit(Account account, double amount) {
         account.deposit(amount);
@@ -166,19 +170,19 @@ public class Bank{
         temporaryFile.renameTo(new File("src/main/resources/data/customer-data.csv"));
     }
 
-    private File createTemporaryCsvFile(){
+    private File createTemporaryCsvFile() {
         return new File("src/main/resources/data/temporary-file.csv");
     }
 
     private void csvDeleteCustomer(String customerId) {
-        try{
+        try {
             BufferedReader csvReader = new BufferedReader(new FileReader("src/main/resources/data/customer-data.csv"));
             String row;
             FileWriter myWriter = new FileWriter("src/main/resources/data/temporary-file.csv");
 
-            while (((row = csvReader.readLine()) != null)){
+            while (((row = csvReader.readLine()) != null)) {
                 String[] line = row.split(",");
-                if (!line[0].equals(customerId)){
+                if (!line[0].equals(customerId)) {
                     myWriter.write(row + "\n");
                 }
             }
@@ -196,6 +200,7 @@ public class Bank{
     public HashMap<Long, Account> getAccountDataHashMap() {
         return accountDataHashMap;
     }
+
     public HashMap<Long, Loan> getLoanDataHashMap() {
         return loanDataHashMap;
     }

@@ -61,7 +61,7 @@ public class TransferController implements Initializable {
                         long accountNumber2 = customer.getAccountTypeHashMap().get(accountComboBox2.getValue());
                         double amount = Double.parseDouble(transferAmountTextField.getText());
                         Account account = bank.getAccountDataHashMap().get(accountNumber1);
-                        if (amount < account.getBalance()) {
+                        if (amount <= account.getBalance()) {
                             bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
                                     bank.getAccountDataHashMap().get(accountNumber2), amount);
                             //TODO transfer success text
