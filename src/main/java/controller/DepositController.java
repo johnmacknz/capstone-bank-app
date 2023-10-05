@@ -68,6 +68,7 @@ public class DepositController implements Initializable {
                 Parent root = fxmlLoader.load();
                 Stage newStage = new Stage();
                 newStage.setScene(new Scene(root));
+                newStage.setTitle("Barclava Bank");
                 currentStage.close();
                 newStage.show();
             }else errorMessageLabel.setText("Please enter a Deposit Amount");
@@ -81,6 +82,7 @@ public class DepositController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -92,6 +94,7 @@ public class DepositController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
