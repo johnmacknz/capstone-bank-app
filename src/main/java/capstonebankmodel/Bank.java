@@ -184,7 +184,7 @@ public class Bank {
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
             if (fileScanner.hasNextLine()) {
                 String headerLine = fileScanner.nextLine();
-                //skip the header line
+                pw.println(headerLine);
             }
             while(fileScanner.hasNext()) {
                 String accountInfo = fileScanner.nextLine();
@@ -215,7 +215,7 @@ public class Bank {
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
             if (fileScanner.hasNextLine()) {
                 String headerLine = fileScanner.nextLine();
-                //skip the header line
+                pw.println(headerLine);
             }
             while(fileScanner.hasNext()) {
                  String accountInfo = fileScanner.nextLine();
