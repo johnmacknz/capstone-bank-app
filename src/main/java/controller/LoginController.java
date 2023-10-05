@@ -50,12 +50,14 @@ public class LoginController {
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated()) {
             accountCreation.setText("Account Successfully Created");
+
         }
         bank = BankFactory.getBank();
     }
 
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
+        SignUpController.ApplicationContext.setAccountCreated(false);
         username = userNameTextField.getText();
         if(bank.getCustomerDataHashMap().containsKey(username)) {
             Customer customer = bank.getCustomerDataHashMap().get(username);

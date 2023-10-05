@@ -182,6 +182,10 @@ public class Bank {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                //skip the header line
+            }
             while(fileScanner.hasNext()) {
                 String accountInfo = fileScanner.nextLine();
                 String[] accountInfoArray = accountInfo.split(",");
@@ -209,12 +213,12 @@ public class Bank {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
-            while(fileScanner.hasNext()) {
-              if (fileScanner.hasNextLine()) {
+            if (fileScanner.hasNextLine()) {
                 String headerLine = fileScanner.nextLine();
                 //skip the header line
-               }
-                String accountInfo = fileScanner.nextLine();
+            }
+            while(fileScanner.hasNext()) {
+                 String accountInfo = fileScanner.nextLine();
                 String[] accountInfoArray = accountInfo.split(",");
                 if (Long.parseLong(accountInfoArray[0]) == accountNumber) {
                     pw.println(accountInfoArray[0] + "," + accountInfoArray[1] + "," + accountInfoArray[2] + "," + newBalance);
