@@ -21,7 +21,6 @@ public class Loan {
         this.startDate=startDate;
     }
 
-
     public Loan(double loanAmount, int loanDuration){
         // for new loan account creation
         if (BankFactory.getBank().getLoanDataHashMap().keySet().isEmpty()) {
