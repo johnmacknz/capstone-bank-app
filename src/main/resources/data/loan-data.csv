@@ -1,1 +1,2 @@
 LoanID,UserName,LoanType,LoanAmount,OutstandingAmount,LoanDuration,StartDate
+1000000000,poorGuy,Home Loan,50000.0,50000.0,15,2023-10-05
