@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankmodel.Account;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
@@ -65,15 +66,18 @@ public class WithdrawController implements Initializable {
             if (withdrawAmountTextField.getText() != null) {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
                 double amount = Double.parseDouble(withdrawAmountTextField.getText());
-                bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-withdraw.fxml"));
-                Parent root = fxmlLoader.load();
-                Stage newStage = new Stage();
-                newStage.setScene(new Scene(root));
-                currentStage.close();
-                newStage.show();
-            }else errorMessageLabel.setText("Please enter a Deposit Amount");
-        }else errorMessageLabel.setText("Please select an Account");
+                Account account = bank.getAccountDataHashMap().get(accountNumber);
+                if (amount < account.getBalance()) {
+                    bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
+                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                     FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-withdraw.fxml"));
+                     Parent root = fxmlLoader.load();
+                     Stage newStage = new Stage();
+                     newStage.setScene(new Scene(root));
+                     currentStage.close();
+                     newStage.show();
+                } else errorMessageLabel.setText("Requested amount is more than available amount in the account!");
+            } else errorMessageLabel.setText("Please enter a Deposit Amount");
+        } else errorMessageLabel.setText("Please select an Account");
     }
 }
