@@ -6,27 +6,34 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SuccessfulTransferController {
+public class RepayLoanController {
     @javafx.fxml.FXML
-    private Label successfulTransferLabel;
+    private ComboBox accountComboBox;
     @javafx.fxml.FXML
-    private Button backToDashboardButton;
+    private TextField depositAmountTextField;
+    @javafx.fxml.FXML
+    private Button repayLoanButton;
+    @javafx.fxml.FXML
+    private Button backButton;
+    @javafx.fxml.FXML
+    private Label errorMessageLabel;
     @javafx.fxml.FXML
     private Label signedInAsLabel;
     @javafx.fxml.FXML
     private Label userNameLabel;
     @javafx.fxml.FXML
     private Button logOutButton;
-
-    public void initialize() {
-        String username = LoginController.getUsername();
-        userNameLabel.setText(username);
-    }
+    @javafx.fxml.FXML
+    private Label selectLoanLabel;
+    @javafx.fxml.FXML
+    private ComboBox selectLoanComboBox;
 
     @javafx.fxml.FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
@@ -50,5 +57,9 @@ public class SuccessfulTransferController {
         newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void handleRepayButton(ActionEvent actionEvent) {
     }
 }

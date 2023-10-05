@@ -27,6 +27,7 @@ public class BankApp extends Application {
         Parent root = fxmlLoader.load();
         style(root);
         stage.setScene(new Scene(root));
+        stage.setTitle("Barclava Bank");
         stage.show();
     }
 

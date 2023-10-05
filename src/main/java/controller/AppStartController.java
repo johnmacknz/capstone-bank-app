@@ -29,6 +29,7 @@ public class AppStartController{
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -40,6 +41,7 @@ public class AppStartController{
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/sign-up-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
+        newStage.setTitle("Barclava Bank");
         newStage.setScene(new Scene(root));
         currentStage.close();
         newStage.show();

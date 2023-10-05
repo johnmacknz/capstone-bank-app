@@ -17,6 +17,7 @@
                   <Button fx:id="depositButton" mnemonicParsing="false" onAction="#handleDepositButton" text="Deposit" />
                   <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#handleWithdrawButton" text="Withdraw" />
                   <Button fx:id="transferButton" mnemonicParsing="false" onAction="#handleTransferButton" text="Transfer" />
+                  <Button fx:id="repayLoanButton" mnemonicParsing="false" onAction="#handleRepayLoanButton" text="Repay Loan" />
                </children>
             </HBox>
             <VBox spacing="10.0">
