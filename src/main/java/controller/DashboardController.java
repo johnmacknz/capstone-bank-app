@@ -103,6 +103,7 @@ public class DashboardController {
         username = LoginController.getUsername();
         bank = BankFactory.getBank();
         customer = bank.getCustomerDataHashMap().get(username);
+        userNameLabel.setText(username);
         if (!customer.getAccountTypeHashMap().isEmpty()) {
             accountGrid.setVisible(true);
             noAccountCreatedTextFlow.setVisible(false);

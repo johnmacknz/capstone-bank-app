@@ -55,6 +55,7 @@ public class TransferController implements Initializable {
         customer = bank.getCustomerDataHashMap().get(username);
         accountComboBox1.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
         accountComboBox2.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
+        userNameLabel.setText(username);
     }
 
     @javafx.fxml.FXML
