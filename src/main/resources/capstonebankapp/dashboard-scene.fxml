@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
       <Group layoutX="32.0" layoutY="47.0" />
       <VBox layoutX="38.900001525878906" layoutY="19.899999618530273" spacing="10.0">
@@ -22,7 +22,7 @@
             </HBox>
             <VBox spacing="10.0">
                <children>
-                  <TitledPane animated="false" expanded="false" text="My Accounts">
+                  <TitledPane fx:id="myAccountsTitlePane" animated="false" expanded="false" text="My Accounts">
                     <content>
             
             
@@ -66,7 +66,7 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" expanded="false" text="Loans">
+                  <TitledPane fx:id="loansTitlePane" animated="false" expanded="false" text="Loans">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -112,8 +112,8 @@
             </VBox>
          </children>
       </VBox>
-      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="601.0" layoutY="1.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
-      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="527.0" layoutY="20.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
-      <Button fx:id="logOutButton" layoutX="612.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
+      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="580.0" layoutY="14.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
+      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="586.0" layoutY="34.0" prefHeight="26.0" prefWidth="88.0" textFill="#2e7ea6" />
+      <Button fx:id="logOutButton" layoutX="586.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
    </children>
 </AnchorPane>

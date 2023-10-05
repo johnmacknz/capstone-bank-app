@@ -1,2 +1,4 @@
-johnmacknz,John,Mackenzie,Password123
-0,roney,george,0
+UserName,FirstName,LastName,Password
+richGuy,rich,guy,0
+poorGuy,poor,guy,0
+0,0,0,Password123

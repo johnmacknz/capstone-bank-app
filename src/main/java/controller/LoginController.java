@@ -3,6 +3,9 @@ package controller;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +18,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 
 public class LoginController {
+
 
     @FXML
     private Label usenameLabel;
@@ -37,6 +42,7 @@ public class LoginController {
     private Bank bank;
     @FXML
     private Text errorMessage;
+
     @FXML
     private Text accountCreation;
 
@@ -46,11 +52,28 @@ public class LoginController {
 
     private static String username;
 
+    private static boolean accountCreatedShown = false;
+
 
     public void initialize() {
-        if (SignUpController.ApplicationContext.isAccountCreated()) {
+        if (SignUpController.ApplicationContext.isAccountCreated() && !accountCreatedShown) {
             accountCreation.setText("Account Successfully Created");
+            accountCreatedShown = true;
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), accountCreation);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
 
+            fadeOut.setOnFinished(event -> {
+                accountCreation.setVisible(false);
+            });
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(3), event -> {
+                        fadeOut.play();
+                    })
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
         }
         bank = BankFactory.getBank();
     }
