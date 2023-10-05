@@ -92,8 +92,8 @@ public class Bank{
                 String line = fileScanner.nextLine();
                 String[] loanDetails = line.split(",");
                 Customer customer = customerDataHashMap.get(loanDetails[1]);
-                addLoan(customer, Long.parseLong(loanDetails[0]), loanDetails[2], Double.parseDouble(loanDetails[4]),
-                        Double.parseDouble(loanDetails[5]), Integer.parseInt(loanDetails[6]), LocalDate.parse(loanDetails[7]));
+                addLoan(customer, Long.parseLong(loanDetails[0]), loanDetails[2], Double.parseDouble(loanDetails[3]),
+                        Double.parseDouble(loanDetails[4]), Integer.parseInt(loanDetails[5]), LocalDate.parse(loanDetails[6]));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -109,7 +109,7 @@ public class Bank{
 
     public void addLoan(Customer customer, long loanId, String loanType, double loanAmount,
                         double outstandingAmount, int loanDuration, LocalDate date) {
-        Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
+        Loan loan = LoanFactory.generateLoan(loanId, loanType, loanAmount, outstandingAmount, loanDuration, date);
         loanDataHashMap.put(loan.getLoanId(), loan);
         customer.addLoan(loan);
     }
