@@ -133,9 +133,11 @@ public class LoanController implements Initializable {
 
         } else {
             try {
-                int loanAmount = Integer.parseInt(loanAmountTextField.getText());
+                double loanAmount = Double.parseDouble(loanAmountTextField.getText());
                 if (loanAmount > maxLoanAmount) {
                     errorMessageLabel.setText("Loan amount exceeds the maximum allowed amount for " + selectedOption);
+                } else if (doesLoanExceedThreshold(loanAmount)) {
+                    errorMessageLabel.setText("This loan exceeds bank's loan threshold!");
                 } else {
                     bank.addNewLoan(customer, loanTypeChoiceBox.getValue(), loanAmount, loanDurationChoiceBox.getValue());
                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -150,6 +152,22 @@ public class LoanController implements Initializable {
                 errorMessageLabel.setText("Invalid loan amount. Please enter a valid number.");
             }
         }
+    }
+
+    private boolean doesLoanExceedThreshold(double loanAmount) {
+        boolean conditionsMet = false;
+        double totalCustomerLoans = 0;
+        for (long loanId : customer.getLoanTypeHashMap().values()) {
+            Loan loan = bank.getLoanDataHashMap().get(loanId);
+            double outstandingAmount = loan.getOutstandingAmount();
+            totalCustomerLoans += outstandingAmount;
+        }
+        if (loanAmount > bank.getTotalDeposits()*0.9 - bank.getTotalLoans()) {
+            conditionsMet = true;
+        } else if (totalCustomerLoans + loanAmount > bank.getTotalDeposits()*0.1) {
+            conditionsMet = true;
+        }
+        return conditionsMet;
     }
 
     @javafx.fxml.FXML

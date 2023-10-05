@@ -1,4 +1,1 @@
 LoanID,UserName,LoanType,LoanAmount,OutstandingAmount,LoanDuration,StartDate
-1000000000,johnmacknz,Car Loan,50000.0,50000.0,5,2023-10-05
-1000000001,0,Home Loan,100.0,100.0,15,2023-10-05
-1000000002,0,Car Loan,1000.0,1000.0,3,2023-10-05

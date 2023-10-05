@@ -13,12 +13,38 @@ import org.apache.commons.csv.CSVRecord;
 
 public class Bank {
 
-    HashMap<String, Customer> customerDataHashMap = new HashMap<>();
-    HashMap<Long, Account> accountDataHashMap = new HashMap<>();
-    HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
+    private HashMap<String, Customer> customerDataHashMap = new HashMap<>();
+    private HashMap<Long, Account> accountDataHashMap = new HashMap<>();
+    private HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
+
+    public double getTotalDeposits() {
+        return totalDeposits;
+    }
+
+    private double totalDeposits;
+
+    public double getTotalLoans() {
+        return totalLoans;
+    }
+
+    private double totalLoans;
 
     public Bank() {
         initializeHashMaps();
+        initializeTotalDeposits();
+        initializeTotalLoans();
+    }
+
+    private void initializeTotalDeposits() {
+        for (Account account : accountDataHashMap.values()) {
+            totalDeposits += account.getBalance();
+        }
+    }
+
+    private void initializeTotalLoans() {
+        for (Loan loan : loanDataHashMap.values()) {
+            totalLoans += loan.getOutstandingAmount();
+        }
     }
 
     public void withdraw(Account account, double amount) {
