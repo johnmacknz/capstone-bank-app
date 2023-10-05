@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RepayLoanController">
+    <children>
+        <ComboBox fx:id="accountComboBox" layoutX="156.0" layoutY="66.0" prefWidth="150.0" promptText="Account" />
+        <Label layoutX="156.0" layoutY="44.0" text="Select Account:" textFill="WHITE" />
+        <Label layoutX="156.0" layoutY="165.0" text="Enter Amount:" textFill="WHITE" />
+        <TextField fx:id="depositAmountTextField" layoutX="158.0" layoutY="190.0" promptText="£" />
+        <Button fx:id="repayLoanButton" layoutX="159.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleRepayButton" text="Repay" />
+        <Button fx:id="backButton" layoutX="267.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+        <Label fx:id="errorMessageLabel" layoutX="162.0" layoutY="251.0" textFill="RED" />
+        <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="521.0" layoutY="1.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
+        <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="445.0" layoutY="27.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
+        <Button fx:id="logOutButton" layoutX="532.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
+        <Label fx:id="selectLoanLabel" layoutX="156.0" layoutY="102.0" prefHeight="18.0" prefWidth="121.0" text="Select Loan:" textFill="WHITE" />
+        <ComboBox fx:id="selectLoanComboBox" layoutX="156.0" layoutY="125.0" prefWidth="150.0" promptText="Loan" />
+    </children>
+</AnchorPane>
