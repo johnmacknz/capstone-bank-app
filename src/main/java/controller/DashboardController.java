@@ -92,6 +92,12 @@ public class DashboardController {
     private String username;
 
     private Customer customer;
+    @javafx.fxml.FXML
+    private Label signedInAsLabel;
+    @javafx.fxml.FXML
+    private Label accountNameLabel;
+    @javafx.fxml.FXML
+    private Button logOutButton;
 
     public void initialize() {
         //TODO boolean expresion returns true if user has an account
@@ -261,5 +267,16 @@ public class DashboardController {
                 loanDuration3Label.setText(String.valueOf(loanDuration));
             }
         }
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
     }
 }
