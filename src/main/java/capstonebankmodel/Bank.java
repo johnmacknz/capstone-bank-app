@@ -50,6 +50,7 @@ public class Bank {
         String csvFilePath = "src/main/resources/data/account-data.csv";
         String[] recordToAdd = {String.valueOf(account.getAccountId()), customerName,
                 account.ACCOUNT_TYPE, String.valueOf(account.getBalance())};
+        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -73,6 +74,10 @@ public class Bank {
 
     public void initializeHashMaps() {
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/customer-data.csv"))) {
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                //skip the header line
+            }
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] customerDetails = line.split(",");
@@ -82,6 +87,10 @@ public class Bank {
             throw new RuntimeException(e);
         }
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"))) {
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                //skip the header line
+            }
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] accountDetails = line.split(",");
@@ -93,6 +102,10 @@ public class Bank {
             throw new RuntimeException(e);
         }
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"))) {
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                //skip the header line
+            }
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] loanDetails = line.split(",");
@@ -124,7 +137,7 @@ public class Bank {
         String[] recordToAdd = {String.valueOf(loan.getLoanId()), username, loan.loanType,
                 String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
                 String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
-
+        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -150,7 +163,7 @@ public class Bank {
     private void csvAddCustomerRecord(Customer customer) {
         String csvFilePath = "src/main/resources/data/customer-data.csv";
         String[] recordToAdd = {customer.getUserName(), customer.getFirstName(), customer.getLastName(), customer.getPassword()};
-
+        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -170,7 +183,7 @@ public class Bank {
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
             fileScanner.useDelimiter("[,\n]");
-            while(fileScanner.hasNext()) {
+            while (fileScanner.hasNext()) {
                 String accountId = fileScanner.next();
                 String username = fileScanner.next();
                 String accountType = fileScanner.next();
@@ -199,8 +212,12 @@ public class Bank {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                //skip the header line
+            }
             fileScanner.useDelimiter("[,\n]");
-            while(fileScanner.hasNext()) {
+            while (fileScanner.hasNext()) {
                 String accountId = fileScanner.next();
                 String username = fileScanner.next();
                 String accountType = fileScanner.next();
@@ -208,7 +225,7 @@ public class Bank {
                 if (Long.parseLong(accountId) == accountNumber) {
                     pw.println(accountId + "," + username + "," + accountType + "," + newBalance);
                 } else {
-                    pw.print(accountId + "," + username + "," + accountType + "," + balance);
+                    pw.println(accountId + "," + username + "," + accountType + "," + balance);
                 }
             }
             fileScanner.close();
