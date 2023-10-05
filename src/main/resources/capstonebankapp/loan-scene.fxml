@@ -10,9 +10,8 @@
       <ChoiceBox fx:id="loanTypeChoiceBox" layoutX="216.0" layoutY="126.0" onAction="#onChoiceBoxSelectionChanged" prefWidth="150.0" />
       <Label fx:id="loanAmountLabel" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="157.0" prefHeight="31.0" prefWidth="92.0" text="Loan Amount:" textFill="WHITE" />
       <TextField fx:id="loanAmountTextField" layoutX="216.0" layoutY="159.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button fx:id="requestLoanButton" layoutX="121.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleRequestButton" prefHeight="38.0" prefWidth="110.0" text="Request Loan" />
-      <Button fx:id="viewPreviousLoansButton" layoutX="279.0" layoutY="260.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="139.0" text="View Previous Loans" />
-      <Button fx:id="backButton" layoutX="216.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="38.0" prefWidth="78.0" text="Back" />
+      <Button fx:id="requestLoanButton" layoutX="168.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleRequestButton" prefHeight="38.0" prefWidth="110.0" text="Request Loan" />
+      <Button fx:id="backButton" layoutX="327.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="38.0" prefWidth="78.0" text="Back" />
       <Label alignment="CENTER" layoutX="146.0" layoutY="31.0" prefHeight="47.0" prefWidth="302.0" text="Loan Details" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -24,7 +23,7 @@
       <ChoiceBox fx:id="loanDurationChoiceBox" disable="true" layoutX="216.0" layoutY="191.0" prefWidth="150.0" />
       <TextField fx:id="personalLoanDurationTextField" layoutX="216.0" layoutY="195.0" prefHeight="26.0" prefWidth="150.0" visible="false" />
       <Label fx:id="errorMessageLabel" alignment="CENTER" layoutX="110.0" layoutY="221.0" prefHeight="28.0" prefWidth="405.0" textFill="RED" />
-      <Label fx:id="enterAnIntegerLabel" layoutX="380.0" layoutY="153.0" prefHeight="38.0" prefWidth="185.0" text="Please enter an Integer" textFill="WHITE" />
+      <Label fx:id="enterAnIntegerLabel" layoutX="380.0" layoutY="153.0" prefHeight="38.0" prefWidth="185.0" text="Please enter an amount" textFill="WHITE" />
       <Label fx:id="durationInYearsLabel" layoutX="380.0" layoutY="187.0" prefHeight="38.0" prefWidth="185.0" text="Duration in Years" textFill="WHITE" />
       <Button fx:id="logOutButton" layoutX="532.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
    </children>
