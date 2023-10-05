@@ -1,12 +1,13 @@
 module capstonebankapp {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.jetbrains.annotations;
     requires org.apache.commons.csv;
+    requires jdk.compiler;
+    requires org.jetbrains.annotations;
+    requires javafx.graphics;
 
 
-    opens capstonebankapp to javafx.fxml;
     exports capstonebankapp;
+    opens capstonebankapp to javafx.fxml;
     opens controller to javafx.fxml;
-    exports controller;
 }

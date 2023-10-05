@@ -23,18 +23,19 @@ public class Bank {
 
     public void withdraw(Account account, double amount) {
         account.withdraw(amount);
-        //TODO populate account-data.csv with new amount
+        csvEditAccountBalance(account.getAccountId(), account.getBalance());
     }
 
 
     public void deposit(Account account, double amount) {
         account.deposit(amount);
-        //TODO populate account-data.csv with new amount
+        csvEditAccountBalance(account.getAccountId(), account.getBalance());
     }
 
     public void transfer(Account sender, Account recipient, double amount) {
         sender.transferTo(amount, recipient);
-        //TODO populate account-data.csv with new amounts
+        csvEditAccountBalance(sender.getAccountId(), sender.getBalance());
+        csvEditAccountBalance(recipient.getAccountId(), recipient.getBalance());
     }
 
     public void addAccount(Customer customer, String accountType) {
@@ -65,9 +66,9 @@ public class Bank {
         customer.addAccount(account);
     }
 
-    public void deleteAccount(String accountId) {
+    public void deleteAccount(long accountId) {
         accountDataHashMap.remove(accountId);
-        // TODO delete account to account-data.csv
+        csvDeleteAccount(accountId);
     }
 
     public void initializeHashMaps() {
@@ -159,37 +160,65 @@ public class Bank {
         }
     }
 
-
-    public void deleteCustomer(String customerId) {
-        customerDataHashMap.remove(customerId);
-        // TODO delete customer from customer-data.csv
-        File temporaryFile = createTemporaryCsvFile();
-        File customerDataFile = new File("src/main/resources/data/customer-data.csv");
-        csvDeleteCustomer(customerId);
-        customerDataFile.delete();
-        temporaryFile.renameTo(new File("src/main/resources/data/customer-data.csv"));
-    }
-
-    private File createTemporaryCsvFile() {
-        return new File("src/main/resources/data/temporary-file.csv");
-    }
-
-    private void csvDeleteCustomer(String customerId) {
+    private void csvDeleteAccount(long accountNumber) {
+        String tempFilePath = "src/main/resources/data/temporary-file.csv";
+        File accountData = new File("src/main/resources/data/account-data.csv");
+        File tempFile = new File(tempFilePath);
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("src/main/resources/data/customer-data.csv"));
-            String row;
-            FileWriter myWriter = new FileWriter("src/main/resources/data/temporary-file.csv");
-
-            while (((row = csvReader.readLine()) != null)) {
-                String[] line = row.split(",");
-                if (!line[0].equals(customerId)) {
-                    myWriter.write(row + "\n");
+            FileWriter fw = new FileWriter(tempFilePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
+            fileScanner.useDelimiter("[,\n]");
+            while(fileScanner.hasNext()) {
+                String accountId = fileScanner.next();
+                String username = fileScanner.next();
+                String accountType = fileScanner.next();
+                String balance = fileScanner.next();
+                if (Long.parseLong(accountId) != accountNumber) {
+                    pw.print(accountId + "," + username + "," + accountType + "," + balance);
                 }
             }
-            myWriter.close();
-
+            fileScanner.close();
+            pw.flush();
+            pw.close();
+            accountData.delete();
+            File dump = new File("src/main/resources/data/account-data.csv");
+            tempFile.renameTo(dump);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void csvEditAccountBalance(long accountNumber, double newBalance) {
+        String tempFilePath = "src/main/resources/data/temporary-file.csv";
+        File accountData = new File("src/main/resources/data/account-data.csv");
+        File tempFile = new File(tempFilePath);
+        try {
+            FileWriter fw = new FileWriter(tempFilePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
+            fileScanner.useDelimiter("[,\n]");
+            while(fileScanner.hasNext()) {
+                String accountId = fileScanner.next();
+                String username = fileScanner.next();
+                String accountType = fileScanner.next();
+                String balance = fileScanner.next();
+                if (Long.parseLong(accountId) == accountNumber) {
+                    pw.println(accountId + "," + username + "," + accountType + "," + newBalance);
+                } else {
+                    pw.print(accountId + "," + username + "," + accountType + "," + balance);
+                }
+            }
+            fileScanner.close();
+            pw.flush();
+            pw.close();
+            accountData.delete();
+            File dump = new File("src/main/resources/data/account-data.csv");
+            tempFile.renameTo(dump);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
