@@ -11,7 +11,7 @@
             <Font name="System Bold" size="24.0" />
          </font></Label>
       <Button fx:id="backToDashboardButton" layoutX="202.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="46.0" prefWidth="195.0" text="Back to Dashboard" />
-      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="440.0" prefHeight="29.0" prefWidth="160.0" text="Signed in as:" />
+      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="440.0" prefHeight="29.0" prefWidth="160.0" text="Signed in as:" textFill="WHITE" />
       <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="417.0" layoutY="21.0" prefHeight="30.0" prefWidth="183.0" />
       <Button fx:id="logOutButton" layoutX="508.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="30.0" prefWidth="92.0" text="Log out" />
    </children>

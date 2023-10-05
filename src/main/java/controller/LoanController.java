@@ -41,8 +41,6 @@ public class LoanController implements Initializable {
     @javafx.fxml.FXML
     private Label signedInAsLabel;
     @javafx.fxml.FXML
-    private Label accountNameLabel;
-    @javafx.fxml.FXML
     private Label loanDurationLabel;
     @javafx.fxml.FXML
     private ChoiceBox<Integer> loanDurationChoiceBox;
@@ -57,6 +55,10 @@ public class LoanController implements Initializable {
     private Bank bank;
     private String username;
     private Customer customer;
+    @javafx.fxml.FXML
+    private Button logOutButton;
+    @javafx.fxml.FXML
+    private Label accountNameLabel;
 
     @javafx.fxml.FXML
     private void onChoiceBoxSelectionChanged() {
@@ -148,6 +150,17 @@ public class LoanController implements Initializable {
                 errorMessageLabel.setText("Invalid loan amount. Please enter a valid number.");
             }
         }
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
     }
 }
 

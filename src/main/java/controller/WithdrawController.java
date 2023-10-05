@@ -39,6 +39,12 @@ public class WithdrawController implements Initializable {
     private String username;
 
     private Customer customer;
+    @javafx.fxml.FXML
+    private Button logOutButton;
+    @javafx.fxml.FXML
+    private Label signedInAsLabel;
+    @javafx.fxml.FXML
+    private Label userNameLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,5 +85,16 @@ public class WithdrawController implements Initializable {
                 } else errorMessageLabel.setText("Requested amount is more than available amount in the account!");
             } else errorMessageLabel.setText("Please enter a Deposit Amount");
         } else errorMessageLabel.setText("Please select an Account");
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
     }
 }
