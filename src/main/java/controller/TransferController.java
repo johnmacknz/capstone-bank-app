@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankmodel.Account;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
@@ -55,15 +56,22 @@ public class TransferController implements Initializable {
         if (accountComboBox1.getValue() != null) {
             if (accountComboBox2.getValue() != null) {
                 if (transferAmountTextField.getText() != null) {
-                    long accountNumber1 = customer.getAccountTypeHashMap().get(accountComboBox1.getValue());
-                    long accountNumber2 = customer.getAccountTypeHashMap().get(accountComboBox2.getValue());
-                    double amount = Double.parseDouble(transferAmountTextField.getText());
-                    bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
-                            bank.getAccountDataHashMap().get(accountNumber2), amount);
-                    //TODO transfer success text
-                }else errorMessageLabel.setText("Please enter a Deposit Amount");
-            }else errorMessageLabel.setText("Please select an Account to Transfer to");
-        }else errorMessageLabel.setText("Please select an Account to Transfer from");
+                    if (accountComboBox1.getValue() != accountComboBox2.getValue()) {
+                        long accountNumber1 = customer.getAccountTypeHashMap().get(accountComboBox1.getValue());
+                        long accountNumber2 = customer.getAccountTypeHashMap().get(accountComboBox2.getValue());
+                        double amount = Double.parseDouble(transferAmountTextField.getText());
+                        Account account = bank.getAccountDataHashMap().get(accountNumber1);
+                        if (amount < account.getBalance()) {
+                            bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
+                                    bank.getAccountDataHashMap().get(accountNumber2), amount);
+                            //TODO transfer success text
+                            errorMessageLabel.setText("");
+                        } else
+                            errorMessageLabel.setText("Requested amount is more than available amount in the account!");
+                    } else errorMessageLabel.setText("Cannot transfer between same account types!");
+                } else errorMessageLabel.setText("Please enter a Deposit Amount");
+            } else errorMessageLabel.setText("Please select an Account to Transfer to");
+        } else errorMessageLabel.setText("Please select an Account to Transfer from");
     }
 
     @javafx.fxml.FXML

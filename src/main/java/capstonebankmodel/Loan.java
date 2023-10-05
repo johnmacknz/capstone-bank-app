@@ -14,7 +14,6 @@ public class Loan {
     private LocalDate loanDate;
     public String loanType;
 
-
     public Loan(double loanAmount, int loanDuration){
         // for new loan account creation
         if (BankFactory.getBank().getLoanDataHashMap().keySet().isEmpty()) {
