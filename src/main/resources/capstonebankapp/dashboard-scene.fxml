@@ -118,7 +118,7 @@
          </children>
       </VBox>
       <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="601.0" layoutY="1.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
-      <Label fx:id="accountNameLabel" alignment="CENTER_RIGHT" layoutX="527.0" layoutY="20.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
+      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="527.0" layoutY="20.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
       <Button fx:id="logOutButton" layoutX="612.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
    </children>
 </AnchorPane>

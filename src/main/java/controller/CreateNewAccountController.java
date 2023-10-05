@@ -45,6 +45,8 @@ public class CreateNewAccountController implements Initializable {
     private String username;
 
     private Customer customer;
+    @FXML
+    private Button logOutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,7 +75,7 @@ public class CreateNewAccountController implements Initializable {
         if (accountTypeChoiceBox.getValue() == null) {
             emptyErrorMessageLabel.setText("Please select an account type!");
         } else if (customer.getAccountTypeHashMap().containsKey(accountType)) {
-            emptyErrorMessageLabel.setText("Account of this type already exist!");
+            emptyErrorMessageLabel.setText("Account of this type already exists!");
         } else {
             bank.addAccount(customer, accountType);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -84,5 +86,16 @@ public class CreateNewAccountController implements Initializable {
             currentStage.close();
             newStage.show();
         }
+    }
+
+    @FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
     }
 }
