@@ -145,6 +145,7 @@ public class LoanController implements Initializable {
                     Parent root = fxmlLoader.load();
                     Stage newStage = new Stage();
                     newStage.setScene(new Scene(root));
+                    newStage.setTitle("Barclava Bank");
                     currentStage.close();
                     newStage.show();
                 }
@@ -177,6 +178,7 @@ public class LoanController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }

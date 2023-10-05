@@ -165,6 +165,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -177,6 +178,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         style(root);
         newStage.show();
@@ -192,6 +194,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -204,6 +207,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -216,6 +220,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -228,6 +233,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -240,6 +246,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -281,6 +288,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
@@ -292,6 +300,7 @@ public class DashboardController {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }

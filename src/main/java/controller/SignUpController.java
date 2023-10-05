@@ -92,6 +92,7 @@ public class SignUpController implements Initializable {
                     Parent root = fxmlLoader.load();
                     Stage newStage = new Stage();
                     newStage.setScene(new Scene(root));
+                    newStage.setTitle("Barclava Bank");
                     currentStage.close();
                     newStage.show();
                 } else createAccountErrorMessage.setText("Password conditions not met!");
@@ -119,6 +120,7 @@ public class SignUpController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }

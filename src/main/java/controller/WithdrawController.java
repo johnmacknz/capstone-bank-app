@@ -81,6 +81,7 @@ public class WithdrawController implements Initializable {
                      Parent root = fxmlLoader.load();
                      Stage newStage = new Stage();
                      newStage.setScene(new Scene(root));
+                    newStage.setTitle("Barclava Bank");
                      currentStage.close();
                      newStage.show();
                 } else errorMessageLabel.setText("Requested amount is more than available amount in the account!");
@@ -95,6 +96,7 @@ public class WithdrawController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
+        newStage.setTitle("Barclava Bank");
         currentStage.close();
         newStage.show();
     }
