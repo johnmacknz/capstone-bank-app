@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BankAppTest.testEnglishInput" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="capstone-bank-app" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="capstonebankapptest.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="capstonebankapptest" />
+    <option name="MAIN_CLASS_NAME" value="capstonebankapptest.BankAppTest" />
+    <option name="METHOD_NAME" value="testEnglishInput" />
+    <option name="TEST_OBJECT" value="method" />
+    <option name="VM_PARAMETERS" value="--add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED" />
+    <option name="TEST_SEARCH_SCOPE">
+      <value defaultName="wholeProject" />
+    </option>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
