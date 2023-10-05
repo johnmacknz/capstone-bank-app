@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankmodel.Account;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
@@ -60,14 +61,18 @@ public class WithdrawController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleWithdrawButton(ActionEvent actionEvent){
+    public void handleWithdrawButton(ActionEvent actionEvent) {
         if (accountComboBox.getValue() != null) {
             if (withdrawAmountTextField.getText() != null) {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
                 double amount = Double.parseDouble(withdrawAmountTextField.getText());
-                bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
-                //TODO withdraw success text
-            }else errorMessageLabel.setText("Please enter a Deposit Amount");
-        }else errorMessageLabel.setText("Please select an Account");
+                Account account = bank.getAccountDataHashMap().get(accountNumber);
+                if (amount < account.getBalance()) {
+                    bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
+                    //TODO withdraw success text
+                    errorMessageLabel.setText("");
+                } else errorMessageLabel.setText("Requested amount is more than available amount in the account!");
+            } else errorMessageLabel.setText("Please enter a Deposit Amount");
+        } else errorMessageLabel.setText("Please select an Account");
     }
 }
