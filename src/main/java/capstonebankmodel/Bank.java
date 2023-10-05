@@ -182,14 +182,11 @@ public class Bank {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
-            fileScanner.useDelimiter("[,\n]");
-            while (fileScanner.hasNext()) {
-                String accountId = fileScanner.next();
-                String username = fileScanner.next();
-                String accountType = fileScanner.next();
-                String balance = fileScanner.next();
-                if (Long.parseLong(accountId) != accountNumber) {
-                    pw.print(accountId + "," + username + "," + accountType + "," + balance);
+            while(fileScanner.hasNext()) {
+                String accountInfo = fileScanner.nextLine();
+                String[] accountInfoArray = accountInfo.split(",");
+                if (Long.parseLong(accountInfoArray[0]) != accountNumber) {
+                    pw.print(accountInfoArray[0] + "," + accountInfoArray[1] + "," + accountInfoArray[2] + "," + accountInfoArray[3]);
                 }
             }
             fileScanner.close();
@@ -212,20 +209,17 @@ public class Bank {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"));
-            if (fileScanner.hasNextLine()) {
+            while(fileScanner.hasNext()) {
+              if (fileScanner.hasNextLine()) {
                 String headerLine = fileScanner.nextLine();
                 //skip the header line
-            }
-            fileScanner.useDelimiter("[,\n]");
-            while (fileScanner.hasNext()) {
-                String accountId = fileScanner.next();
-                String username = fileScanner.next();
-                String accountType = fileScanner.next();
-                String balance = fileScanner.next();
-                if (Long.parseLong(accountId) == accountNumber) {
-                    pw.println(accountId + "," + username + "," + accountType + "," + newBalance);
+               }
+                String accountInfo = fileScanner.nextLine();
+                String[] accountInfoArray = accountInfo.split(",");
+                if (Long.parseLong(accountInfoArray[0]) == accountNumber) {
+                    pw.println(accountInfoArray[0] + "," + accountInfoArray[1] + "," + accountInfoArray[2] + "," + newBalance);
                 } else {
-                    pw.println(accountId + "," + username + "," + accountType + "," + balance);
+                    pw.println(accountInfoArray[0] + "," + accountInfoArray[1] + "," + accountInfoArray[2] + "," + accountInfoArray[3]);
                 }
             }
             fileScanner.close();

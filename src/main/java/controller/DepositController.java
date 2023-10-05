@@ -39,6 +39,12 @@ public class DepositController implements Initializable {
     private String username;
 
     private Customer customer;
+    @javafx.fxml.FXML
+    private Label signedInAsLabel;
+    @javafx.fxml.FXML
+    private Label userNameLabel;
+    @javafx.fxml.FXML
+    private Button logOutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +77,17 @@ public class DepositController implements Initializable {
     public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));

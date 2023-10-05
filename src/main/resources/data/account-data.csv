@@ -1,1 +1,7 @@
-AccountID,UserName,AccountType,Balance1000000000,johnmacknz,Checking Account,0.01000000001,johnmacknz,Savings Account,0.01000000002,johnmacknz,CD Account,0.01000000003,0,Savings Account,10.01000000004,0,Checking Account,0.01000000005,0,CD Account,0.0
+AccountID,UserName,AccountType,Balance
+1000000000,johnmacknz,Checking Account,0.0
+1000000001,johnmacknz,Savings Account,0.0
+1000000002,johnmacknz,CD Account,0.0
+1000000003,0,Savings Account,10.0
+1000000004,0,Checking Account,0.0
+1000000005,0,CD Account,0.0
