@@ -52,7 +52,7 @@ public class TransferController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleTransferButton(ActionEvent actionEvent) {
+    public void handleTransferButton(ActionEvent actionEvent) throws IOException {
         if (accountComboBox1.getValue() != null) {
             if (accountComboBox2.getValue() != null) {
                 if (transferAmountTextField.getText() != null) {

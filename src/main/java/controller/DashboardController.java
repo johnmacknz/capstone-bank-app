@@ -92,9 +92,14 @@ public class DashboardController {
     private String username;
 
     private Customer customer;
+    @javafx.fxml.FXML
+    private Label signedInAsLabel;
+    @javafx.fxml.FXML
+    private Label accountNameLabel;
+    @javafx.fxml.FXML
+    private Button logOutButton;
 
     public void initialize() {
-        //TODO boolean expresion returns true if user has an account
         username = LoginController.getUsername();
         bank = BankFactory.getBank();
         customer = bank.getCustomerDataHashMap().get(username);
@@ -106,9 +111,10 @@ public class DashboardController {
             accountGrid.setVisible(false);
             noAccountCreatedTextFlow.setVisible(true);
         }
-        //TODO boolean expression returns true if user has a loan
-        if (false) {
-
+        if (!customer.getLoanTypeHashMap().isEmpty()) {
+            loanGrid.setVisible(true);
+            noLoansTextFlow.setVisible(false);
+            populateLoanGrid();
         } else {
             loanGrid.setVisible(false);
             noLoansTextFlow.setVisible(true);
@@ -261,5 +267,16 @@ public class DashboardController {
                 loanDuration3Label.setText(String.valueOf(loanDuration));
             }
         }
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
     }
 }

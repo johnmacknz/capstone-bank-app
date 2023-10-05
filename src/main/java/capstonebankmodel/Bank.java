@@ -1,6 +1,7 @@
 package capstonebankmodel;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -90,9 +91,9 @@ public class Bank{
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] loanDetails = line.split(",");
-                Customer customer = customerDataHashMap.get(loanDetails[0]);
-                addLoan(customer, loanDetails[0], Double.parseDouble(loanDetails[2]),
-                        Integer.parseInt(loanDetails[4]));
+                Customer customer = customerDataHashMap.get(loanDetails[1]);
+                addLoan(customer, Long.parseLong(loanDetails[0]), loanDetails[2], Double.parseDouble(loanDetails[3]),
+                        Double.parseDouble(loanDetails[4]), Integer.parseInt(loanDetails[5]), LocalDate.parse(loanDetails[6]));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -101,20 +102,21 @@ public class Bank{
 
     public void addNewLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
         Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
-        loanDataHashMap.put(loan.getLoanAccountId(), loan);
+        loanDataHashMap.put(loan.getLoanId(), loan);
         csvAddLoan(loan, customer.getUserName());
         customer.addLoan(loan);
     }
 
-    public void addLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
-        Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
-        loanDataHashMap.put(loan.getLoanAccountId(), loan);
+    public void addLoan(Customer customer, long loanId, String loanType, double loanAmount,
+                        double outstandingAmount, int loanDuration, LocalDate date) {
+        Loan loan = LoanFactory.generateLoan(loanId, loanType, loanAmount, outstandingAmount, loanDuration, date);
+        loanDataHashMap.put(loan.getLoanId(), loan);
         customer.addLoan(loan);
     }
 
     private void csvAddLoan(Loan loan, String username) {
         String csvFilePath = "src/main/resources/data/loan-data.csv";
-        String[] recordToAdd = {String.valueOf(loan.getLoanAccountId()), username, loan.loanType,
+        String[] recordToAdd = {String.valueOf(loan.getLoanId()), username, loan.loanType,
                 String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
                 String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
 
