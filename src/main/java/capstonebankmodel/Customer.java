@@ -56,6 +56,6 @@ public class Customer {
     }
 
     public void addLoan(Loan loan) {
-        loanTypeHashMap.put(loan.loanType, loan.getLoanAccountId());
+        loanTypeHashMap.put(loan.loanType, loan.getLoanId());
     }
 }
