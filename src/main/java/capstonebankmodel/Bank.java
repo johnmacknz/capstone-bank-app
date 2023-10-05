@@ -2,13 +2,16 @@ package capstonebankmodel;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
-public class Bank{
+public class Bank {
 
     HashMap<String, Customer> customerDataHashMap = new HashMap<>();
     HashMap<Long, Account> accountDataHashMap = new HashMap<>();
@@ -22,6 +25,7 @@ public class Bank{
         account.withdraw(amount);
         csvEditAccountBalance(account.getAccountId(), account.getBalance());
     }
+
 
     public void deposit(Account account, double amount) {
         account.deposit(amount);
@@ -225,6 +229,7 @@ public class Bank{
     public HashMap<Long, Account> getAccountDataHashMap() {
         return accountDataHashMap;
     }
+
     public HashMap<Long, Loan> getLoanDataHashMap() {
         return loanDataHashMap;
     }
