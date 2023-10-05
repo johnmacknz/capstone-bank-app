@@ -89,7 +89,7 @@ public class CreateNewAccountController implements Initializable {
     }
 
     @FXML
-    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+    public void handleLogOutButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
         Parent root = fxmlLoader.load();

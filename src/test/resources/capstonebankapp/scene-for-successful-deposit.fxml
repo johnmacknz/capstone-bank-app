@@ -4,15 +4,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuccessfulDepositController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuccessfulDepositController">
    <children>
-      <Label fx:id="successfulDepositLabel" alignment="CENTER" layoutX="37.0" layoutY="135.0" prefHeight="82.0" prefWidth="525.0" text="Great news! Your deposit has been accepted!">
+      <Label fx:id="successfulDepositLabel" alignment="CENTER" layoutX="77.0" layoutY="134.0" prefHeight="82.0" prefWidth="525.0" text="Great news! Your deposit has been accepted!" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="475.0" prefHeight="28.0" prefWidth="125.0" text="Signed in as:" />
-      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="474.0" layoutY="28.0" prefHeight="28.0" prefWidth="126.0" textFill="#0451c4" />
-      <Button fx:id="backToDashboardButton" layoutX="220.0" layoutY="248.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="41.0" prefWidth="160.0" text="Back to Dashboard" />
+      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="601.0" layoutY="1.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
+      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="527.0" layoutY="20.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
+      <Button fx:id="backToDashboardButton" layoutX="260.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="41.0" prefWidth="160.0" text="Back to Dashboard" />
+      <Button fx:id="logOutButton" layoutX="612.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
    </children>
 </AnchorPane>
