@@ -95,9 +95,9 @@ public class DashboardController {
     @javafx.fxml.FXML
     private Label signedInAsLabel;
     @javafx.fxml.FXML
-    private Label accountNameLabel;
-    @javafx.fxml.FXML
     private Button logOutButton;
+    @javafx.fxml.FXML
+    private Label userNameLabel;
 
     public void initialize() {
         username = LoginController.getUsername();
@@ -272,7 +272,7 @@ public class DashboardController {
     @javafx.fxml.FXML
     public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/login-scene.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));

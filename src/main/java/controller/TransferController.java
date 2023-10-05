@@ -41,6 +41,12 @@ public class TransferController implements Initializable {
     private String username;
 
     private Customer customer;
+    @javafx.fxml.FXML
+    private Button logOutButton;
+    @javafx.fxml.FXML
+    private Label signedInAsLabel;
+    @javafx.fxml.FXML
+    private Label userNameLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,7 +70,13 @@ public class TransferController implements Initializable {
                         if (amount <= account.getBalance()) {
                             bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
                                     bank.getAccountDataHashMap().get(accountNumber2), amount);
-                            //TODO transfer success text
+                            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                            FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-transfer.fxml"));
+                            Parent root = fxmlLoader.load();
+                            Stage newStage = new Stage();
+                            newStage.setScene(new Scene(root));
+                            currentStage.close();
+                            newStage.show();
                             errorMessageLabel.setText("");
                         } else
                             errorMessageLabel.setText("Requested amount is more than available amount in the account!");
@@ -79,6 +91,17 @@ public class TransferController implements Initializable {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
