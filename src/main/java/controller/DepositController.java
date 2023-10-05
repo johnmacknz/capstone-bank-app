@@ -52,6 +52,7 @@ public class DepositController implements Initializable {
         username = LoginController.getUsername();
         customer = bank.getCustomerDataHashMap().get(username);
         accountComboBox.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
+        userNameLabel.setText(username);
     }
 
     @javafx.fxml.FXML
