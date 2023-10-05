@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankapp.BankApp;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
@@ -18,6 +19,8 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+
+import static capstonebankapp.BankApp.style;
 
 public class DashboardController {
     @javafx.fxml.FXML
@@ -174,6 +177,7 @@ public class DashboardController {
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
         currentStage.close();
+        style(root);
         newStage.show();
     }
 
