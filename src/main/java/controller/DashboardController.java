@@ -24,8 +24,6 @@ import static capstonebankapp.BankApp.style;
 
 public class DashboardController {
     @javafx.fxml.FXML
-    private ImageView barclavaImageView;
-    @javafx.fxml.FXML
     private TextFlow noAccountCreatedTextFlow;
     @javafx.fxml.FXML
     private Hyperlink hereHyperLink;
@@ -101,6 +99,8 @@ public class DashboardController {
     private Button logOutButton;
     @javafx.fxml.FXML
     private Label userNameLabel;
+    @javafx.fxml.FXML
+    private Button repayLoanButton;
 
     public void initialize() {
         username = LoginController.getUsername();
@@ -278,6 +278,17 @@ public class DashboardController {
     public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        currentStage.close();
+        newStage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void handleRepayLoanButton(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/repay-loan-scene.fxml"));
         Parent root = fxmlLoader.load();
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
