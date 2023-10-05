@@ -61,7 +61,7 @@ public class WithdrawController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleWithdrawButton(ActionEvent actionEvent) {
+    public void handleWithdrawButton(ActionEvent actionEvent) throws IOException {
         if (accountComboBox.getValue() != null) {
             if (withdrawAmountTextField.getText() != null) {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
@@ -69,8 +69,13 @@ public class WithdrawController implements Initializable {
                 Account account = bank.getAccountDataHashMap().get(accountNumber);
                 if (amount < account.getBalance()) {
                     bank.withdraw(bank.getAccountDataHashMap().get(accountNumber), amount);
-                    //TODO withdraw success text
-                    errorMessageLabel.setText("");
+                     Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                     FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-withdraw.fxml"));
+                     Parent root = fxmlLoader.load();
+                     Stage newStage = new Stage();
+                     newStage.setScene(new Scene(root));
+                     currentStage.close();
+                     newStage.show();
                 } else errorMessageLabel.setText("Requested amount is more than available amount in the account!");
             } else errorMessageLabel.setText("Please enter a Deposit Amount");
         } else errorMessageLabel.setText("Please select an Account");
