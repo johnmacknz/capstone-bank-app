@@ -27,7 +27,7 @@
             </HBox>
             <VBox spacing="10.0">
                <children>
-                  <TitledPane animated="false" text="My Accounts">
+                  <TitledPane animated="false" expanded="false" text="My Accounts">
                     <content>
             
             
@@ -71,7 +71,7 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="Loans">
+                  <TitledPane animated="false" expanded="false" text="Loans">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

@@ -51,7 +51,7 @@ public class TransferController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void handleTransferButton(ActionEvent actionEvent) {
+    public void handleTransferButton(ActionEvent actionEvent) throws IOException {
         if (accountComboBox1.getValue() != null) {
             if (accountComboBox2.getValue() != null) {
                 if (transferAmountTextField.getText() != null) {
@@ -60,7 +60,13 @@ public class TransferController implements Initializable {
                     double amount = Double.parseDouble(transferAmountTextField.getText());
                     bank.transfer(bank.getAccountDataHashMap().get(accountNumber1),
                             bank.getAccountDataHashMap().get(accountNumber2), amount);
-                    //TODO transfer success text
+                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-transfer.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Stage newStage = new Stage();
+                    newStage.setScene(new Scene(root));
+                    currentStage.close();
+                    newStage.show();
                 }else errorMessageLabel.setText("Please enter a Deposit Amount");
             }else errorMessageLabel.setText("Please select an Account to Transfer to");
         }else errorMessageLabel.setText("Please select an Account to Transfer from");
