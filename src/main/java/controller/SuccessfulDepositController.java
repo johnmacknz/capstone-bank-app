@@ -1,5 +1,6 @@
 package controller;
 
+import capstonebankmodel.BankFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -22,6 +23,11 @@ public class SuccessfulDepositController {
     private Button backToDashboardButton;
     @javafx.fxml.FXML
     private Button logOutButton;
+
+    public void initialize() {
+        String username = LoginController.getUsername();
+        userNameLabel.setText(username);
+    }
 
     @javafx.fxml.FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
