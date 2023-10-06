@@ -3,6 +3,9 @@ package controller;
 
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,10 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
@@ -52,6 +58,8 @@ public class SignUpController implements Initializable {
     private TextField firstNameUserTextField;
     @javafx.fxml.FXML
     private Label titleLabel;
+    @javafx.fxml.FXML
+    private Label time;
 
     private Bank bank;
 
@@ -128,10 +136,18 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String text = """
-                Password needs to have at least 
-                1 uppercase letter, 1 lowercase 
-                letter and  a number!""";
+                Password needs to have at least:
+                    - 1 uppercase letter 
+                    - 1 lowercase letter
+                    - 1 number""";
         passwordRequirementsLabel.setText(text);
         bank = BankFactory.getBank();
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
+                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+        ),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 }
