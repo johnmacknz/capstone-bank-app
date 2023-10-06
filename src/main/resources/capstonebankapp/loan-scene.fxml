@@ -18,7 +18,7 @@
          </font></Label>
       <Label fx:id="loanOutputLabel" layoutX="380.0" layoutY="119.0" prefHeight="38.0" prefWidth="185.0" textFill="WHITE" />
       <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="475.0" prefHeight="28.0" prefWidth="125.0" text="Signed in as:" textFill="WHITE" />
-      <Label fx:id="accountNameLabel" alignment="CENTER_RIGHT" layoutX="474.0" layoutY="17.0" prefHeight="28.0" prefWidth="126.0" textFill="#0451c4" />
+      <Label fx:id="accountNameLabel" alignment="CENTER_RIGHT" layoutX="474.0" layoutY="17.0" prefHeight="28.0" prefWidth="126.0" textFill="#2e7ea6" />
       <Label fx:id="loanDurationLabel" layoutX="112.0" layoutY="188.0" prefHeight="31.0" prefWidth="92.0" text="Loan Duration:" textFill="WHITE" />
       <ChoiceBox fx:id="loanDurationChoiceBox" disable="true" layoutX="216.0" layoutY="191.0" prefWidth="150.0" />
       <TextField fx:id="personalLoanDurationTextField" layoutX="216.0" layoutY="195.0" prefHeight="26.0" prefWidth="150.0" visible="false" />
