@@ -86,11 +86,21 @@ public class RepayLoanController {
             double amount = Double.parseDouble(depositAmountTextField.getText());
             if (account.getBalance() >= amount){
                 bank.repayLoan(customer, account, loan, amount);
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/successful-repayment-scene.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage newStage = new Stage();
+                newStage.setScene(new Scene(root));
+                newStage.setTitle("Barclava Bank");
+                currentStage.close();
+                newStage.show();
             } else {
                 errorMessageLabel.setText("Insufficient funds in this account!");
             }
         } catch (NumberFormatException e) {
             errorMessageLabel.setText("Please enter a valid amount of money.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

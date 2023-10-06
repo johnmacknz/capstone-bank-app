@@ -4,6 +4,9 @@ import capstonebankapp.BankApp;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,9 +20,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static capstonebankapp.BankApp.style;
 
@@ -106,6 +112,8 @@ public class DashboardController {
     private TitledPane loansTitlePane;
     @javafx.fxml.FXML
     private Button repayLoanButton;
+    @javafx.fxml.FXML
+    private Label time;
 
     public void initialize() {
         username = LoginController.getUsername();
@@ -128,6 +136,13 @@ public class DashboardController {
             loanGrid.setVisible(false);
             noLoansTextFlow.setVisible(true);
         }
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
+                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+        ),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     private void populateAccountGrid() {
@@ -260,7 +275,7 @@ public class DashboardController {
         for (String loanType : customer.getLoanTypeHashMap().keySet()) {
             long loanAccountId = customer.getLoanTypeHashMap().get(loanType);
             int loanDuration = bank.getLoanDataHashMap().get(loanAccountId).getLoanDuration();
-            double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getLoanAmount();
+            double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getOutstandingAmount();
             if (loanType1Label.getText().equals("Label")) {
                 loanType1Label.setVisible(true);
                 loanAmount1Label.setVisible(true);
