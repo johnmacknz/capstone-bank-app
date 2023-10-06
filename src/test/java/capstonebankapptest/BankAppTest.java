@@ -34,7 +34,6 @@ import static org.testfx.util.NodeQueryUtils.isVisible;
 
 class BankAppTest extends ApplicationTest {
     private Stage primaryStage;
-
     private Bank bank;
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
@@ -694,41 +693,38 @@ class BankAppTest extends ApplicationTest {
         assertTrue(containsLoanDuration, "Loan Amount not found in the grid.");
     }
 
-//    @TestFx
-//    public void testCreateSameLoan() {
-//        clickOn("#loginButton");
-//        clickOn("#userNameTextField");
-//        write("test");
-//        clickOn("#passwordFieldLogin");
-//        write("Password123");
-//        clickOn("#loginButton");
-//        clickOn("#requestLoanButton");
-//        clickOn("#loanTypeChoiceBox");
-//        clickOn("Car Loan");
-//        clickOn("#loanAmountTextField").write("100");
-//        clickOn("#loanDurationChoiceBox");
-//        clickOn("3");
-//        clickOn("#requestLoanButton");
-//        clickOn("#backToDashboardButton");
-//        TitledPane titledPane = lookup("Loans").query();
-//        clickOn(titledPane);
-//        clickOn("#requestLoanButton");
-//        clickOn("#loanTypeChoiceBox");
-//        clickOn("Car Loan");
-//        clickOn("#loanAmountTextField").write("100");
-//        clickOn("#loanDurationChoiceBox");
-//        clickOn("3");
-//        clickOn("#requestLoanButton");
-//        clickOn("#backToDashboardButton");
-//        titledPane = lookup("Loans").query();
-//        clickOn(titledPane);
-//
-//        sleep(1000);
-//
-//        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
-//        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Requested amount is more than available amount in the account!"));
-//
-//    }
+    @TestFx
+    public void testCreateSameLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Car Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("3");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Car Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("3");
+        clickOn("#requestLoanButton");
+
+        sleep(1000);
+
+        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
+        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Loan of this type already exists!"));
+
+    }
 
     @TestFx
     public void testLoanExceedsAmount() {
