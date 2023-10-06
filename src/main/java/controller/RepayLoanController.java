@@ -1,5 +1,7 @@
 package controller;
 
+import capstonebankmodel.*;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,6 +37,21 @@ public class RepayLoanController {
     @javafx.fxml.FXML
     private ComboBox selectLoanComboBox;
 
+    private Bank bank;
+
+    private String username;
+
+    private Customer customer;
+
+    public void initialize() {
+        bank = BankFactory.getBank();
+        username = LoginController.getUsername();
+        customer = bank.getCustomerDataHashMap().get(username);
+        userNameLabel.setText(username);
+        accountComboBox.setItems(FXCollections.observableArrayList(customer.getAccountTypeHashMap().keySet()));
+        selectLoanComboBox.setItems(FXCollections.observableArrayList(customer.getLoanTypeHashMap().keySet()));
+    }
+
     @javafx.fxml.FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -61,5 +78,19 @@ public class RepayLoanController {
 
     @javafx.fxml.FXML
     public void handleRepayButton(ActionEvent actionEvent) {
+        try {
+            long accountId = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
+            Account account = bank.getAccountDataHashMap().get(accountId);
+            long loanId = customer.getLoanTypeHashMap().get(selectLoanComboBox.getValue());
+            Loan loan = bank.getLoanDataHashMap().get(loanId);
+            double amount = Double.parseDouble(depositAmountTextField.getText());
+            if (account.getBalance() >= amount){
+                bank.repayLoan(customer, account, loan, amount);
+            } else {
+                errorMessageLabel.setText("Insufficient funds in this account!");
+            }
+        } catch (NumberFormatException e) {
+            errorMessageLabel.setText("Please enter a valid amount of money.");
+        }
     }
 }

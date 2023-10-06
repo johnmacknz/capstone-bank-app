@@ -263,6 +263,89 @@ public class Bank {
         }
     }
 
+    public void repayLoan(Customer customer, Account account, Loan loan, double amount) {
+        withdraw(account, amount);
+        loan.repayLoan(amount);
+        if (loan.getOutstandingAmount() > 0) {
+            csvEditLoanOutstandingAmount(loan.getLoanId(), loan.getOutstandingAmount());
+        } else if (loan.getOutstandingAmount() == 0) {
+            customer.getLoanTypeHashMap().remove(loan.getLoanId());
+            csvDeleteLoan(loan.getLoanId());
+        } else {
+            deposit(account, -loan.getOutstandingAmount());
+            customer.getLoanTypeHashMap().remove(loan.getLoanId());
+            csvDeleteLoan(loan.getLoanId());
+        }
+
+    }
+
+    private void csvDeleteLoan(long loanId) {
+        String tempFilePath = "src/main/resources/data/temporary-file.csv";
+        File accountData = new File("src/main/resources/data/loan-data.csv");
+        File tempFile = new File(tempFilePath);
+        try {
+            FileWriter fw = new FileWriter(tempFilePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"));
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                pw.println(headerLine);
+            }
+            while(fileScanner.hasNext()) {
+                String loanInfo = fileScanner.nextLine();
+                String[] loanInfoArray = loanInfo.split(",");
+                if (Long.parseLong(loanInfoArray[0]) != loanId) {
+                    pw.println(loanInfoArray[0] + "," + loanInfoArray[1] + "," + loanInfoArray[2] + "," + loanInfoArray[3]
+                            + "," + loanInfoArray[4] + "," + loanInfoArray[5] + "," + loanInfoArray[6]);
+                }
+            }
+            fileScanner.close();
+            pw.flush();
+            pw.close();
+            accountData.delete();
+            File dump = new File("src/main/resources/data/loan-data.csv");
+            tempFile.renameTo(dump);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void csvEditLoanOutstandingAmount(long loanId, double newOutstandingAmount) {
+        String tempFilePath = "src/main/resources/data/temporary-file.csv";
+        File accountData = new File("src/main/resources/data/loan-data.csv");
+        File tempFile = new File(tempFilePath);
+        try {
+            FileWriter fw = new FileWriter(tempFilePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"));
+            if (fileScanner.hasNextLine()) {
+                String headerLine = fileScanner.nextLine();
+                pw.println(headerLine);
+            }
+            while(fileScanner.hasNext()) {
+                String loanInfo = fileScanner.nextLine();
+                String[] loanInfoArray = loanInfo.split(",");
+                if (Long.parseLong(loanInfoArray[0]) == loanId) {
+                    pw.println(loanInfoArray[0] + "," + loanInfoArray[1] + "," + loanInfoArray[2] + "," + loanInfoArray[3]
+                            + "," + newOutstandingAmount + "," + loanInfoArray[5] + "," + loanInfoArray[6]);
+                } else {
+                    pw.println(loanInfoArray[0] + "," + loanInfoArray[1] + "," + loanInfoArray[2] + "," + loanInfoArray[3]
+                            + "," + loanInfoArray[4] + "," + loanInfoArray[5] + "," + loanInfoArray[6]);
+                }
+            }
+            fileScanner.close();
+            pw.flush();
+            pw.close();
+            accountData.delete();
+            File dump = new File("src/main/resources/data/loan-data.csv");
+            tempFile.renameTo(dump);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public HashMap<String, Customer> getCustomerDataHashMap() {
         return customerDataHashMap;
     }
