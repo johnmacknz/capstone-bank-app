@@ -1,3 +1,7 @@
 UserName,FirstName,LastName,Password
 richGuy,rich,guy,0
 poorGuy,poor,guy,0
+test,test,test,Password123
+0,0,0,Password123
+solast,Sol,Ast,Password123
+sol,a,s,Password123

@@ -1,22 +1,18 @@
 package capstonebankapptest;
 
-
-import capstonebankmodel.Bank;
-import capstonebankmodel.Customer;
-import controller.SignUpController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mockito;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.framework.junit5.TestFx;
@@ -26,15 +22,10 @@ import org.testfx.matcher.control.TextMatchers;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeoutException;
 
-import static org.assertj.core.api.AssertionsForClassTypes.not;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.util.NodeQueryUtils.isVisible;
 
@@ -73,11 +64,37 @@ class BankAppTest extends ApplicationTest {
             e.printStackTrace();
         }
     }
+    private void deleteAccountFromCSV(String username) {
+        String csvFile = "src/main/resources/data/account-data.csv";
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.contains(username)) {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))) {
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @BeforeEach
     public void setUp () {
         String usernameToDelete = "newUser";
+        String accountToDelete = "test";
         deleteUserFromCSV(usernameToDelete);
+        deleteAccountFromCSV(accountToDelete);
     }
 
     @AfterEach
@@ -85,6 +102,10 @@ class BankAppTest extends ApplicationTest {
         FxToolkit.hideStage();
         release(new KeyCode[]{});
         release(new MouseButton[]{});
+        String usernameToDelete = "newUser";
+        String accountToDelete = "test";
+        deleteUserFromCSV(usernameToDelete);
+        deleteAccountFromCSV(accountToDelete);
     }
 
     @TestFx
@@ -141,11 +162,11 @@ class BankAppTest extends ApplicationTest {
     public void testExistingUser() {
         clickOn("#signUpButton");
         clickOn("#firstNameUserTextField");
-        write("0");
+        write("test");
         clickOn("#lastNameUserTextField");
-        write("0");
+        write("test");
         clickOn("#newUserNameTextFiend");
-        write("0");
+        write("test");
         clickOn("#enterPasswordTextField");
         write("Password123");
         clickOn("#reEnterPasswordTextField");
@@ -204,9 +225,9 @@ class BankAppTest extends ApplicationTest {
     public void testSuccessfulLogin () {
         clickOn("#loginButton");
         clickOn("#userNameTextField");
-        write("0");
+        write("test");
         clickOn("#passwordFieldLogin");
-        write("0");
+        write("Password123");
         clickOn("#loginButton");
 
         sleep(1000);
@@ -235,5 +256,100 @@ class BankAppTest extends ApplicationTest {
         verifyThat("#accountCreation", TextMatchers.hasText("Account Successfully Created"));
     }
 
+    @TestFx
+    public void testCreateSavingsAccount () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+    }
+
+    @TestFx
+    public void testCreateCheckingAccount () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Checking Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Checking Account"));
+
+        assertTrue(containsSavingsAccount, "Checking Account not found in the grid.");
+    }
+
+    @TestFx
+    public void testCreateCDAccount () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("CD Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("CD Account"));
+
+        assertTrue(containsSavingsAccount, "Checking Account not found in the grid.");
+    }
+
+    @TestFx
+    public void testCreatingSameAccountType () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+
+        verifyThat("#emptyErrorMessageLabel", NodeMatchers.isVisible());
+        verifyThat("#emptyErrorMessageLabel", LabeledMatchers.hasText("Account of this type already exists!"));
+    }
 
  }
