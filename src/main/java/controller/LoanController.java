@@ -139,15 +139,23 @@ public class LoanController implements Initializable {
                 } else if (doesLoanExceedThreshold(loanAmount)) {
                     errorMessageLabel.setText("This loan exceeds bank's loan threshold!");
                 } else {
-                    bank.addNewLoan(customer, loanTypeChoiceBox.getValue(), loanAmount, loanDurationChoiceBox.getValue());
-                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-loan.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Stage newStage = new Stage();
-                    newStage.setScene(new Scene(root));
-                    newStage.setTitle("Barclava Bank");
-                    currentStage.close();
-                    newStage.show();
+                    try {
+                        if (loanTypeChoiceBox.getValue().equals("Personal Loan")) {
+                            bank.addNewLoan(customer, loanTypeChoiceBox.getValue(), loanAmount, Integer.parseInt(personalLoanDurationTextField.getText()));
+                        } else {
+                            bank.addNewLoan(customer, loanTypeChoiceBox.getValue(), loanAmount, loanDurationChoiceBox.getValue());
+                        }
+                        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-loan.fxml"));
+                        Parent root = fxmlLoader.load();
+                        Stage newStage = new Stage();
+                        newStage.setScene(new Scene(root));
+                        newStage.setTitle("Barclava Bank");
+                        currentStage.close();
+                        newStage.show();
+                    } catch (NumberFormatException e) {
+                        errorMessageLabel.setText("Invalid loan duration. Please enter a valid duration in years.");
+                    }
                 }
             } catch (NumberFormatException e) {
                 errorMessageLabel.setText("Invalid loan amount. Please enter a valid number.");
