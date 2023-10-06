@@ -11,6 +11,6 @@ public class CarLoan extends Loan{
     public CarLoan(long loanId, double loanAmount,
                         double outstandingAmount, int loanDuration, LocalDate date) {
         super(loanId, loanAmount, outstandingAmount, loanDuration, date);
-        this.loanType = "Personal Loan";
+        this.loanType = "Car Loan";
     }
 }
