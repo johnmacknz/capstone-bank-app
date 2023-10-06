@@ -24,6 +24,11 @@ public class SuccessfulAccountController {
     @javafx.fxml.FXML
     private Button logOutButton;
 
+    public void initialize() {
+        String username = LoginController.getUsername();
+        userNameLabel.setText(username);
+    }
+
     @javafx.fxml.FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
