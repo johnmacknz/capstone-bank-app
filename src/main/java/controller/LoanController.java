@@ -138,6 +138,8 @@ public class LoanController implements Initializable {
                     errorMessageLabel.setText("Loan amount exceeds the maximum allowed amount for " + selectedOption);
                 } else if (doesLoanExceedThreshold(loanAmount)) {
                     errorMessageLabel.setText("This loan exceeds bank's loan threshold!");
+                } else if (customer.getLoanTypeHashMap().containsKey(loanTypeChoiceBox.getValue())) {
+                    errorMessageLabel.setText("Loan of this type already exists!");
                 } else {
                     try {
                         if (loanTypeChoiceBox.getValue().equals("Personal Loan")) {
