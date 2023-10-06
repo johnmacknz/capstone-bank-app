@@ -39,8 +39,8 @@ public class Loan {
         //bank.getLoanDataHashMap().keySet();
     }
 
-    public void repayLoan(){
-
+    public void repayLoan(double amount){
+        outstandingAmount -= amount;
     }
 
     public long getLoanId() {

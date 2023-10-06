@@ -2,4 +2,4 @@ AccountID,UserName,AccountType,Balance
 1000000000,richGuy,Savings Account,500000.0
 1000000001,poorGuy,Checking Account,0.0
 1000000002,poorGuy,Savings Account,100000.0
-1000000003,vader,Savings Account,1000000.0
+1000000003,poorGuy,CD Account,0.0
