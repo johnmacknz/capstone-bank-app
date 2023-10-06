@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<AnchorPane prefHeight="543.0" prefWidth="674.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
       <Group layoutX="32.0" layoutY="47.0" />
       <VBox layoutX="38.900001525878906" layoutY="19.899999618530273" spacing="10.0">
@@ -17,6 +17,7 @@
                   <Button fx:id="depositButton" mnemonicParsing="false" onAction="#handleDepositButton" text="Deposit" />
                   <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#handleWithdrawButton" text="Withdraw" />
                   <Button fx:id="transferButton" mnemonicParsing="false" onAction="#handleTransferButton" text="Transfer" />
+                  <Button fx:id="repayLoanButton" mnemonicParsing="false" onAction="#handleRepayLoanButton" text="Repay Loan" />
                </children>
             </HBox>
             <VBox spacing="10.0">
@@ -111,8 +112,8 @@
             </VBox>
          </children>
       </VBox>
-      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="601.0" layoutY="1.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
-      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="527.0" layoutY="20.0" prefHeight="26.0" prefWidth="152.0" textFill="#2e7ea6" />
-      <Button fx:id="logOutButton" layoutX="612.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
+      <Label fx:id="signedInAsLabel" alignment="CENTER_RIGHT" layoutX="591.0" layoutY="6.0" prefHeight="26.0" prefWidth="78.0" text="Signed in as:" textFill="WHITE" />
+      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="581.0" layoutY="28.0" prefHeight="26.0" prefWidth="88.0" textFill="#2e7ea6" />
+      <Button fx:id="logOutButton" layoutX="606.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleLogOutButton" prefHeight="26.0" prefWidth="67.0" text="Log out" />
    </children>
 </AnchorPane>

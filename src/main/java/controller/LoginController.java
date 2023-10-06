@@ -3,6 +3,7 @@ package controller;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +21,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class LoginController {
@@ -38,11 +42,9 @@ public class LoginController {
     private Button backButton;
     @FXML
     private PasswordField passwordFieldLogin;
-
     private Bank bank;
     @FXML
     private Text errorMessage;
-
     @FXML
     private Text accountCreation;
 
@@ -51,9 +53,9 @@ public class LoginController {
     }
 
     private static String username;
-
     private static boolean accountCreatedShown = false;
-
+    @FXML
+    private Label time;
 
     public void initialize() {
         if (SignUpController.ApplicationContext.isAccountCreated() && !accountCreatedShown) {
@@ -63,12 +65,12 @@ public class LoginController {
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
 
-            fadeOut.setOnFinished(event -> {
+            fadeOut.setOnFinished(event->{
                 accountCreation.setVisible(false);
             });
 
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(3), event -> {
+                    new KeyFrame(Duration.seconds(3), event->{
                         fadeOut.play();
                     })
             );
@@ -76,13 +78,20 @@ public class LoginController {
             timeline.play();
         }
         bank = BankFactory.getBank();
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
+                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+        ),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     @javafx.fxml.FXML
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
         SignUpController.ApplicationContext.setAccountCreated(false);
         username = userNameTextField.getText();
-        if(bank.getCustomerDataHashMap().containsKey(username)) {
+        if (bank.getCustomerDataHashMap().containsKey(username)) {
             Customer customer = bank.getCustomerDataHashMap().get(username);
             if (passwordFieldLogin.getText().equals(customer.getPassword())) {
                 Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

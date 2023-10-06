@@ -66,10 +66,6 @@ public class AppStartController implements Initializable {
         newStage.show();
     }
 
-    private int minute;
-    private int hour;
-    private int second;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
