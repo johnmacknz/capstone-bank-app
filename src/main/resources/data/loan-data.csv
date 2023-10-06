@@ -2,3 +2,4 @@ LoanID,UserName,LoanType,LoanAmount,OutstandingAmount,LoanDuration,StartDate
 1000000001,poorGuy,Personal Loan,2.0,2.0,2,2023-10-06
 1000000002,poorGuy,Home Loan,2.0,2.0,15,2023-10-06
 1000000005,test,Car Loan,100.0,100.0,3,2023-10-06
+

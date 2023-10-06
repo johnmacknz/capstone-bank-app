@@ -269,11 +269,13 @@ public class Bank {
         if (loan.getOutstandingAmount() > 0) {
             csvEditLoanOutstandingAmount(loan.getLoanId(), loan.getOutstandingAmount());
         } else if (loan.getOutstandingAmount() == 0) {
-            customer.getLoanTypeHashMap().remove(loan.getLoanId());
+            customer.getLoanTypeHashMap().remove(loan.loanType);
+            loanDataHashMap.remove(loan.getLoanId());
             csvDeleteLoan(loan.getLoanId());
         } else {
             deposit(account, -loan.getOutstandingAmount());
-            customer.getLoanTypeHashMap().remove(loan.getLoanId());
+            customer.getLoanTypeHashMap().remove(loan.loanType);
+            loanDataHashMap.remove(loan.getLoanId());
             csvDeleteLoan(loan.getLoanId());
         }
 
