@@ -1,5 +1,8 @@
 package capstonebankapptest;
 
+import capstonebankmodel.Bank;
+import capstonebankmodel.BankFactory;
+import capstonebankmodel.Customer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +34,8 @@ import static org.testfx.util.NodeQueryUtils.isVisible;
 
 class BankAppTest extends ApplicationTest {
     private Stage primaryStage;
+
+    private Bank bank;
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -91,8 +96,12 @@ class BankAppTest extends ApplicationTest {
 
     @BeforeEach
     public void setUp () {
+        bank = BankFactory.getBank();
         String usernameToDelete = "newUser";
         String accountToDelete = "test";
+        bank.getCustomerDataHashMap().remove(usernameToDelete);
+        Customer customer = bank.getCustomerDataHashMap().get(accountToDelete);
+        customer.getAccountTypeHashMap().clear();
         deleteUserFromCSV(usernameToDelete);
         deleteAccountFromCSV(accountToDelete);
     }
@@ -102,8 +111,12 @@ class BankAppTest extends ApplicationTest {
         FxToolkit.hideStage();
         release(new KeyCode[]{});
         release(new MouseButton[]{});
+        bank = BankFactory.getBank();
         String usernameToDelete = "newUser";
         String accountToDelete = "test";
+        bank.getCustomerDataHashMap().remove(usernameToDelete);
+        Customer customer = bank.getCustomerDataHashMap().get(accountToDelete);
+        customer.getAccountTypeHashMap().clear();
         deleteUserFromCSV(usernameToDelete);
         deleteAccountFromCSV(accountToDelete);
     }
@@ -352,4 +365,149 @@ class BankAppTest extends ApplicationTest {
         verifyThat("#emptyErrorMessageLabel", LabeledMatchers.hasText("Account of this type already exists!"));
     }
 
+    @TestFx
+    public void testDepositToAccount () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("100.0"));
+
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
+    }
+
+    @TestFx
+    public void testWithdrawFromAccount () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#withdrawButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#withdrawAmountTextField").write("50");
+        clickOn("#withdrawButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("50.0"));
+
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
+    }
+
+    @TestFx
+    public void testTransferBetweenAccounts () {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Checking Account");
+        clickOn("#createNewAccountButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#transferButton");
+        clickOn("#accountComboBox1");
+        clickOn("Savings Account");
+        clickOn("#accountComboBox2");
+        clickOn("Checking Account");
+        clickOn("#transferAmountTextField").write("50");
+        clickOn("#transferButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsSavingsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("50.0"));
+        boolean containsCheckingAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Checking Account"));
+        boolean containsCheckingAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("50.0"));
+
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsSavingsAccountAmount, "Account Amount not found in the grid.");
+        assertTrue(containsCheckingAccount, "Checking Account not found in the grid.");
+        assertTrue(containsCheckingAccountAmount, "Account Amount not found in the grid.");
+    }
  }
