@@ -34,5 +34,6 @@
          </Text>
       </children>
    </Group>
-   <Label layoutX="26.0" layoutY="297.0" text="©500MilesOfCode" textFill="#3abf20" />
+   <Label layoutX="29.0" layoutY="307.0" text="©500MilesOfCode" textFill="#3abf20" />
+   <Label fx:id="time" layoutX="381.0" layoutY="303.0" prefHeight="25.0" prefWidth="128.0" textFill="#fceeee" />
 </AnchorPane>

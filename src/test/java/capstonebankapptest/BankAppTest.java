@@ -281,6 +281,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
 
@@ -306,6 +307,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Checking Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
 
@@ -331,6 +333,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("CD Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
 
@@ -356,6 +359,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         clickOn("#createAccountButton");
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
@@ -377,6 +381,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
         clickOn("#depositButton");
@@ -415,6 +420,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
         clickOn("#depositButton");
@@ -461,6 +467,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Savings Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         TitledPane titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
         clickOn("#depositButton");
@@ -475,6 +482,7 @@ class BankAppTest extends ApplicationTest {
         clickOn("#accountTypeChoiceBox");
         clickOn("Checking Account");
         clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
         titledPane = lookup("My Accounts").query();
         clickOn(titledPane);
         clickOn("#transferButton");
@@ -509,5 +517,41 @@ class BankAppTest extends ApplicationTest {
         assertTrue(containsSavingsAccountAmount, "Account Amount not found in the grid.");
         assertTrue(containsCheckingAccount, "Checking Account not found in the grid.");
         assertTrue(containsCheckingAccountAmount, "Account Amount not found in the grid.");
+    }
+
+    @TestFx
+    public void testOverdraft() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#withdrawButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#withdrawAmountTextField").write("200");
+        clickOn("#withdrawButton");
+
+        sleep(1000);
+
+        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
+        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Requested amount is more than available amount in the account!"));
+
     }
  }
