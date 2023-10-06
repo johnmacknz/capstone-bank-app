@@ -80,7 +80,7 @@ public class CreateNewAccountController implements Initializable {
         } else {
             bank.addAccount(customer, accountType);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-account.fxml"));
             Parent root = fxmlLoader.load();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(root));
