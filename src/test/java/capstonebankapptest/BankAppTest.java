@@ -69,6 +69,30 @@ class BankAppTest extends ApplicationTest {
             e.printStackTrace();
         }
     }
+    private void deleteLoanFromCSV(String username) {
+        String csvFile = "src/main/resources/data/loan-data.csv";
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.contains(username)) {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))) {
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void deleteAccountFromCSV(String username) {
         String csvFile = "src/main/resources/data/account-data.csv";
         List<String> lines = new ArrayList<>();
@@ -102,8 +126,10 @@ class BankAppTest extends ApplicationTest {
         bank.getCustomerDataHashMap().remove(usernameToDelete);
         Customer customer = bank.getCustomerDataHashMap().get(accountToDelete);
         customer.getAccountTypeHashMap().clear();
+        customer.getLoanTypeHashMap().clear();
         deleteUserFromCSV(usernameToDelete);
         deleteAccountFromCSV(accountToDelete);
+        deleteLoanFromCSV(accountToDelete);
     }
 
     @AfterEach
@@ -553,5 +579,239 @@ class BankAppTest extends ApplicationTest {
         verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
         verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Requested amount is more than available amount in the account!"));
 
+    }
+
+    @TestFx
+    public void testCreatePersonalLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Personal Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#personalLoanDurationTextField").write("10");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#loanGrid").query();
+        boolean containsPersonalLoan = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Personal Loan"));
+        boolean containsLoanAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("100.0"));
+        boolean containsLoanDuration = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("10"));
+
+
+        assertTrue(containsPersonalLoan, "Personal Loan not found in the grid.");
+        assertTrue(containsLoanAmount, "Loan Amount not found in the grid.");
+        assertTrue(containsLoanDuration, "Loan Amount not found in the grid.");
+    }
+
+    @TestFx
+    public void testCreateHomeLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#loanGrid").query();
+        boolean containsHomeLoan = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Home Loan"));
+        boolean containsLoanAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("100.0"));
+        boolean containsLoanDuration = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("15"));
+
+
+        assertTrue(containsHomeLoan, "Personal Loan not found in the grid.");
+        assertTrue(containsLoanAmount, "Loan Amount not found in the grid.");
+        assertTrue(containsLoanDuration, "Loan Amount not found in the grid.");
+    }
+
+    @TestFx
+    public void testCreateCarLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Car Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("3");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#loanGrid").query();
+        boolean containsCarLoan = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Car Loan"));
+        boolean containsLoanAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("100.0"));
+        boolean containsLoanDuration = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("3"));
+
+
+        assertTrue(containsCarLoan, "Personal Loan not found in the grid.");
+        assertTrue(containsLoanAmount, "Loan Amount not found in the grid.");
+        assertTrue(containsLoanDuration, "Loan Amount not found in the grid.");
+    }
+
+//    @TestFx
+//    public void testCreateSameLoan() {
+//        clickOn("#loginButton");
+//        clickOn("#userNameTextField");
+//        write("test");
+//        clickOn("#passwordFieldLogin");
+//        write("Password123");
+//        clickOn("#loginButton");
+//        clickOn("#requestLoanButton");
+//        clickOn("#loanTypeChoiceBox");
+//        clickOn("Car Loan");
+//        clickOn("#loanAmountTextField").write("100");
+//        clickOn("#loanDurationChoiceBox");
+//        clickOn("3");
+//        clickOn("#requestLoanButton");
+//        clickOn("#backToDashboardButton");
+//        TitledPane titledPane = lookup("Loans").query();
+//        clickOn(titledPane);
+//        clickOn("#requestLoanButton");
+//        clickOn("#loanTypeChoiceBox");
+//        clickOn("Car Loan");
+//        clickOn("#loanAmountTextField").write("100");
+//        clickOn("#loanDurationChoiceBox");
+//        clickOn("3");
+//        clickOn("#requestLoanButton");
+//        clickOn("#backToDashboardButton");
+//        titledPane = lookup("Loans").query();
+//        clickOn(titledPane);
+//
+//        sleep(1000);
+//
+//        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
+//        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Requested amount is more than available amount in the account!"));
+//
+//    }
+
+    @TestFx
+    public void testLoanExceedsAmount() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("2000001");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+
+        sleep(1000);
+
+        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
+        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Loan amount exceeds the maximum allowed amount for Home Loan"));
+    }
+
+    @TestFx
+    public void testRepayLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+        clickOn("#repayLoanButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#selectLoanComboBox");
+        clickOn("Home Loan");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#repayLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("0.0"));
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
+
+        verifyThat("#loanGrid", NodeMatchers.isInvisible());
+        verifyThat("#noLoansTextFlow", NodeMatchers.isVisible());
     }
  }

@@ -32,6 +32,7 @@ public class LoanController implements Initializable {
     private TextField loanAmountTextField;
     @javafx.fxml.FXML
     private Button requestLoanButton;
+
     @javafx.fxml.FXML
     private Button viewPreviousLoansButton;
     @javafx.fxml.FXML
