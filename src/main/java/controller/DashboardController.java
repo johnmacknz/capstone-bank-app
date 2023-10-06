@@ -260,7 +260,7 @@ public class DashboardController {
         for (String loanType : customer.getLoanTypeHashMap().keySet()) {
             long loanAccountId = customer.getLoanTypeHashMap().get(loanType);
             int loanDuration = bank.getLoanDataHashMap().get(loanAccountId).getLoanDuration();
-            double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getLoanAmount();
+            double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getOutstandingAmount();
             if (loanType1Label.getText().equals("Label")) {
                 loanType1Label.setVisible(true);
                 loanAmount1Label.setVisible(true);
