@@ -3,7 +3,9 @@ package capstonebankmodel;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Account {
+import static capstonebankmodel.CsvManager.pw;
+
+public class Account implements CsvWritable, CsvAddable{
 
     public String ACCOUNT_TYPE = "default";
 
@@ -44,5 +46,26 @@ public class Account {
     public void transferTo(double amount, Account recipient) {
         this.balance -= amount;
         recipient.balance += amount;
+    }
+
+    @Override
+    public void editCsvRow(double newAmount, String[] infoArray) {
+        if (Long.parseLong(infoArray[0]) == accountId) {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + newAmount);
+        } else {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + infoArray[3]);
+        }
+    }
+
+    @Override
+    public void deleteCsvRow(String[] infoArray) {
+        if (Long.parseLong(infoArray[0]) != accountId) {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + infoArray[3]);
+        }
+    }
+
+    @Override
+    public String[] getRecordToAdd(String username) {
+        return new String[]{String.valueOf(accountId), username, ACCOUNT_TYPE, String.valueOf(balance)};
     }
 }
