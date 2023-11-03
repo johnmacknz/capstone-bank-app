@@ -1,122 +1,106 @@
 package controller;
 
-import capstonebankapp.BankApp;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static capstonebankapp.BankApp.style;
 
 public class DashboardController {
-    @javafx.fxml.FXML
+    @FXML
     private TextFlow noAccountCreatedTextFlow;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink hereHyperLink;
-    @javafx.fxml.FXML
+    @FXML
     private Button createAccountButton;
-    @javafx.fxml.FXML
+    @FXML
     private TextFlow noLoansTextFlow;
-    @javafx.fxml.FXML
+    @FXML
     private Hyperlink hereHyperLink2;
-    @javafx.fxml.FXML
+    @FXML
     private Button requestLoanButton;
-    @javafx.fxml.FXML
+    @FXML
     private Button depositButton;
-    @javafx.fxml.FXML
+    @FXML
     private Button withdrawButton;
-    @javafx.fxml.FXML
+    @FXML
     private Button transferButton;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountType1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountNumber1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label balance1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountType2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountNumber2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label balance2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountType3Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label accountNumber3Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label balance3Label;
-    @javafx.fxml.FXML
+    @FXML
     private GridPane accountGrid;
-    @javafx.fxml.FXML
+    @FXML
     private GridPane loanGrid;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanTypeTitleLabel;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanAmountTitleLabel;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanDurationTitleLabel;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanType1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanAmount1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanDuration1Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanType2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanAmount2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanDuration2Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanType3Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanAmount3Label;
-    @javafx.fxml.FXML
+    @FXML
     private Label loanDuration3Label;
+    @FXML
+    private Label signedInAsLabel;
+    @FXML
+    private Button logOutButton;
+    @FXML
+    private Label userNameLabel;
+    @FXML
+    private TitledPane myAccountsTitlePane;
+    @FXML
+    private TitledPane loansTitlePane;
+    @FXML
+    private Label time;
+    @FXML
+    private Button repayLoanButton;
 
     private Bank bank;
 
-    private String username;
-
     private Customer customer;
-    @javafx.fxml.FXML
-    private Label signedInAsLabel;
-    @javafx.fxml.FXML
-    private Button logOutButton;
-    @javafx.fxml.FXML
-    private Label userNameLabel;
-    @javafx.fxml.FXML
-    private TitledPane myAccountsTitlePane;
-    @javafx.fxml.FXML
-    private TitledPane loansTitlePane;
-    @javafx.fxml.FXML
-    private Button repayLoanButton;
-    @javafx.fxml.FXML
-    private Label time;
 
     public void initialize() {
-        username = LoginController.getUsername();
+        String username = LoginController.getUsername();
         bank = BankFactory.getBank();
         customer = bank.getCustomerDataHashMap().get(username);
         userNameLabel.setText(username);
@@ -136,13 +120,7 @@ public class DashboardController {
             loanGrid.setVisible(false);
             noLoansTextFlow.setVisible(true);
         }
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
-                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-        ),
-                new KeyFrame(Duration.seconds(1))
-        );
-        clock.setCycleCount(Animation.INDEFINITE);
-        clock.play();
+        ControllerLogic.addClock(time);
     }
 
     private void populateAccountGrid() {
@@ -150,125 +128,51 @@ public class DashboardController {
             long accountNumber = customer.getAccountTypeHashMap().get(accountType);
             double balance = bank.getAccountDataHashMap().get(accountNumber).getBalance();
             if (accountType1Label.getText().equals("Label")) {
-                accountType1Label.setVisible(true);
-                accountNumber1Label.setVisible(true);
-                balance1Label.setVisible(true);
-                accountType1Label.setText(accountType);
-                accountNumber1Label.setText(String.valueOf(accountNumber));
-                balance1Label.setText(String.valueOf(balance));
+                ControllerLogic.populateGridRow(accountType1Label, accountNumber1Label, balance1Label, accountType, String.valueOf(accountNumber), String.valueOf(balance));
             } else if (accountType2Label.getText().equals("Label")) {
-                accountType2Label.setVisible(true);
-                accountNumber2Label.setVisible(true);
-                balance2Label.setVisible(true);
-                accountType2Label.setText(accountType);
-                accountNumber2Label.setText(String.valueOf(accountNumber));
-                balance2Label.setText(String.valueOf(balance));
+                ControllerLogic.populateGridRow(accountType2Label, accountNumber2Label, balance2Label, accountType, String.valueOf(accountNumber), String.valueOf(balance));
             } else if (accountType3Label.getText().equals("Label")) {
-                accountType3Label.setVisible(true);
-                accountNumber3Label.setVisible(true);
-                balance3Label.setVisible(true);
-                accountType3Label.setText(accountType);
-                accountNumber3Label.setText(String.valueOf(accountNumber));
-                balance3Label.setText(String.valueOf(balance));
+                ControllerLogic.populateGridRow(accountType3Label, accountNumber3Label, balance3Label, accountType, String.valueOf(accountNumber), String.valueOf(balance));
             }
         }
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleHereHyperLink(@NotNull ActionEvent actionEvent) throws IOException {
         accountGrid.setVisible(true);
         noAccountCreatedTextFlow.setVisible(false);
-
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/create-new-account-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent,"/capstonebankapp/create-new-account-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleCreateAccountButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/create-new-account-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        style(root);
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent,"/capstonebankapp/create-new-account-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleHereHyperLink2(@NotNull ActionEvent actionEvent) throws IOException {
         noLoansTextFlow.setVisible(false);
-
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/loan-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent,"/capstonebankapp/loan-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleRequestLoanButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/loan-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent,"/capstonebankapp/loan-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleDepositButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/deposit-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent,"/capstonebankapp/deposit-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleWithdrawButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/withdraw-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/withdraw-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleTransferButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/transfer-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/transfer-scene.fxml");
     }
 
     private void populateLoanGrid() {
@@ -277,51 +181,22 @@ public class DashboardController {
             int loanDuration = bank.getLoanDataHashMap().get(loanAccountId).getLoanDuration();
             double loanAmount = bank.getLoanDataHashMap().get(loanAccountId).getOutstandingAmount();
             if (loanType1Label.getText().equals("Label")) {
-                loanType1Label.setVisible(true);
-                loanAmount1Label.setVisible(true);
-                loanDuration1Label.setVisible(true);
-                loanType1Label.setText(loanType);
-                loanAmount1Label.setText(String.valueOf(loanAmount));
-                loanDuration1Label.setText(String.valueOf(loanDuration));
+                ControllerLogic.populateGridRow(loanType1Label, loanAmount1Label, loanDuration1Label, loanType, String.valueOf(loanAmount), String.valueOf(loanDuration));
             } else if (loanType2Label.getText().equals("Label")) {
-                loanType2Label.setVisible(true);
-                loanAmount2Label.setVisible(true);
-                loanDuration2Label.setVisible(true);
-                loanType2Label.setText(loanType);
-                loanAmount2Label.setText(String.valueOf(loanAmount));
-                loanDuration2Label.setText(String.valueOf(loanDuration));
+                ControllerLogic.populateGridRow(loanType2Label, loanAmount2Label, loanDuration2Label, loanType, String.valueOf(loanAmount), String.valueOf(loanDuration));
             } else if (loanType3Label.getText().equals("Label")) {
-                loanType3Label.setVisible(true);
-                loanAmount3Label.setVisible(true);
-                loanDuration3Label.setVisible(true);
-                loanType3Label.setText(loanType);
-                loanAmount3Label.setText(String.valueOf(loanAmount));
-                loanDuration3Label.setText(String.valueOf(loanDuration));
+                ControllerLogic.populateGridRow(loanType3Label, loanAmount3Label, loanDuration3Label, loanType, String.valueOf(loanAmount), String.valueOf(loanDuration));
             }
         }
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleLogOutButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/app-start-scene.fxml");
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void handleRepayLoanButton(ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/repay-loan-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene( actionEvent,"/capstonebankapp/repay-loan-scene.fxml");
     }
 }

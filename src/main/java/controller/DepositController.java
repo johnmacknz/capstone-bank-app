@@ -5,6 +5,7 @@ import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -62,15 +63,7 @@ public class DepositController implements Initializable {
                 long accountNumber = customer.getAccountTypeHashMap().get(accountComboBox.getValue());
                 double amount = Double.parseDouble(depositAmountTextField.getText());
                 bank.deposit(bank.getAccountDataHashMap().get(accountNumber), amount);
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/scene-for-successful-deposit.fxml"));
-                Parent root = fxmlLoader.load();
-                Stage newStage = new Stage();
-                newStage.setScene(new Scene(root));
-                newStage.setTitle("Barclava Bank");
-                currentStage.close();
-                newStage.show();
+                ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/scene-for-successful-deposit.fxml");
             }else errorMessageLabel.setText("Please enter a Deposit Amount");
         }else errorMessageLabel.setText("Please select an Account");
     }
@@ -87,8 +80,8 @@ public class DepositController implements Initializable {
         newStage.show();
     }
 
-    @javafx.fxml.FXML
-    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
+    @FXML
+    public void handleLogOutButton(@NotNull ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
         Parent root = fxmlLoader.load();

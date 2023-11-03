@@ -1,21 +1,19 @@
 package capstonebankmodel;
 
-import java.io.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Bank {
 
-    private HashMap<String, Customer> customerDataHashMap = new HashMap<>();
-    private HashMap<Long, Account> accountDataHashMap = new HashMap<>();
-    private HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
+    private final HashMap<String, Customer> customerDataHashMap = new HashMap<>();
+    private final HashMap<Long, Account> accountDataHashMap = new HashMap<>();
+    private final HashMap<Long, Loan> loanDataHashMap = new HashMap<>();
 
     public double getTotalDeposits() {
         return totalDeposits;
@@ -47,24 +45,24 @@ public class Bank {
         }
     }
 
-    public void withdraw(Account account, double amount) {
+    public void withdraw(@NotNull Account account, double amount) {
         account.withdraw(amount);
         CsvManager.writeCsvRow(account, account.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
 
-    public void deposit(Account account, double amount) {
+    public void deposit(@NotNull Account account, double amount) {
         account.deposit(amount);
         CsvManager.writeCsvRow(account, account.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
-    public void transfer(Account sender, Account recipient, double amount) {
+    public void transfer(@NotNull Account sender, Account recipient, double amount) {
         sender.transferTo(amount, recipient);
         CsvManager.writeCsvRow(sender, sender.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
         CsvManager.writeCsvRow(recipient, recipient.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
-    public void addAccount(Customer customer, String accountType) {
+    public void addAccount(@NotNull Customer customer, String accountType) {
         // NEW ACCOUNT
         Account account = AccountFactory.generateAccount(accountType);
         accountDataHashMap.put(account.getAccountId(), account);
@@ -72,11 +70,10 @@ public class Bank {
         customer.addAccount(account);
     }
 
-    private void csvAddAccountRecord(Account account, String customerName) {
+    private void csvAddAccountRecord(@NotNull Account account, String customerName) {
         String csvFilePath = "src/main/resources/data/account-data.csv";
         String[] recordToAdd = {String.valueOf(account.getAccountId()), customerName,
                 account.ACCOUNT_TYPE, String.valueOf(account.getBalance())};
-        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -86,7 +83,7 @@ public class Bank {
         }
     }
 
-    public void addAccount(Customer customer, String accountType, long accountId, double balance) {
+    public void addAccount(@NotNull Customer customer, String accountType, long accountId, double balance) {
         // OLD ACCOUNT
         Account account = AccountFactory.generateAccount(accountType, accountId, balance);
         accountDataHashMap.put(account.getAccountId(), account);
@@ -96,7 +93,7 @@ public class Bank {
     public void initializeHashMaps() {
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/customer-data.csv"))) {
             if (fileScanner.hasNextLine()) {
-                String headerLine = fileScanner.nextLine();
+                fileScanner.nextLine();
                 //skip the header line
             }
             while (fileScanner.hasNextLine()) {
@@ -109,7 +106,7 @@ public class Bank {
         }
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/account-data.csv"))) {
             if (fileScanner.hasNextLine()) {
-                String headerLine = fileScanner.nextLine();
+                fileScanner.nextLine();
                 //skip the header line
             }
             while (fileScanner.hasNextLine()) {
@@ -124,7 +121,7 @@ public class Bank {
         }
         try (Scanner fileScanner = new Scanner(new File("src/main/resources/data/loan-data.csv"))) {
             if (fileScanner.hasNextLine()) {
-                String headerLine = fileScanner.nextLine();
+                fileScanner.nextLine();
                 //skip the header line
             }
             while (fileScanner.hasNextLine()) {
@@ -139,26 +136,25 @@ public class Bank {
         }
     }
 
-    public void addNewLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
+    public void addNewLoan(@NotNull Customer customer, String loanType, double loanAmount, int loanDuration) {
         Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
         loanDataHashMap.put(loan.getLoanId(), loan);
         CsvManager.addCsvRow(loan, customer.getUsername(), CsvManager.LOAN_DATA_FILE_PATH);
         customer.addLoan(loan);
     }
 
-    public void addLoan(Customer customer, long loanId, String loanType, double loanAmount,
+    public void addLoan(@NotNull Customer customer, long loanId, String loanType, double loanAmount,
                         double outstandingAmount, int loanDuration, LocalDate date) {
         Loan loan = LoanFactory.generateLoan(loanId, loanType, loanAmount, outstandingAmount, loanDuration, date);
         loanDataHashMap.put(loan.getLoanId(), loan);
         customer.addLoan(loan);
     }
 
-    private void csvAddLoan(Loan loan, String username) {
+    private void csvAddLoan(@NotNull Loan loan, String username) {
         String csvFilePath = "src/main/resources/data/loan-data.csv";
         String[] recordToAdd = {String.valueOf(loan.getLoanId()), username, loan.loanType,
                 String.valueOf(loan.getLoanAmount()), String.valueOf(loan.getOutstandingAmount()),
                 String.valueOf(loan.getLoanDuration()), String.valueOf(loan.getLoanDate())};
-        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -181,10 +177,9 @@ public class Bank {
         customerDataHashMap.put(customer.getUsername(), customer);
     }
 
-    private void csvAddCustomerRecord(Customer customer) {
+    private void csvAddCustomerRecord(@NotNull Customer customer) {
         String csvFilePath = "src/main/resources/data/customer-data.csv";
         String[] recordToAdd = {customer.getUserName(), customer.getFirstName(), customer.getLastName(), customer.getPassword()};
-        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader();
         try (Writer fileWriter = new FileWriter(csvFilePath, true);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord((Object[]) recordToAdd);
@@ -219,15 +214,20 @@ public class Bank {
             fileScanner.close();
             pw.flush();
             pw.close();
-            accountData.delete();
+
+
+            boolean deleteResult = accountData.delete();
+
+
             File dump = new File("src/main/resources/data/account-data.csv");
-            tempFile.renameTo(dump);
+            boolean renameResult =  tempFile.renameTo(dump);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void repayLoan(Customer customer, Account account, Loan loan, double amount) {
+    public void repayLoan(Customer customer, Account account, @NotNull Loan loan, double amount) {
         withdraw(account, amount);
         loan.repayLoan(amount);
         if (loan.getOutstandingAmount() > 0) {
