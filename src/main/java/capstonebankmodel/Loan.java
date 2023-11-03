@@ -3,7 +3,9 @@ package capstonebankmodel;
 import java.time.LocalDate;
 import java.util.Collections;
 
-public class Loan {
+import static capstonebankmodel.CsvManager.pw;
+
+public class Loan implements CsvWritable, CsvAddable{
 
     private long loanId;
     private double loanAmount;
@@ -51,5 +53,30 @@ public class Loan {
     }
     public LocalDate getLoanDate() {
         return startDate;
+    }
+
+    @Override
+    public void editCsvRow(double newAmount, String[] infoArray) {
+        if (Long.parseLong(infoArray[0]) == loanId) {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + infoArray[3]
+                    + "," + newAmount + "," + infoArray[5] + "," + infoArray[6]);
+        } else {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + infoArray[3]
+                    + "," + infoArray[4] + "," + infoArray[5] + "," + infoArray[6]);
+        }
+    }
+
+    @Override
+    public void deleteCsvRow(String[] infoArray) {
+        if (Long.parseLong(infoArray[0]) != loanId) {
+            pw.println(infoArray[0] + "," + infoArray[1] + "," + infoArray[2] + "," + infoArray[3]
+                    + "," + infoArray[4] + "," + infoArray[5] + "," + infoArray[6]);
+        }
+    }
+
+    @Override
+    public String[] getRecordToAdd(String username) {
+        return new String[]{String.valueOf(loanId), username, loanType, String.valueOf(loanAmount),
+                String.valueOf(outstandingAmount), String.valueOf(loanDuration), String.valueOf(startDate)};
     }
 }

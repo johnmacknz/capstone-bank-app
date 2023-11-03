@@ -49,26 +49,26 @@ public class Bank {
 
     public void withdraw(Account account, double amount) {
         account.withdraw(amount);
-        csvEditAccountBalance(account.getAccountId(), account.getBalance());
+        CsvManager.writeCsvRow(account, account.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
 
     public void deposit(Account account, double amount) {
         account.deposit(amount);
-        csvEditAccountBalance(account.getAccountId(), account.getBalance());
+        CsvManager.writeCsvRow(account, account.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
     public void transfer(Account sender, Account recipient, double amount) {
         sender.transferTo(amount, recipient);
-        csvEditAccountBalance(sender.getAccountId(), sender.getBalance());
-        csvEditAccountBalance(recipient.getAccountId(), recipient.getBalance());
+        CsvManager.writeCsvRow(sender, sender.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
+        CsvManager.writeCsvRow(recipient, recipient.getBalance(), CsvManager.ACCOUNT_DATA_FILE_PATH);
     }
 
     public void addAccount(Customer customer, String accountType) {
         // NEW ACCOUNT
         Account account = AccountFactory.generateAccount(accountType);
         accountDataHashMap.put(account.getAccountId(), account);
-        csvAddAccountRecord(account, customer.getUserName());
+        CsvManager.addCsvRow(account, customer.getUsername(), CsvManager.ACCOUNT_DATA_FILE_PATH);
         customer.addAccount(account);
     }
 
@@ -142,7 +142,7 @@ public class Bank {
     public void addNewLoan(Customer customer, String loanType, double loanAmount, int loanDuration) {
         Loan loan = LoanFactory.generateLoan(loanType, loanAmount, loanDuration);
         loanDataHashMap.put(loan.getLoanId(), loan);
-        csvAddLoan(loan, customer.getUserName());
+        CsvManager.addCsvRow(loan, customer.getUsername(), CsvManager.LOAN_DATA_FILE_PATH);
         customer.addLoan(loan);
     }
 
@@ -171,14 +171,14 @@ public class Bank {
     public void addNewCustomer(String username, String firstName, String lastName, String password) {
         // NEW CUSTOMER
         Customer customer = new Customer(username, firstName, lastName, password);
-        customerDataHashMap.put(customer.getUserName(), customer);
-        csvAddCustomerRecord(customer);
+        customerDataHashMap.put(customer.getUsername(), customer);
+        CsvManager.addCsvRow(customer, customer.getUsername(), CsvManager.CUSTOMER_DATA_FILE_PATH);
     }
 
     public void addCustomer(String username, String firstName, String lastName, String password) {
         // OLD CUSTOMER
         Customer customer = new Customer(username, firstName, lastName, password);
-        customerDataHashMap.put(customer.getUserName(), customer);
+        customerDataHashMap.put(customer.getUsername(), customer);
     }
 
     private void csvAddCustomerRecord(Customer customer) {
@@ -231,16 +231,16 @@ public class Bank {
         withdraw(account, amount);
         loan.repayLoan(amount);
         if (loan.getOutstandingAmount() > 0) {
-            csvEditLoanOutstandingAmount(loan.getLoanId(), loan.getOutstandingAmount());
+            CsvManager.writeCsvRow(loan, loan.getOutstandingAmount(), CsvManager.LOAN_DATA_FILE_PATH);
         } else if (loan.getOutstandingAmount() == 0) {
             customer.getLoanTypeHashMap().remove(loan.loanType);
             loanDataHashMap.remove(loan.getLoanId());
-            csvDeleteLoan(loan.getLoanId());
+            CsvManager.writeCsvRow(loan, CsvManager.LOAN_DATA_FILE_PATH);
         } else {
             deposit(account, -loan.getOutstandingAmount());
             customer.getLoanTypeHashMap().remove(loan.loanType);
             loanDataHashMap.remove(loan.getLoanId());
-            csvDeleteLoan(loan.getLoanId());
+            CsvManager.writeCsvRow(loan, CsvManager.LOAN_DATA_FILE_PATH);
         }
 
     }
