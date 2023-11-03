@@ -10,9 +10,4 @@ public class CheckingAccount extends Account{
         super(accountId, balance);
         this.ACCOUNT_TYPE = "Checking Account";
     }
-
-    public void payBills(){
-
-    }
-
 }

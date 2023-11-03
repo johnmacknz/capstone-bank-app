@@ -749,7 +749,7 @@ class BankAppTest extends ApplicationTest {
     }
 
     @TestFx
-    public void testRepayLoan() {
+    public void testRepayFullLoan() {
         clickOn("#loginButton");
         clickOn("#userNameTextField");
         write("test");
@@ -803,6 +803,193 @@ class BankAppTest extends ApplicationTest {
         boolean containsAccountAmount = accountGrid.getChildren()
                 .stream()
                 .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("0.0"));
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
+
+        verifyThat("#loanGrid", NodeMatchers.isInvisible());
+        verifyThat("#noLoansTextFlow", NodeMatchers.isVisible());
+    }
+
+    @TestFx
+    public void testRepayPartialLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+        clickOn("#repayLoanButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#selectLoanComboBox");
+        clickOn("Home Loan");
+        clickOn("#depositAmountTextField").write("50");
+        clickOn("#repayLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("50.0"));
+
+        GridPane loanGrid = lookup("#loanGrid").query();
+        boolean containsHomeLoan = loanGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Home Loan"));
+        boolean containsLoanAmount = loanGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("50.0"));
+        boolean containsLoanDuration = loanGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("15"));
+
+
+        assertTrue(containsHomeLoan, "Home Loan not found in the grid.");
+        assertTrue(containsLoanAmount, "Loan Amount not found in the grid.");
+        assertTrue(containsLoanDuration, "Loan Amount not found in the grid.");
+
+        assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
+        assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
+
+    }
+
+    @TestFx
+    public void testNotEnoughMoneyToPayLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("50");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+        clickOn("#repayLoanButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#selectLoanComboBox");
+        clickOn("Home Loan");
+        clickOn("#depositAmountTextField").write("100");
+        clickOn("#repayLoanButton");
+
+        sleep(1000);
+
+        verifyThat("#errorMessageLabel", NodeMatchers.isVisible());
+        verifyThat("#errorMessageLabel", LabeledMatchers.hasText("Insufficient funds in this account!"));
+    }
+
+    @TestFx
+    public void testRepayTooMuchToLoan() {
+        clickOn("#loginButton");
+        clickOn("#userNameTextField");
+        write("test");
+        clickOn("#passwordFieldLogin");
+        write("Password123");
+        clickOn("#loginButton");
+        clickOn("#createAccountButton");
+        clickOn("#accountTypeChoiceBox");
+        clickOn("Savings Account");
+        clickOn("#createNewAccountButton");
+        clickOn("#backToDashboardButton");
+        TitledPane titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#depositButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#depositAmountTextField").write("200");
+        clickOn("#depositButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        clickOn("#requestLoanButton");
+        clickOn("#loanTypeChoiceBox");
+        clickOn("Home Loan");
+        clickOn("#loanAmountTextField").write("100");
+        clickOn("#loanDurationChoiceBox");
+        clickOn("15");
+        clickOn("#requestLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+        clickOn("#repayLoanButton");
+        clickOn("#accountComboBox");
+        clickOn("Savings Account");
+        clickOn("#selectLoanComboBox");
+        clickOn("Home Loan");
+        clickOn("#depositAmountTextField").write("200");
+        clickOn("#repayLoanButton");
+        clickOn("#backToDashboardButton");
+        titledPane = lookup("My Accounts").query();
+        clickOn(titledPane);
+        titledPane = lookup("Loans").query();
+        clickOn(titledPane);
+
+        sleep(1000);
+
+        GridPane accountGrid = lookup("#accountGrid").query();
+        boolean containsSavingsAccount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("Savings Account"));
+        boolean containsAccountAmount = accountGrid.getChildren()
+                .stream()
+                .anyMatch(node -> node instanceof Label && ((Label) node).getText().equals("100.0"));
 
         assertTrue(containsSavingsAccount, "Savings Account not found in the grid.");
         assertTrue(containsAccountAmount, "Account Amount not found in the grid.");
