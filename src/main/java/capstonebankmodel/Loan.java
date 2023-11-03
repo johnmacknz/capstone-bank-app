@@ -7,7 +7,6 @@ import static capstonebankmodel.CsvManager.pw;
 
 public class Loan implements CsvWritable, CsvAddable{
 
-    private final double interestRate = 5.00; //TODO- for now let it be fixed
     private long loanId;
     private double loanAmount;
     private double outstandingAmount;
@@ -34,11 +33,6 @@ public class Loan implements CsvWritable, CsvAddable{
         outstandingAmount = loanAmount;
         this.loanDuration = loanDuration;
         startDate = LocalDate.now();
-    }
-
-    public void calculateInterest(long loanAccountId){
-
-        //bank.getLoanDataHashMap().keySet();
     }
 
     public void repayLoan(double amount){
