@@ -3,28 +3,17 @@ package controller;
 import capstonebankmodel.Bank;
 import capstonebankmodel.BankFactory;
 import capstonebankmodel.Customer;
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 public class LoginController {
@@ -42,49 +31,27 @@ public class LoginController {
     private Button backButton;
     @FXML
     private PasswordField passwordFieldLogin;
-    private Bank bank;
     @FXML
     private Text errorMessage;
     @FXML
-    private Text accountCreation;
+    public static Text accountCreation;
+    @FXML
+    private ImageView barclavaImageView1;
+    @FXML
+    private Label time;
 
     public static String getUsername() {
         return username;
     }
 
+    private Bank bank;
     private static String username;
-    private static boolean accountCreatedShown = false;
-    @FXML
-    private Label time;
+    public static boolean accountCreatedShown = false;
 
     public void initialize() {
-        if (SignUpController.ApplicationContext.isAccountCreated() && !accountCreatedShown) {
-            accountCreation.setText("Account Successfully Created");
-            accountCreatedShown = true;
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), accountCreation);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-
-            fadeOut.setOnFinished(event->{
-                accountCreation.setVisible(false);
-            });
-
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(3), event->{
-                        fadeOut.play();
-                    })
-            );
-            timeline.setCycleCount(1);
-            timeline.play();
-        }
+        ControllerLogic.accountCreatedCheck();
         bank = BankFactory.getBank();
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e->
-                time.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-        ),
-                new KeyFrame(Duration.seconds(1))
-        );
-        clock.setCycleCount(Animation.INDEFINITE);
-        clock.play();
+        ControllerLogic.addClock(time);
     }
 
     @javafx.fxml.FXML
@@ -94,15 +61,7 @@ public class LoginController {
         if (bank.getCustomerDataHashMap().containsKey(username)) {
             Customer customer = bank.getCustomerDataHashMap().get(username);
             if (passwordFieldLogin.getText().equals(customer.getPassword())) {
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/dashboard-scene.fxml"));
-                Parent root = fxmlLoader.load();
-                Stage newStage = new Stage();
-                newStage.setScene(new Scene(root));
-                newStage.setTitle("Barclava Bank");
-                currentStage.close();
-                newStage.show();
+                ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/dashboard-scene.fxml");
             } else {
                 errorMessage.setText("Incorrect password entered!");
             }
@@ -113,14 +72,6 @@ public class LoginController {
 
     @javafx.fxml.FXML
     public void handleBackButton(@NotNull ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppStartController.class.getResource("/capstonebankapp/app-start-scene.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Barclava Bank");
-        currentStage.close();
-        newStage.show();
+        ControllerLogic.openNewScene(actionEvent, "/capstonebankapp/app-start-scene.fxml");
     }
 }
